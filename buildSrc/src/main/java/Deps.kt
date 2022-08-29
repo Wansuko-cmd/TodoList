@@ -7,18 +7,6 @@ object Deps {
 
         private const val kotlinCoroutineVersion = "1.6.4"
         const val coroutine = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutineVersion" // ktlint-disable max-line-length
-
-        const val datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.4.0"
-
-        const val kotlinxSerializationJson = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2" // ktlint-disable max-line-length
-
-        object Plugin {
-            const val serialization = "org.jetbrains.kotlin.plugin.serialization"
-        }
-
-        object Test {
-            const val coroutine = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutineVersion"
-        }
     }
 
     object Hilt {
@@ -36,12 +24,6 @@ object Deps {
             const val junit = "androidx.test.ext:junit:1.1.3"
             const val espresso = "androidx.test.espresso:espresso-core:3.4.0"
         }
-    }
-
-    object Network {
-        const val retrofit = "com.squareup.retrofit2:retrofit:2.9.0"
-        const val retrofit2KotlinxSerializationConverter =
-            "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
     }
 
     object Compose {
