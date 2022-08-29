@@ -19,3 +19,4 @@ dependencyResolutionManagement {
 rootProject.name = "TodoList"
 include("app")
 include("ui")
+include("domain")
