@@ -1,4 +1,4 @@
-package com.wsr.todolist.ui.theme
+package com.wsr.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes
