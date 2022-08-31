@@ -20,4 +20,5 @@ rootProject.name = "TodoList"
 include("app")
 include("ui")
 include("domain")
+include("usecase")
 include("utils")
