@@ -2,7 +2,7 @@ package com.wsr.memo
 
 data class Memo(
     val id: MemoId,
-    val items: List<ItemId>,
+    val items: List<Item>,
 )
 
 @JvmInline
