@@ -3,6 +3,8 @@ plugins {
 }
 
 dependencies {
+    implementation(project(":utils"))
+
     implementation(Deps.Kotlin.coroutine)
 
     testImplementation(Deps.Test.truth)

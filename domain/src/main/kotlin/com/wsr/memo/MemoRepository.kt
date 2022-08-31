@@ -1,14 +1,17 @@
 package com.wsr.memo
 
+import com.wsr.exception.DomainException
+import com.wsr.result.ApiResult
+
 interface MemoRepository {
 
-    suspend fun getAll(): List<Memo>
+    suspend fun getAll(): ApiResult<List<Memo>, DomainException>
 
-    suspend fun getById(memoId: MemoId): Memo
+    suspend fun getById(memoId: MemoId): ApiResult<Memo, DomainException>
 
-    suspend fun create(memo: Memo)
+    suspend fun create(memo: Memo): ApiResult<Unit, DomainException>
 
-    suspend fun update(memo: Memo)
+    suspend fun update(memo: Memo): ApiResult<Unit, DomainException>
 
-    suspend fun delete(memo: Memo)
+    suspend fun delete(memo: Memo): ApiResult<Unit, DomainException>
 }
