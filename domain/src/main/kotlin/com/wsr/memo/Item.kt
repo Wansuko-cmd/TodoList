@@ -1,4 +1,4 @@
-package com.wsr
+package com.wsr.memo
 
 data class Item(
     val id: ItemId,
