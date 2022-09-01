@@ -1,4 +1,4 @@
-package com.wsr.ui.theme
+package com.wsr.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes
