@@ -4,13 +4,15 @@ plugins {
 }
 
 android {
-    flavorDimensions.add("default")
-    productFlavors {
+
+    defaultConfig {
+        buildConfigField("String", "FLAVOR_TYPE", "MOCK".asStringLiteral())
+    }
+
+    buildTypes {
         create("mock") {
             buildConfigField("String", "FLAVOR_TYPE", "MOCK".asStringLiteral())
-        }
-        create("prod") {
-            buildConfigField("String", "FLAVOR_TYPE", "PROD".asStringLiteral())
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
 }

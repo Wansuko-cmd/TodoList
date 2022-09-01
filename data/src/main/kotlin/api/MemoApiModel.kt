@@ -6,14 +6,17 @@ import com.wsr.memo.ItemContent
 import com.wsr.memo.ItemId
 import com.wsr.memo.Memo
 import com.wsr.memo.MemoId
+import com.wsr.memo.MemoTitle
 
 data class MemoApiModel(
     val id: String,
+    val title: String,
     val items: List<ItemApiModel>
 ) {
     companion object {
         fun MemoApiModel.toDomain(): Memo = Memo(
             id = MemoId(id),
+            title = MemoTitle(title),
             items = items.map { it.toDomain() },
         )
     }

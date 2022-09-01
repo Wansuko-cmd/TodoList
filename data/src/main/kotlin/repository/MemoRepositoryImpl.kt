@@ -9,11 +9,13 @@ import com.wsr.memo.MemoId
 import com.wsr.memo.MemoRepository
 import com.wsr.result.ApiResult
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class MemoRepositoryImpl(
+class MemoRepositoryImpl @Inject constructor(
     private val memoApi: MemoApi,
-    @IODispatcher private val dispatcher: CoroutineDispatcher,
+    @IODispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : MemoRepository {
     override suspend fun getAll(): ApiResult<List<Memo>, DomainException> =
         withContext(dispatcher) {

@@ -8,7 +8,7 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-interface MockApiModule {
+interface MockApiBindModule {
     @ApiFlavor(ApiFlavor.MOCK)
     @Singleton
     @Binds

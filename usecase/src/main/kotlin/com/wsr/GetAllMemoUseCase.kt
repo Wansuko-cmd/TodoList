@@ -10,12 +10,13 @@ import com.wsr.memo.MemoTitle
 import com.wsr.result.ApiResult
 import com.wsr.result.map
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class GetAllMemoUseCase @Inject constructor(
     private val memoRepository: MemoRepository,
-    @DefaultDispatcher private val dispatcher: CoroutineDispatcher,
+    @DefaultDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) {
     suspend operator fun invoke(): ApiResult<List<GetAllMemoUseCaseModel>, DomainException> =
         withContext(dispatcher) {

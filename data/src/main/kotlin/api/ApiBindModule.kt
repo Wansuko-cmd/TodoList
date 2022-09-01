@@ -1,6 +1,6 @@
 package api
 
-import com.ace.c.android.utils.BuildConfig
+import com.wsr.data.BuildConfig
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -10,5 +10,5 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 interface ApiBindModule {
     @Binds
-    fun bindMemoApi(@ApiFlavor(BuildConfig.BUILD_TYPE) impl: MemoApi): MemoApi
+    fun bindMemoApi(@ApiFlavor(BuildConfig.FLAVOR_TYPE) impl: MemoApi): MemoApi
 }

@@ -21,6 +21,10 @@ android {
 dependencies {
 
     implementation(project(":ui"))
+    implementation(project(":usecase"))
+    implementation(project(":data"))
+    implementation(project(":utils"))
+    implementation(project(":domain"))
 
     implementation(Deps.AndroidX.core)
     implementation(Deps.AndroidX.lifecycleRuntime)
