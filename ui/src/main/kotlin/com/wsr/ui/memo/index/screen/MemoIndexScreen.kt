@@ -36,7 +36,10 @@ fun MemoIndexScreen(
     uiState: MemoIndexUiState,
     navController: NavHostController,
 ) {
-    Scaffold(modifier) { innerPadding ->
+    Scaffold(
+        modifier = modifier,
+        topBar = { MemoIndexTopBar() },
+    ) { innerPadding ->
         LazyColumn(
             modifier = Modifier.padding(innerPadding),
         ) {
