@@ -37,7 +37,7 @@ fun TodoListTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composab
 
     MaterialTheme(
         colors = colors,
-        typography = Typography,
+        typography = NormalTypography,
         shapes = Shapes,
         content = content
     )
