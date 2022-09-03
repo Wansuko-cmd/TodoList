@@ -24,7 +24,7 @@ class FetchMemoByIdUseCase @Inject constructor(
     private val queryService: FetchMemoByIdQueryService,
     @DefaultDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) {
-    val flow = queryService.flow
+    val flow = queryService.flow.map { data -> data.map { it.toGetMemoByIdUseCaseModel() } }
 
     suspend operator fun invoke(memoId: MemoId) {
         withContext(dispatcher) {
@@ -34,7 +34,7 @@ class FetchMemoByIdUseCase @Inject constructor(
 }
 
 interface FetchMemoByIdQueryService {
-    val flow: Flow<ApiResult<FetchMemoByIdUseCaseModel, DomainException>>
+    val flow: Flow<ApiResult<Memo, DomainException>>
 
     suspend operator fun invoke(memoId: MemoId)
 }

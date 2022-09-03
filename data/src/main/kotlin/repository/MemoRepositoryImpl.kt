@@ -20,10 +20,6 @@ class MemoRepositoryImpl @Inject constructor(
     private val memoApi: MemoApi,
     @IODispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : MemoRepository {
-    override suspend fun getAll(): ApiResult<List<Memo>, DomainException> =
-        withContext(dispatcher) {
-            runCatchDomainException { memoApi.getAll().map { it.toDomain() } }
-        }
 
     override suspend fun create(memo: Memo): ApiResult<Unit, DomainException> {
         TODO("Not yet implemented")

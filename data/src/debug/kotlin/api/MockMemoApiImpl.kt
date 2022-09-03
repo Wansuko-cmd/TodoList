@@ -5,13 +5,15 @@ import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
 class MockMemoApiImpl @Inject constructor() : MemoApi {
-    override suspend fun getAll(): List<MemoApiModel> = List(10) { index ->
-        MemoApiModel(
-            id = "id$index",
-            title = "title$index",
-            items = listOf(),
-        )
-    }
+    override suspend fun getAll(): Flow<List<MemoApiModel>> = flowOf(
+        List(10) { index ->
+            MemoApiModel(
+                id = "id$index",
+                title = "title$index",
+                items = listOf(),
+            )
+        }
+    )
 
     override suspend fun getById(memoId: String): Flow<MemoApiModel> = flowOf(
         MemoApiModel(
