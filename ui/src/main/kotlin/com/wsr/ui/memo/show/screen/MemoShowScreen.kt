@@ -1,5 +1,6 @@
 package com.wsr.ui.memo.show.screen
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
@@ -37,9 +38,14 @@ fun MemoShowScreen(
 ) {
     Scaffold(
         modifier = modifier,
-    ) {
-        Text(text = uiState.title)
-        LazyColumn {
+        topBar = {
+            MemoShowTopBar(
+                navController = navController,
+                memoTitle = uiState.title,
+            )
+        }
+    ) { innerPadding ->
+        LazyColumn(modifier = Modifier.padding(innerPadding)) {
             items(uiState.items) {
                 Text(text = it.content)
             }
