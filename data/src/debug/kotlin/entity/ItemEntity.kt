@@ -28,8 +28,16 @@ data class ItemEntity(
     companion object {
         fun ItemEntity.toApiModel() = ItemApiModel(
             id = id,
-            checked,
+            checked = checked,
             content = content,
+        )
+
+        fun from(item: ItemApiModel, memoId: String, index: Int) = ItemEntity(
+            id = item.id,
+            memoId = memoId,
+            checked = item.checked,
+            content = item.content,
+            index = index,
         )
     }
 }

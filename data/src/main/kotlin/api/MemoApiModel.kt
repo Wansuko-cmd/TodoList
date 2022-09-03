@@ -19,6 +19,12 @@ data class MemoApiModel(
             title = MemoTitle(title),
             items = items.map { it.toDomain() },
         )
+
+        fun from(memo: Memo) = MemoApiModel(
+            id = memo.id.value,
+            title = memo.title.value,
+            items = memo.items.map { ItemApiModel.from(it) }
+        )
     }
 }
 
@@ -32,6 +38,12 @@ data class ItemApiModel(
             id = ItemId(id),
             checked = checked,
             content = ItemContent(content),
+        )
+
+        fun from(item: Item) = ItemApiModel(
+            id = item.id.value,
+            checked = item.checked,
+            content = item.content.value,
         )
     }
 }

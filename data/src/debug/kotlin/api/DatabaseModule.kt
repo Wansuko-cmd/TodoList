@@ -23,7 +23,7 @@ object DatabaseModule {
         .databaseBuilder(context, AppDatabase::class.java, "dev_db")
         .build()
         .also { db -> memos.forEach { runBlocking { db.memoDao().insertMemo(it) } } }
-        .also { db -> items.forEach { runBlocking { db.memoDao().insertItems(it) } } }
+        .also { db -> runBlocking { db.memoDao().insertItems(items) } }
 
     @Singleton
     @Provides

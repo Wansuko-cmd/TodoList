@@ -1,6 +1,8 @@
 package api
 
 import dao.MemoDao
+import entity.ItemEntity
+import entity.MemoEntity
 import entity.MemoEntity.Companion.toApiModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -20,4 +22,11 @@ class MemoApiImpl @Inject constructor(
         memoDao.getMemoById(memoId).map { (memo, items) ->
             memo.toApiModel(items)
         }
+
+    override suspend fun insert(memo: MemoApiModel) {
+        memoDao.insertMemo(MemoEntity.from(memo))
+        memo.items.mapIndexed { index, item ->
+            ItemEntity.from(item, memo.id, index)
+        }.let { memoDao.insertItems(it) }
+    }
 }

@@ -50,7 +50,20 @@ class MemoIndexViewModel @Inject constructor(
 
     fun createMemo(title: String) {
         viewModelScope.launch {
+            dismissDialog()
             createMemoUseCase(MemoTitle(title))
+        }
+    }
+
+    fun showDialog() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(showCreateMemoDialog = true) }
+        }
+    }
+
+    fun dismissDialog() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(showCreateMemoDialog = false) }
         }
     }
 }

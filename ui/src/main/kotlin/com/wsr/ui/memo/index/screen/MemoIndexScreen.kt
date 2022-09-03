@@ -29,20 +29,29 @@ fun MemoIndexScreen(
         modifier = modifier,
         uiState = uiState,
         navController = navController,
+        onClickFab = viewModel::showDialog,
     )
+
+    if (uiState.showCreateMemoDialog) {
+        MemoIndexCreateMemoDialog(
+            onDismiss = viewModel::dismissDialog,
+            onConfirm = viewModel::createMemo,
+        )
+    }
 }
 @Composable
 fun MemoIndexScreen(
     modifier: Modifier = Modifier,
     uiState: MemoIndexUiState,
     navController: NavHostController,
+    onClickFab: () -> Unit,
 ) {
     Scaffold(
         modifier = modifier,
         topBar = { MemoIndexTopBar() },
         floatingActionButton = {
             MemoIndexFloatActionButton(
-                onClick = { },
+                onClick = onClickFab,
             )
         }
     ) { innerPadding ->
@@ -58,6 +67,5 @@ fun MemoIndexScreen(
                 )
             }
         }
-        MemoIndexCreateMemoDialog(onDismiss = { /*TODO*/ }, onConfirm = {})
     }
 }

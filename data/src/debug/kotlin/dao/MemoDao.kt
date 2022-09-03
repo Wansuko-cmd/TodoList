@@ -24,5 +24,5 @@ interface MemoDao {
     suspend fun insertMemo(memoEntity: MemoEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertItems(vararg items: ItemEntity)
+    suspend fun insertItems(items: List<ItemEntity>)
 }

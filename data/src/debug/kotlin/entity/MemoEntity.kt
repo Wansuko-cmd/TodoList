@@ -16,5 +16,10 @@ data class MemoEntity(
             title = title,
             items = items.sortedBy { it.index }.map { it.toApiModel() }
         )
+
+        fun from(memo: MemoApiModel) = MemoEntity(
+            id = memo.id,
+            title = memo.title,
+        )
     }
 }

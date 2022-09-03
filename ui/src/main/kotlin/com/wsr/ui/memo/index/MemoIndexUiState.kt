@@ -4,6 +4,7 @@ import com.wsr.FetchAllMemoUseCaseModel
 
 data class MemoIndexUiState(
     val memos: List<MemoIndexMemoUiState> = listOf(),
+    val showCreateMemoDialog: Boolean = false,
 ) {
     companion object {
         fun from(memos: List<FetchAllMemoUseCaseModel>) =
