@@ -3,8 +3,6 @@ package repository
 import api.MemoApi
 import api.MemoApiModel.Companion.toDomain
 import com.wsr.FetchMemoByIdQueryService
-import com.wsr.FetchMemoByIdUseCaseModel
-import com.wsr.FetchMemoByIdUseCaseModel.Companion.toGetMemoByIdUseCaseModel
 import com.wsr.di.IODispatcher
 import com.wsr.exception.DomainException
 import com.wsr.memo.Memo
