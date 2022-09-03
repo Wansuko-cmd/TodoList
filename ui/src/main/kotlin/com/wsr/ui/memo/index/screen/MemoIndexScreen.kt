@@ -13,6 +13,7 @@ import androidx.navigation.NavHostController
 import com.wsr.Route
 import com.wsr.ui.memo.index.MemoIndexUiState
 import com.wsr.ui.memo.index.MemoIndexViewModel
+import com.wsr.ui.memo.index.component.MemoIndexCreateMemoDialog
 import com.wsr.ui.memo.index.component.MemoIndexMemoTile
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
@@ -39,6 +40,11 @@ fun MemoIndexScreen(
     Scaffold(
         modifier = modifier,
         topBar = { MemoIndexTopBar() },
+        floatingActionButton = {
+            MemoIndexFloatActionButton(
+                onClick = { },
+            )
+        }
     ) { innerPadding ->
         LazyColumn(
             modifier = Modifier.padding(innerPadding),
@@ -52,5 +58,6 @@ fun MemoIndexScreen(
                 )
             }
         }
+        MemoIndexCreateMemoDialog(onDismiss = { /*TODO*/ }, onConfirm = {})
     }
 }

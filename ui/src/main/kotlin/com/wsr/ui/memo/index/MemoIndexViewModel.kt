@@ -2,20 +2,22 @@ package com.wsr.ui.memo.index
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.wsr.CreateMemoUseCase
 import com.wsr.FetchAllMemoUseCase
 import com.wsr.FetchAllMemoUseCaseModel
+import com.wsr.memo.MemoTitle
 import com.wsr.result.consume
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MemoIndexViewModel @Inject constructor(
-    private val getAllMemoUseCase: FetchAllMemoUseCase,
+    private val fetchAllMemoUseCase: FetchAllMemoUseCase,
+    private val createMemoUseCase: CreateMemoUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(MemoIndexUiState())
     val uiState = _uiState.asStateFlow()
@@ -27,13 +29,13 @@ class MemoIndexViewModel @Inject constructor(
 
     private fun observeLatestMemos() {
         viewModelScope.launch {
-            getAllMemoUseCase()
+            fetchAllMemoUseCase()
         }
     }
 
     private fun setCollectAndUpdateUiState() {
         viewModelScope.launch {
-            getAllMemoUseCase.flow.collect { data ->
+            fetchAllMemoUseCase.flow.collect { data ->
                 data.consume(
                     success = ::onSuccessGetting,
                     failure = {},
@@ -44,5 +46,11 @@ class MemoIndexViewModel @Inject constructor(
 
     private fun onSuccessGetting(memos: List<FetchAllMemoUseCaseModel>) {
         _uiState.update { MemoIndexUiState.from(memos) }
+    }
+
+    fun createMemo(title: String) {
+        viewModelScope.launch {
+            createMemoUseCase(MemoTitle(title))
+        }
     }
 }
