@@ -20,6 +20,13 @@ object Deps {
         const val core = "androidx.core:core-ktx:1.8.0"
         const val lifecycleRuntime = "androidx.lifecycle:lifecycle-runtime-ktx:2.5.1"
 
+        object Room {
+            private const val roomVersion = "2.4.3"
+            const val runtime = "androidx.room:room-runtime:$roomVersion"
+            const val compiler = "androidx.room:room-compiler:$roomVersion"
+            const val ktx = "androidx.room:room-ktx:$roomVersion"
+        }
+
         object Test {
             const val junit = "androidx.test.ext:junit:1.1.3"
             const val espresso = "androidx.test.espresso:espresso-core:3.4.0"

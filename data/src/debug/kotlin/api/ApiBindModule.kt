@@ -8,8 +8,8 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-interface MockApiBindModule {
+interface ApiBindModule {
     @Singleton
     @Binds
-    fun bindMemoApi(mockMemoApiImpl: MockMemoApiImpl): MemoApi
+    fun bindMemoApi(impl: MemoApiImpl): MemoApi
 }
