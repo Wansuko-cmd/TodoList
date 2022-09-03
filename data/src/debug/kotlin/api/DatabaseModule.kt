@@ -39,6 +39,7 @@ val items = List(10) { memoIndex ->
         ItemEntity(
             id = "itemId$memoIndex$itemIndex",
             memoId = "memoId$memoIndex",
+            checked = itemIndex % 2 == 0,
             content = "content$itemIndex",
             index = itemIndex,
         )

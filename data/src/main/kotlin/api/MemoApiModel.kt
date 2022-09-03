@@ -24,11 +24,13 @@ data class MemoApiModel(
 
 data class ItemApiModel(
     val id: String,
+    val checked: Boolean,
     val content: String,
 ) {
     companion object {
         fun ItemApiModel.toDomain(): Item = Item(
             id = ItemId(id),
+            checked = checked,
             content = ItemContent(content),
         )
     }

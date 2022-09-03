@@ -54,11 +54,13 @@ data class FetchMemoByIdUseCaseModel(
 
 data class FetchMemoByIdItemUseCaseModel(
     val id: ItemId,
+    val checked: Boolean,
     val content: ItemContent,
 ) {
     companion object {
         fun Item.toGetMemoByIdItemUseCaseModel() = FetchMemoByIdItemUseCaseModel(
             id = id,
+            checked = checked,
             content = content,
         )
     }
