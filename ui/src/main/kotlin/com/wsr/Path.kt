@@ -10,7 +10,7 @@ object Route {
         object Index : Path { override val path = "$root/index" }
 
         object Show : Path {
-            override val path: String = "$root/{memo_Id}"
+            override val path: String = "$root/{memoId}"
             fun with(memoId: String) = "$root/$memoId"
         }
     }

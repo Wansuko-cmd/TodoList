@@ -1,5 +1,7 @@
 package com.wsr.ui.memo.show.screen
 
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -37,5 +39,10 @@ fun MemoShowScreen(
         modifier = modifier,
     ) {
         Text(text = uiState.title)
+        LazyColumn {
+            items(uiState.items) {
+                Text(text = it.content)
+            }
+        }
     }
 }

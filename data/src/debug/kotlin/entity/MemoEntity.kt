@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import api.MemoApiModel
 import entity.ItemEntity.Companion.toApiModel
 
-@Entity
+@Entity(tableName = "memos")
 data class MemoEntity(
     @PrimaryKey val id: String,
     val title: String,

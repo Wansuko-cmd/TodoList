@@ -46,7 +46,9 @@ fun MemoIndexScreen(
             items(uiState.memos) {
                 MemoIndexMemoTile(
                     memoUiState = it,
-                    onClickTile = { memoId -> navController.navigate(Route.Memo.Show.with(memoId)) },
+                    onClickTile = { memoId ->
+                        navController.navigate(Route.Memo.Show.with(memoId))
+                    },
                 )
             }
         }
