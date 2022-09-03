@@ -8,8 +8,6 @@ interface MemoRepository {
 
     suspend fun getAll(): ApiResult<List<Memo>, DomainException>
 
-    suspend fun getById(memoId: MemoId): Flow<ApiResult<Memo, DomainException>>
-
     suspend fun create(memo: Memo): ApiResult<Unit, DomainException>
 
     suspend fun update(memo: Memo): ApiResult<Unit, DomainException>

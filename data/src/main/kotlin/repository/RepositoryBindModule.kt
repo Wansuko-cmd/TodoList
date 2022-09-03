@@ -1,5 +1,6 @@
 package repository
 
+import com.wsr.FetchMemoByIdQueryService
 import com.wsr.memo.MemoRepository
 import dagger.Binds
 import dagger.Module
@@ -13,4 +14,9 @@ interface RepositoryBindModule {
     fun bindMemoRepository(
         memoRepositoryImpl: MemoRepositoryImpl,
     ): MemoRepository
+
+    @Binds
+    fun bindFetchMemoByIdQueryService(
+        fetchMemoByIdQueryServiceImpl: FetchMemoByIdQueryServiceImpl,
+    ): FetchMemoByIdQueryService
 }

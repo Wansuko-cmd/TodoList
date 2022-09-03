@@ -1,5 +1,7 @@
 package api
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
 class MockMemoApiImpl @Inject constructor() : MemoApi {
@@ -10,4 +12,12 @@ class MockMemoApiImpl @Inject constructor() : MemoApi {
             items = listOf(),
         )
     }
+
+    override suspend fun getById(memoId: String): Flow<MemoApiModel> = flowOf(
+        MemoApiModel(
+            id = memoId,
+            title = "title",
+            items = listOf(),
+        )
+    )
 }

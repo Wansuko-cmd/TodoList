@@ -10,6 +10,7 @@ import com.wsr.ui.memo.show.MemoShowUiState
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class MemoShowViewModel @AssistedInject constructor(
@@ -17,14 +18,22 @@ class MemoShowViewModel @AssistedInject constructor(
     @Assisted("memoId") private val memoId: String,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(MemoShowUiState())
+    val uiState = _uiState.asStateFlow()
 
     init {
         observeLatestMemo()
+        setCollectAndUpdateUiState()
     }
 
     private fun observeLatestMemo() {
         viewModelScope.launch {
-            fetchMemoByIdUseCase(MemoId(memoId)).collect { data ->
+            fetchMemoByIdUseCase(MemoId(memoId))
+        }
+    }
+
+    private fun setCollectAndUpdateUiState() {
+        viewModelScope.launch {
+            fetchMemoByIdUseCase.flow.collect { data ->
                 data.consume(
                     success = ::onSuccessFetching,
                     failure = {},

@@ -21,16 +21,22 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class FetchMemoByIdUseCase @Inject constructor(
-    private val memoRepository: MemoRepository,
+    private val queryService: FetchMemoByIdQueryService,
     @DefaultDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) {
+    val flow = queryService.flow
 
-    suspend operator fun invoke(memoId: MemoId): Flow<ApiResult<FetchMemoByIdUseCaseModel, DomainException>> =
+    suspend operator fun invoke(memoId: MemoId) {
         withContext(dispatcher) {
-            memoRepository.getById(memoId).map { data ->
-                data.map { it.toGetMemoByIdUseCaseModel() }
-            }
+            queryService(memoId)
         }
+    }
+}
+
+interface FetchMemoByIdQueryService {
+    val flow: Flow<ApiResult<FetchMemoByIdUseCaseModel, DomainException>>
+
+    suspend operator fun invoke(memoId: MemoId)
 }
 
 data class FetchMemoByIdUseCaseModel(

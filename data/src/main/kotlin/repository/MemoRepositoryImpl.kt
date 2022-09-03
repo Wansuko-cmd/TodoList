@@ -10,6 +10,9 @@ import com.wsr.memo.MemoRepository
 import com.wsr.result.ApiResult
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -21,10 +24,6 @@ class MemoRepositoryImpl @Inject constructor(
         withContext(dispatcher) {
             runCatchDomainException { memoApi.getAll().map { it.toDomain() } }
         }
-
-    override suspend fun getById(memoId: MemoId): ApiResult<Memo, DomainException> {
-        TODO("Not yet implemented")
-    }
 
     override suspend fun create(memo: Memo): ApiResult<Unit, DomainException> {
         TODO("Not yet implemented")
