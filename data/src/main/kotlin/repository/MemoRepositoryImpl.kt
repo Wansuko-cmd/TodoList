@@ -15,7 +15,7 @@ class MemoRepositoryImpl @Inject constructor(
     @IODispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : MemoRepository {
 
-    override suspend fun create(memo: Memo): ApiResult<Unit, DomainException> {
+    override suspend fun insert(memo: Memo): ApiResult<Unit, DomainException> {
         TODO("Not yet implemented")
     }
 

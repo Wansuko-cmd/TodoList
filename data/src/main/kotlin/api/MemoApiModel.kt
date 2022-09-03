@@ -14,7 +14,7 @@ data class MemoApiModel(
     val items: List<ItemApiModel>
 ) {
     companion object {
-        fun MemoApiModel.toDomain(): Memo = Memo(
+        fun MemoApiModel.toDomain(): Memo = Memo.reconstruct(
             id = MemoId(id),
             title = MemoTitle(title),
             items = items.map { it.toDomain() },
@@ -28,7 +28,7 @@ data class ItemApiModel(
     val content: String,
 ) {
     companion object {
-        fun ItemApiModel.toDomain(): Item = Item(
+        fun ItemApiModel.toDomain(): Item = Item.reconstruct(
             id = ItemId(id),
             checked = checked,
             content = ItemContent(content),

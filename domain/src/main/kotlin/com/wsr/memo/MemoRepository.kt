@@ -5,7 +5,7 @@ import com.wsr.result.ApiResult
 
 interface MemoRepository {
 
-    suspend fun create(memo: Memo): ApiResult<Unit, DomainException>
+    suspend fun insert(memo: Memo): ApiResult<Unit, DomainException>
 
     suspend fun update(memo: Memo): ApiResult<Unit, DomainException>
 
