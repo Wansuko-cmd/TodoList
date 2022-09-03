@@ -3,6 +3,8 @@ package repository
 import com.wsr.FetchAllMemoQueryService
 import com.wsr.FetchMemoByIdQueryService
 import com.wsr.memo.MemoRepository
+import cqrs.FetchAllMemoQueryServiceImpl
+import cqrs.FetchMemoByIdQueryServiceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -15,14 +17,4 @@ interface RepositoryBindModule {
     fun bindMemoRepository(
         memoRepositoryImpl: MemoRepositoryImpl,
     ): MemoRepository
-
-    @Binds
-    fun bindFetchMemoByIdQueryService(
-        fetchMemoByIdQueryServiceImpl: FetchMemoByIdQueryServiceImpl,
-    ): FetchMemoByIdQueryService
-
-    @Binds
-    fun bindFetchAllMemoQueryService(
-        fetchAllMemoQueryServiceImpl: FetchAllMemoQueryServiceImpl,
-    ): FetchAllMemoQueryService
 }
