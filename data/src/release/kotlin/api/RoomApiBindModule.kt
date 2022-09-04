@@ -1,4 +1,4 @@
-package repository.room
+package api
 
 import api.MemoApi
 import dagger.Binds

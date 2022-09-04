@@ -5,8 +5,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -18,6 +22,7 @@ fun MemoIndexMemoTile(
     modifier: Modifier = Modifier,
     memoUiState: MemoIndexMemoUiState,
     onClickTile: (memoId: String) -> Unit,
+    onClickDeleteButton: (memoId: String) -> Unit,
 ) {
     Card(
         modifier = modifier
@@ -33,6 +38,10 @@ fun MemoIndexMemoTile(
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.h4,
             )
+
+            IconButton(onClick = { onClickDeleteButton(memoUiState.id) }) {
+                Icon(Icons.Filled.Delete, contentDescription = null)
+            }
         }
     }
 }

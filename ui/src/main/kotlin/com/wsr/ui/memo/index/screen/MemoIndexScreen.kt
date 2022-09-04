@@ -1,5 +1,6 @@
 package com.wsr.ui.memo.index.screen
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -30,6 +31,7 @@ fun MemoIndexScreen(
         uiState = uiState,
         navController = navController,
         onClickFab = viewModel::showDialog,
+        onClickDeleteButton = viewModel::deleteMemo,
     )
 
     if (uiState.showCreateMemoDialog) {
@@ -39,12 +41,15 @@ fun MemoIndexScreen(
         )
     }
 }
+
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MemoIndexScreen(
     modifier: Modifier = Modifier,
     uiState: MemoIndexUiState,
     navController: NavHostController,
     onClickFab: () -> Unit,
+    onClickDeleteButton: (memoId: String) -> Unit,
 ) {
     Scaffold(
         modifier = modifier,
@@ -58,12 +63,14 @@ fun MemoIndexScreen(
         LazyColumn(
             modifier = Modifier.padding(innerPadding),
         ) {
-            items(uiState.memos) {
+            items(uiState.memos, key = { it.id }) {
                 MemoIndexMemoTile(
+                    modifier = Modifier.animateItemPlacement(),
                     memoUiState = it,
                     onClickTile = { memoId ->
                         navController.navigate(Route.Memo.Show.with(memoId))
                     },
+                    onClickDeleteButton = onClickDeleteButton,
                 )
             }
         }

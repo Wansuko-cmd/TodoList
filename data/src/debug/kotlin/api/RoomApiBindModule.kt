@@ -1,10 +1,10 @@
-package repository.room
+package api
 
-import api.MemoApi
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import repository.room.RoomMemoApiImpl
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)

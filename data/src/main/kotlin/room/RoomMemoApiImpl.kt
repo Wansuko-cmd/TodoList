@@ -23,11 +23,14 @@ class RoomMemoApiImpl @Inject constructor(
 
     override suspend fun upsert(memo: MemoApiModel) {
         memoDao.upsertMemo(MemoEntity.from(memo))
-        memo.items.mapIndexed { index, item ->
-            ItemEntity.from(item, memo.id, index)
-        }.let { memoDao.upsertItems(it) }
+        memo.items
+            .mapIndexed { index, item ->
+                ItemEntity.from(item, memo.id, index)
+            }
+            .let { memoDao.upsertItems(it) }
     }
 
     override suspend fun delete(memoId: String) {
+        memoDao.deleteMemo(memoId)
     }
 }
