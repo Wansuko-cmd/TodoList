@@ -32,7 +32,8 @@ fun MemoShowScreen(
         uiState = uiState,
         navController = navController,
         onChecked = viewModel::changeItemChecked,
-        onChangeContent = viewModel::changeItemContent
+        onChangeContent = viewModel::changeItemContent,
+        addItem = viewModel::addItem,
     )
 }
 
@@ -44,6 +45,7 @@ fun MemoShowScreen(
     navController: NavHostController,
     onChecked: (itemId: String) -> Unit,
     onChangeContent: (itemId: String, content: String) -> Unit,
+    addItem: () -> Unit,
 ) {
     Scaffold(
         modifier = modifier,
@@ -52,6 +54,9 @@ fun MemoShowScreen(
                 navController = navController,
                 memoTitle = uiState.title,
             )
+        },
+        floatingActionButton = {
+            MemoShowFloatActionButton(onClick = addItem)
         }
     ) { innerPadding ->
         LazyColumn(

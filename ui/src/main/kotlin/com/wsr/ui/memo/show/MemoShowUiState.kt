@@ -1,5 +1,6 @@
 package com.wsr.ui.memo.show
 
+import com.wsr.CreateItemUseCaseModel
 import com.wsr.FetchMemoByIdItemUseCaseModel
 import com.wsr.FetchMemoByIdUseCaseModel
 import com.wsr.UpdateMemoItemUseCaseModel
@@ -39,6 +40,13 @@ data class MemoShowItemUiState(
                 id = fetchMemoByIdItemUseCaseModel.id.value,
                 checked = fetchMemoByIdItemUseCaseModel.checked,
                 content = fetchMemoByIdItemUseCaseModel.content.value,
+            )
+
+        fun from(createItemUseCaseModel: CreateItemUseCaseModel) =
+            MemoShowItemUiState(
+                id = createItemUseCaseModel.id.value,
+                checked = createItemUseCaseModel.checked,
+                content = createItemUseCaseModel.content.value,
             )
 
         fun MemoShowItemUiState.toUpdateMemoUseCaseModel() = UpdateMemoItemUseCaseModel(

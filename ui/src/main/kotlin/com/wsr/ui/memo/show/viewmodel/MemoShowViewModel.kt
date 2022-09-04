@@ -2,6 +2,7 @@ package com.wsr.ui.memo.show.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.wsr.CreateItemUseCase
 import com.wsr.FetchMemoByIdUseCaseModel
 import com.wsr.GetMemoByIdUseCase
 import com.wsr.UpdateMemoUseCase
@@ -23,6 +24,7 @@ import kotlinx.coroutines.launch
 class MemoShowViewModel @AssistedInject constructor(
     private val fetchMemoByIdUseCase: GetMemoByIdUseCase,
     private val updateMemoUseCase: UpdateMemoUseCase,
+    private val createItemInstanceUsecase: CreateItemUseCase,
     @Assisted("memoId") private val memoId: String,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(MemoShowUiState())
@@ -62,6 +64,14 @@ class MemoShowViewModel @AssistedInject constructor(
         updateItem(itemId) { it.copy(content = content) }
     }
 
+    fun addItem() {
+        val newItem = MemoShowItemUiState.from(createItemInstanceUsecase())
+        _uiState.update { uiState ->
+            uiState.copy(items = uiState.items + newItem)
+        }
+        saveToDatabase()
+    }
+
     override fun onCleared() {
         super.onCleared()
         saveToDatabase()
@@ -70,7 +80,7 @@ class MemoShowViewModel @AssistedInject constructor(
     private fun updateItem(itemId: String, block: (MemoShowItemUiState) -> MemoShowItemUiState) {
         _uiState.update { uiState ->
             uiState.copy(
-                items = _uiState.value.items.map { item ->
+                items = uiState.items.map { item ->
                     if (item.id == itemId) block(item) else item
                 }
             )

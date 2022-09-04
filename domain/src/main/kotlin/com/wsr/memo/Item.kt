@@ -8,10 +8,10 @@ class Item private constructor(
     val content: ItemContent,
 ) {
     companion object {
-        fun create(content: ItemContent) = Item(
+        fun create() = Item(
             id = ItemId(UUID.randomUUID().toString()),
             checked = false,
-            content = content,
+            content = ItemContent(""),
         )
 
         fun reconstruct(
