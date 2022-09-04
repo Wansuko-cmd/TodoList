@@ -23,10 +23,10 @@ class MemoApiImpl @Inject constructor(
             memo.toApiModel(items)
         }
 
-    override suspend fun insert(memo: MemoApiModel) {
-        memoDao.insertMemo(MemoEntity.from(memo))
+    override suspend fun upsert(memo: MemoApiModel) {
+        memoDao.upsertMemo(MemoEntity.from(memo))
         memo.items.mapIndexed { index, item ->
             ItemEntity.from(item, memo.id, index)
-        }.let { memoDao.insertItems(it) }
+        }.let { memoDao.upsertItems(it) }
     }
 }

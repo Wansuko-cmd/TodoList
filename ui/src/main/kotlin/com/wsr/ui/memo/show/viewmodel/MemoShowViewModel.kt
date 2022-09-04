@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wsr.FetchMemoByIdUseCase
 import com.wsr.FetchMemoByIdUseCaseModel
+import com.wsr.UpdateMemoUseCase
 import com.wsr.memo.MemoId
 import com.wsr.result.consume
 import com.wsr.ui.memo.show.MemoShowUiState
@@ -18,6 +19,7 @@ import kotlinx.coroutines.launch
 
 class MemoShowViewModel @AssistedInject constructor(
     private val fetchMemoByIdUseCase: FetchMemoByIdUseCase,
+    private val updateMemoUseCase: UpdateMemoUseCase,
     @Assisted("memoId") private val memoId: String,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(MemoShowUiState())

@@ -16,6 +16,6 @@ class CreateMemoUseCase @Inject constructor(
     suspend operator fun invoke(title: MemoTitle) =
         withContext(dispatcher) {
             val memo = Memo.create(title)
-            memoRepository.insert(memo)
+            memoRepository.upsert(memo)
         }
 }

@@ -7,5 +7,5 @@ interface MemoApi {
 
     suspend fun getById(memoId: String): Flow<MemoApiModel>
 
-    suspend fun insert(memo: MemoApiModel)
+    suspend fun upsert(memo: MemoApiModel)
 }

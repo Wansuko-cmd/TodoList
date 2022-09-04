@@ -21,8 +21,8 @@ interface MemoDao {
     fun getMemoById(id: String): Flow<MemoWithItems>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertMemo(memoEntity: MemoEntity)
+    suspend fun upsertMemo(memoEntity: MemoEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertItems(items: List<ItemEntity>)
+    suspend fun upsertItems(items: List<ItemEntity>)
 }

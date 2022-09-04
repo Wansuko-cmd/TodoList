@@ -22,8 +22,8 @@ object DatabaseModule {
     ) = Room
         .databaseBuilder(context, AppDatabase::class.java, "dev_db")
         .build()
-        .also { db -> memos.forEach { runBlocking { db.memoDao().insertMemo(it) } } }
-        .also { db -> runBlocking { db.memoDao().insertItems(items) } }
+        .also { db -> memos.forEach { runBlocking { db.memoDao().upsertMemo(it) } } }
+        .also { db -> runBlocking { db.memoDao().upsertItems(items) } }
 
     @Singleton
     @Provides

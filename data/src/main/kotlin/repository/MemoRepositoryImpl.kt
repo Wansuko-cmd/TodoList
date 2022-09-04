@@ -17,16 +17,12 @@ class MemoRepositoryImpl @Inject constructor(
     @IODispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : MemoRepository {
 
-    override suspend fun insert(memo: Memo): ApiResult<Unit, DomainException> =
+    override suspend fun upsert(memo: Memo): ApiResult<Unit, DomainException> =
         withContext(dispatcher) {
             runCatchDomainException {
-                memoApi.insert(MemoApiModel.from(memo))
+                memoApi.upsert(MemoApiModel.from(memo))
             }
         }
-
-    override suspend fun update(memo: Memo): ApiResult<Unit, DomainException> {
-        TODO("Not yet implemented")
-    }
 
     override suspend fun delete(memo: Memo): ApiResult<Unit, DomainException> {
         TODO("Not yet implemented")
