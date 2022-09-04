@@ -31,7 +31,9 @@ fun MemoIndexCreateMemoDialog(
     Dialog(onDismissRequest = onDismiss) {
         Surface {
             Column(
-                modifier = modifier.padding(16.dp),
+                modifier = modifier
+                    .padding(horizontal = 16.dp)
+                    .padding(top = 16.dp),
             ) {
                 Text(
                     text = stringResource(id = R.string.memo_index_create_memo_title),
@@ -40,7 +42,11 @@ fun MemoIndexCreateMemoDialog(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                OutlinedTextField(value = text, onValueChange = setText)
+                OutlinedTextField(
+                    value = text,
+                    onValueChange = setText,
+                    placeholder = { Text(text = stringResource(id = R.string.memo_index_create_memo_title)) },
+                )
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
