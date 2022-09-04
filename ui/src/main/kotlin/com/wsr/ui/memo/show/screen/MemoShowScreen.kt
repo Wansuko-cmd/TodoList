@@ -1,5 +1,6 @@
 package com.wsr.ui.memo.show.screen
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -12,6 +13,7 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.wsr.ui.memo.show.MemoShowUiState
+import com.wsr.ui.memo.show.component.MemoShowItemTile
 import com.wsr.ui.memo.show.viewmodel.MemoShowViewModel
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
@@ -30,6 +32,7 @@ fun MemoShowScreen(
     )
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MemoShowScreen(
     modifier: Modifier = Modifier,
@@ -45,9 +48,14 @@ fun MemoShowScreen(
             )
         }
     ) { innerPadding ->
-        LazyColumn(modifier = Modifier.padding(innerPadding)) {
-            items(uiState.items) {
-                Text(text = it.content)
+        LazyColumn(
+            modifier = Modifier.padding(innerPadding),
+        ) {
+            items(uiState.items, key = { it.id }) {
+                MemoShowItemTile(
+                    modifier = Modifier.animateItemPlacement(),
+                    itemUiState = it,
+                )
             }
         }
     }
