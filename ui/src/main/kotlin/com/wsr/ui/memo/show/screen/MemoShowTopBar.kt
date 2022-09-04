@@ -2,6 +2,7 @@ package com.wsr.ui.memo.show.screen
 
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
@@ -20,7 +21,12 @@ fun MemoShowTopBar(
 ) {
     TopAppBar(
         modifier = modifier,
-        title = { Text(text = memoTitle) },
+        title = {
+            Text(
+                text = memoTitle,
+                style = MaterialTheme.typography.h5,
+            )
+        },
         navigationIcon = {
             IconButton(onClick = { navController.popBackStack() }) {
                 Icon(Icons.Filled.ArrowBack, null)

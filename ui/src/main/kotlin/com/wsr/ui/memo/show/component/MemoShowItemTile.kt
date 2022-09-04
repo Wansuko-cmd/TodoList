@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.wsr.theme.LightBlue
 import com.wsr.ui.memo.show.MemoShowItemUiState
 
 @Composable
@@ -22,7 +23,7 @@ fun MemoShowItemTile(
     onChecked: (itemId: String) -> Unit,
     onChangeContent: (itemId: String, content: String) -> Unit,
 ) {
-    val backgroundColor = if (itemUiState.checked) Color.White else Color.Cyan
+    val backgroundColor = if (itemUiState.checked) Color.White else LightBlue
 
     Card(
         modifier = modifier

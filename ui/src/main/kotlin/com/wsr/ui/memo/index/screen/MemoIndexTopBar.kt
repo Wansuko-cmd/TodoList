@@ -1,5 +1,6 @@
 package com.wsr.ui.memo.index.screen
 
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
@@ -11,6 +12,11 @@ import com.wsr.ui.R
 fun MemoIndexTopBar(modifier: Modifier = Modifier) {
     TopAppBar(
         modifier = modifier,
-        title = { Text(text = stringResource(id = R.string.app_name)) }
+        title = {
+            Text(
+                text = stringResource(id = R.string.app_name),
+                style = MaterialTheme.typography.h5,
+            )
+        }
     )
 }

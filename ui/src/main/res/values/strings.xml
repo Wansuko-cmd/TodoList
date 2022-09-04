@@ -4,6 +4,7 @@
     <string name="memo_index_create_memo_title">タイトル</string>
     <string name="memo_index_create_memo_dismiss_button">キャンセル</string>
     <string name="memo_index_create_memo_confirm_button">完了</string>
+    <string name="memo_index_delete_memo">削除</string>
 
     <string name="system_error_message">エラーが発生しました</string>
 </resources>
