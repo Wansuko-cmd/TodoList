@@ -24,7 +24,7 @@ fun MemoShowItemTile(
             .padding(16.dp)
             .fillMaxWidth(),
         elevation = 4.dp,
-        backgroundColor = if(itemUiState.checked) Color.White else Color.Cyan,
+        backgroundColor = if (itemUiState.checked) Color.White else Color.Cyan,
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
