@@ -1,6 +1,6 @@
 package com.wsr.memo
 
-import java.util.*
+import java.util.UUID
 
 class Item private constructor(
     val id: ItemId,
