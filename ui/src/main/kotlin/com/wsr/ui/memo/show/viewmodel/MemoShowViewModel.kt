@@ -2,8 +2,8 @@ package com.wsr.ui.memo.show.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.wsr.GetMemoByIdUseCase
 import com.wsr.FetchMemoByIdUseCaseModel
+import com.wsr.GetMemoByIdUseCase
 import com.wsr.UpdateMemoUseCase
 import com.wsr.memo.MemoId
 import com.wsr.result.consume
@@ -15,9 +15,9 @@ import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class MemoShowViewModel @AssistedInject constructor(
@@ -61,29 +61,33 @@ class MemoShowViewModel @AssistedInject constructor(
         }
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        viewModelScope.launch {
-            updateMemoUseCase(_uiState.value.toUpdateMemoUseCaseModel(memoId))
-        }
-    }
-
-    private fun updateItem(itemId: String, block: (MemoShowItemUiState) -> MemoShowItemUiState) {
-        val memo = _uiState.value
-        val updatedItems = memo.items.map { item ->
-            if (item.id == itemId) block(item) else item
-        }
-        _uiState.value = memo.copy(items = updatedItems)
-        viewModelScope.launch {
-            updateMemoUseCase(memo.copy(items = updatedItems).toUpdateMemoUseCaseModel(memoId))
-        }
-    }
-
     fun changeItemChecked(itemId: String) {
         updateItem(itemId) { it.copy(checked = !it.checked) }
     }
 
     fun changeItemContent(itemId: String, content: String) {
         updateItem(itemId) { it.copy(content = content) }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        saveToDatabase()
+    }
+
+    private fun updateItem(itemId: String, block: (MemoShowItemUiState) -> MemoShowItemUiState) {
+        _uiState.update { uiState ->
+            uiState.copy(
+                items = _uiState.value.items.map { item ->
+                    if (item.id == itemId) block(item) else item
+                }
+            )
+        }
+        saveToDatabase()
+    }
+
+    private fun saveToDatabase() {
+        viewModelScope.launch {
+            updateMemoUseCase(_uiState.value.toUpdateMemoUseCaseModel(memoId))
+        }
     }
 }
