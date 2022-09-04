@@ -1,8 +1,8 @@
 package com.wsr.get
 
+import com.wsr.di.DefaultDispatcher
 import com.wsr.get.GetMemoByIdItemUseCaseModel.Companion.toGetMemoByIdItemUseCaseModel
 import com.wsr.get.GetMemoByIdUseCaseModel.Companion.toGetMemoByIdUseCaseModel
-import com.wsr.di.DefaultDispatcher
 import com.wsr.memo.Item
 import com.wsr.memo.ItemContent
 import com.wsr.memo.ItemId

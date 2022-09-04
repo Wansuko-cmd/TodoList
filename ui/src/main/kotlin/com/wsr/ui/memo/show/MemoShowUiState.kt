@@ -3,13 +3,13 @@ package com.wsr.ui.memo.show
 import com.wsr.create.CreateItemUseCaseModel
 import com.wsr.get.GetMemoByIdItemUseCaseModel
 import com.wsr.get.GetMemoByIdUseCaseModel
-import com.wsr.update.UpdateMemoItemUseCaseModel
-import com.wsr.update.UpdateMemoUseCaseModel
 import com.wsr.memo.ItemContent
 import com.wsr.memo.ItemId
 import com.wsr.memo.MemoId
 import com.wsr.memo.MemoTitle
 import com.wsr.ui.memo.show.MemoShowItemUiState.Companion.toUpdateMemoUseCaseModel
+import com.wsr.update.UpdateMemoItemUseCaseModel
+import com.wsr.update.UpdateMemoUseCaseModel
 
 data class MemoShowUiState(
     val title: String = "",

@@ -29,6 +29,5 @@ class RoomMemoApiImpl @Inject constructor(
     }
 
     override suspend fun delete(memoId: String) {
-
     }
 }

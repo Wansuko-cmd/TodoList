@@ -3,14 +3,14 @@ package com.wsr.ui.memo.show.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wsr.create.CreateItemUseCase
-import com.wsr.get.GetMemoByIdUseCaseModel
 import com.wsr.get.GetMemoByIdUseCase
-import com.wsr.update.UpdateMemoUseCase
+import com.wsr.get.GetMemoByIdUseCaseModel
 import com.wsr.memo.MemoId
 import com.wsr.result.consume
 import com.wsr.ui.memo.show.MemoShowItemUiState
 import com.wsr.ui.memo.show.MemoShowUiState
 import com.wsr.ui.memo.show.MemoShowUiState.Companion.toUpdateMemoUseCaseModel
+import com.wsr.update.UpdateMemoUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class MemoShowViewModel @AssistedInject constructor(
-    private val fetchMemoByIdUseCase: GetMemoByIdUseCase,
+    private val getMemoByIdUseCase: GetMemoByIdUseCase,
     private val updateMemoUseCase: UpdateMemoUseCase,
     private val createItemInstanceUsecase: CreateItemUseCase,
     @Assisted("memoId") private val memoId: String,
@@ -43,7 +43,7 @@ class MemoShowViewModel @AssistedInject constructor(
 
     private fun getMemoAndUpdateUiState() {
         viewModelScope.launch {
-            fetchMemoByIdUseCase(MemoId(memoId)).consume(
+            getMemoByIdUseCase(MemoId(memoId)).consume(
                 success = ::onSuccessFetching,
                 failure = {},
             )

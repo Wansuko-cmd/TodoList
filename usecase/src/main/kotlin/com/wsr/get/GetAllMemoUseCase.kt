@@ -1,7 +1,7 @@
 package com.wsr.get
 
-import com.wsr.get.GetAllMemoUseCaseModel.Companion.toGetAllMemoUseCaseModel
 import com.wsr.di.DefaultDispatcher
+import com.wsr.get.GetAllMemoUseCaseModel.Companion.toGetAllMemoUseCaseModel
 import com.wsr.memo.Memo
 import com.wsr.memo.MemoId
 import com.wsr.memo.MemoRepository
