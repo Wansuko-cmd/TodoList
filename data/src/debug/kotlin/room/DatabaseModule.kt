@@ -22,6 +22,11 @@ object DatabaseModule {
     ) = Room
         .databaseBuilder(context, DevDatabase::class.java, "dev_db")
         .build()
+        .also { db ->
+            runBlocking {
+                db.memoDao().getMemos().forEach { db.memoDao().deleteMemo(it.memo.id) }
+            }
+        }
         .also { db -> memos.forEach { runBlocking { db.memoDao().upsertMemo(it) } } }
         .also { db -> runBlocking { db.memoDao().upsertItems(items) } }
 

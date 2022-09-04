@@ -24,4 +24,7 @@ interface MemoDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertItems(items: List<ItemEntity>)
+
+    @Query("DELETE FROM memos WHERE id=:id")
+    suspend fun deleteMemo(id: String)
 }

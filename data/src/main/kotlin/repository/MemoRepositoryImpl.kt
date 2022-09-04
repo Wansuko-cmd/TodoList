@@ -39,7 +39,10 @@ class MemoRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun delete(memo: Memo): ApiResult<Unit, DomainException> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun delete(id: MemoId): ApiResult<Unit, DomainException> =
+        withContext(dispatcher) {
+            runCatchDomainException {
+                memoApi.delete(id.value)
+            }
+        }
 }

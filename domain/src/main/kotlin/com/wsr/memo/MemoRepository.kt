@@ -11,5 +11,5 @@ interface MemoRepository {
 
     suspend fun upsert(memo: Memo): ApiResult<Unit, DomainException>
 
-    suspend fun delete(memo: Memo): ApiResult<Unit, DomainException>
+    suspend fun delete(id: MemoId): ApiResult<Unit, DomainException>
 }

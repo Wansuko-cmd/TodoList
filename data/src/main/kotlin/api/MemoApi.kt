@@ -6,4 +6,6 @@ interface MemoApi {
     suspend fun getById(memoId: String): MemoApiModel
 
     suspend fun upsert(memo: MemoApiModel)
+
+    suspend fun delete(memoId: String)
 }

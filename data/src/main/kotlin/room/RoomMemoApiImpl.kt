@@ -27,4 +27,8 @@ class RoomMemoApiImpl @Inject constructor(
             ItemEntity.from(item, memo.id, index)
         }.let { memoDao.upsertItems(it) }
     }
+
+    override suspend fun delete(memoId: String) {
+
+    }
 }
