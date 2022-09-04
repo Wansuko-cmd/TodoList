@@ -25,11 +25,7 @@ class MemoIndexViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(MemoIndexUiState())
     val uiState = _uiState.asStateFlow()
 
-    init {
-        getMemosAndUpdateUiState()
-    }
-
-    private fun getMemosAndUpdateUiState() {
+    fun getMemosAndUpdateUiState() {
         viewModelScope.launch {
             getAllMemoUseCase().consume(
                 success = ::onSuccessGetting,
@@ -40,6 +36,7 @@ class MemoIndexViewModel @Inject constructor(
 
     private fun onSuccessGetting(memos: List<GetAllMemoUseCaseModel>) {
         _uiState.update { MemoIndexUiState.from(memos) }
+        println(memos.map { it.title })
     }
 
     fun createMemo(title: String) {

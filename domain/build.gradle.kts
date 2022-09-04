@@ -7,5 +7,7 @@ dependencies {
 
     implementation(Deps.Kotlin.coroutine)
 
+    implementation(Deps.Kotlin.datetime)
+
     testImplementation(Deps.Test.truth)
 }

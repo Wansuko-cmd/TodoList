@@ -8,6 +8,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.runBlocking
+import kotlinx.datetime.Clock
 import repository.room.entity.ItemEntity
 import repository.room.entity.MemoEntity
 import javax.inject.Singleton
@@ -22,11 +23,11 @@ object DatabaseModule {
     ) = Room
         .databaseBuilder(context, DevDatabase::class.java, "dev_db")
         .build()
-//        .also { db ->
-//            runBlocking {
-//                db.memoDao().getMemos().forEach { db.memoDao().deleteMemo(it.memo.id) }
-//            }
-//        }
+        .also { db ->
+            runBlocking {
+                db.memoDao().getMemos().forEach { db.memoDao().deleteMemo(it.memo.id) }
+            }
+        }
         .also { db -> memos.forEach { runBlocking { db.memoDao().upsertMemo(it) } } }
         .also { db -> runBlocking { db.memoDao().upsertItems(items) } }
 
@@ -36,7 +37,7 @@ object DatabaseModule {
 }
 
 val memos = List(10) { index ->
-    MemoEntity(id = "memoId$index", title = "title$index")
+    MemoEntity(id = "memoId$index", title = "title$index", accessedAt = Clock.System.now())
 }
 
 val items = List(10) { memoIndex ->

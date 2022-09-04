@@ -9,6 +9,7 @@ dependencies {
     implementation(project(":utils"))
 
     implementation(Deps.Kotlin.coroutine)
+    implementation(Deps.Kotlin.datetime)
 
     implementation(Deps.AndroidX.Room.runtime)
     annotationProcessor(Deps.AndroidX.Room.compiler)

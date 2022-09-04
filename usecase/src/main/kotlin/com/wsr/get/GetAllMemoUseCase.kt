@@ -18,7 +18,9 @@ class GetAllMemoUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke() = withContext(dispatcher) {
-        memoRepository.getAll().map { memos -> memos.map { it.toGetAllMemoUseCaseModel() } }
+        memoRepository.getAll()
+            .map { memos -> memos.sortedByDescending { it.accessedAt } }
+            .map { memos -> memos.map { it.toGetAllMemoUseCaseModel() } }
     }
 }
 

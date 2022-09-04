@@ -13,6 +13,7 @@ import com.wsr.update.UpdateMemoUseCaseModel.Companion.toDomain
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlinx.datetime.Clock
 import javax.inject.Inject
 
 class UpdateMemoUseCase @Inject constructor(
@@ -34,7 +35,8 @@ data class UpdateMemoUseCaseModel(
         fun UpdateMemoUseCaseModel.toDomain() = Memo.reconstruct(
             id = id,
             title = title,
-            items = items.map { it.toDomain() }
+            items = items.map { it.toDomain() },
+            accessedAt = Clock.System.now(),
         )
     }
 }

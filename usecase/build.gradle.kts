@@ -7,6 +7,7 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":utils"))
     implementation(Deps.Kotlin.coroutine)
+    implementation(Deps.Kotlin.datetime)
 
     testImplementation(Deps.Test.truth)
     testImplementation(Deps.Test.mockk)

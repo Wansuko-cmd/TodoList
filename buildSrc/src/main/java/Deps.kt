@@ -7,6 +7,8 @@ object Deps {
 
         private const val kotlinCoroutineVersion = "1.6.4"
         const val coroutine = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutineVersion" // ktlint-disable max-line-length
+
+        const val datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.4.0"
     }
 
     object Hilt {

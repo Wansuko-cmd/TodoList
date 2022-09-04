@@ -7,23 +7,27 @@ import com.wsr.memo.ItemId
 import com.wsr.memo.Memo
 import com.wsr.memo.MemoId
 import com.wsr.memo.MemoTitle
+import kotlinx.datetime.Instant
 
 data class MemoApiModel(
     val id: String,
     val title: String,
-    val items: List<ItemApiModel>
+    val items: List<ItemApiModel>,
+    val accessedAt: Instant
 ) {
     companion object {
         fun MemoApiModel.toDomain(): Memo = Memo.reconstruct(
             id = MemoId(id),
             title = MemoTitle(title),
             items = items.map { it.toDomain() },
+            accessedAt = accessedAt,
         )
 
         fun from(memo: Memo) = MemoApiModel(
             id = memo.id.value,
             title = memo.title.value,
-            items = memo.items.map { ItemApiModel.from(it) }
+            items = memo.items.map { ItemApiModel.from(it) },
+            accessedAt = memo.accessedAt,
         )
     }
 }

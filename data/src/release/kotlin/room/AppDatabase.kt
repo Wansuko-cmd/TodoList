@@ -7,6 +7,7 @@ import repository.room.entity.ItemEntity
 import repository.room.entity.MemoEntity
 
 @Database(entities = [MemoEntity::class, ItemEntity::class], version = 1, exportSchema = false)
+@TypeConverters(InstantConverters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun memoDao(): MemoDao
 }
