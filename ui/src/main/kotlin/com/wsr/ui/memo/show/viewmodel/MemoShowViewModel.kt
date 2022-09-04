@@ -8,6 +8,7 @@ import com.wsr.UpdateMemoUseCase
 import com.wsr.memo.MemoId
 import com.wsr.result.consume
 import com.wsr.ui.memo.show.MemoShowUiState
+import com.wsr.ui.memo.show.MemoShowUiState.Companion.toUpdateMemoUseCaseModel
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -57,6 +58,16 @@ class MemoShowViewModel @AssistedInject constructor(
     private fun onSuccessFetching(data: FetchMemoByIdUseCaseModel) {
         viewModelScope.launch {
             _uiState.emit(MemoShowUiState.from(data))
+        }
+    }
+
+    fun changeItemChecked(itemId: String) {
+        val memo = _uiState.value.toUpdateMemoUseCaseModel(memoId)
+        val updatedItems = memo.items.map { item ->
+            if (item.id.value == itemId) item.copy(checked = !item.checked) else item
+        }
+        viewModelScope.launch {
+            updateMemoUseCase(memo.copy(items = updatedItems))
         }
     }
 }

@@ -18,6 +18,7 @@ import com.wsr.ui.memo.show.MemoShowItemUiState
 fun MemoShowItemTile(
     modifier: Modifier = Modifier,
     itemUiState: MemoShowItemUiState,
+    onChecked: (itemId: String) -> Unit,
 ) {
     Card(
         modifier = modifier
@@ -29,7 +30,7 @@ fun MemoShowItemTile(
         Row(
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Checkbox(checked = itemUiState.checked, onCheckedChange = {})
+            Checkbox(checked = itemUiState.checked, onCheckedChange = { onChecked(itemUiState.id) })
             Text(
                 text = itemUiState.content,
                 style = MaterialTheme.typography.h4,
