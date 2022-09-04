@@ -1,6 +1,6 @@
-package com.wsr
+package com.wsr.create
 
-import com.wsr.CreateItemUseCaseModel.Companion.toCreateItemUseCaseModel
+import com.wsr.create.CreateItemUseCaseModel.Companion.toCreateItemUseCaseModel
 import com.wsr.memo.Item
 import com.wsr.memo.ItemContent
 import com.wsr.memo.ItemId

@@ -1,10 +1,10 @@
 package com.wsr.ui.memo.show
 
-import com.wsr.CreateItemUseCaseModel
-import com.wsr.FetchMemoByIdItemUseCaseModel
-import com.wsr.FetchMemoByIdUseCaseModel
-import com.wsr.UpdateMemoItemUseCaseModel
-import com.wsr.UpdateMemoUseCaseModel
+import com.wsr.create.CreateItemUseCaseModel
+import com.wsr.get.GetMemoByIdItemUseCaseModel
+import com.wsr.get.GetMemoByIdUseCaseModel
+import com.wsr.update.UpdateMemoItemUseCaseModel
+import com.wsr.update.UpdateMemoUseCaseModel
 import com.wsr.memo.ItemContent
 import com.wsr.memo.ItemId
 import com.wsr.memo.MemoId
@@ -16,7 +16,7 @@ data class MemoShowUiState(
     val items: List<MemoShowItemUiState> = listOf(),
 ) {
     companion object {
-        fun from(fetchMemoByIdUseCaseModel: FetchMemoByIdUseCaseModel) = MemoShowUiState(
+        fun from(fetchMemoByIdUseCaseModel: GetMemoByIdUseCaseModel) = MemoShowUiState(
             title = fetchMemoByIdUseCaseModel.title.value,
             items = fetchMemoByIdUseCaseModel.items.map { MemoShowItemUiState.from(it) },
         )
@@ -35,7 +35,7 @@ data class MemoShowItemUiState(
     val content: String,
 ) {
     companion object {
-        fun from(fetchMemoByIdItemUseCaseModel: FetchMemoByIdItemUseCaseModel) =
+        fun from(fetchMemoByIdItemUseCaseModel: GetMemoByIdItemUseCaseModel) =
             MemoShowItemUiState(
                 id = fetchMemoByIdItemUseCaseModel.id.value,
                 checked = fetchMemoByIdItemUseCaseModel.checked,

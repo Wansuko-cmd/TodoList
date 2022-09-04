@@ -1,7 +1,7 @@
-package com.wsr
+package com.wsr.update
 
-import com.wsr.UpdateMemoItemUseCaseModel.Companion.toDomain
-import com.wsr.UpdateMemoUseCaseModel.Companion.toDomain
+import com.wsr.update.UpdateMemoItemUseCaseModel.Companion.toDomain
+import com.wsr.update.UpdateMemoUseCaseModel.Companion.toDomain
 import com.wsr.di.DefaultDispatcher
 import com.wsr.memo.Item
 import com.wsr.memo.ItemContent

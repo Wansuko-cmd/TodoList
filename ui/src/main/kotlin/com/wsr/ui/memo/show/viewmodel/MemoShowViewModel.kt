@@ -2,10 +2,10 @@ package com.wsr.ui.memo.show.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.wsr.CreateItemUseCase
-import com.wsr.FetchMemoByIdUseCaseModel
-import com.wsr.GetMemoByIdUseCase
-import com.wsr.UpdateMemoUseCase
+import com.wsr.create.CreateItemUseCase
+import com.wsr.get.GetMemoByIdUseCaseModel
+import com.wsr.get.GetMemoByIdUseCase
+import com.wsr.update.UpdateMemoUseCase
 import com.wsr.memo.MemoId
 import com.wsr.result.consume
 import com.wsr.ui.memo.show.MemoShowItemUiState
@@ -50,7 +50,7 @@ class MemoShowViewModel @AssistedInject constructor(
         }
     }
 
-    private fun onSuccessFetching(data: FetchMemoByIdUseCaseModel) {
+    private fun onSuccessFetching(data: GetMemoByIdUseCaseModel) {
         viewModelScope.launch {
             _uiState.emit(MemoShowUiState.from(data))
         }

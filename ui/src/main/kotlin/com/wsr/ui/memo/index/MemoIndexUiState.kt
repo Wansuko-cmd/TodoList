@@ -1,13 +1,13 @@
 package com.wsr.ui.memo.index
 
-import com.wsr.FetchAllMemoUseCaseModel
+import com.wsr.get.GetAllMemoUseCaseModel
 
 data class MemoIndexUiState(
     val memos: List<MemoIndexMemoUiState> = listOf(),
     val showCreateMemoDialog: Boolean = false,
 ) {
     companion object {
-        fun from(memos: List<FetchAllMemoUseCaseModel>) =
+        fun from(memos: List<GetAllMemoUseCaseModel>) =
             MemoIndexUiState(memos = memos.map { MemoIndexMemoUiState.from(it) })
     }
 }
@@ -17,7 +17,7 @@ data class MemoIndexMemoUiState(
     val title: String,
 ) {
     companion object {
-        fun from(memo: FetchAllMemoUseCaseModel) =
+        fun from(memo: GetAllMemoUseCaseModel) =
             MemoIndexMemoUiState(
                 id = memo.id.value,
                 title = memo.title.value,

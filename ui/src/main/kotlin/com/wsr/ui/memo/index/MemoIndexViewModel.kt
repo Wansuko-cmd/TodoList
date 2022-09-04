@@ -2,9 +2,9 @@ package com.wsr.ui.memo.index
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.wsr.CreateMemoUseCase
-import com.wsr.FetchAllMemoUseCaseModel
-import com.wsr.GetAllMemoUseCase
+import com.wsr.create.CreateMemoUseCase
+import com.wsr.get.GetAllMemoUseCaseModel
+import com.wsr.get.GetAllMemoUseCase
 import com.wsr.memo.MemoTitle
 import com.wsr.result.consume
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -35,7 +35,7 @@ class MemoIndexViewModel @Inject constructor(
         }
     }
 
-    private fun onSuccessGetting(memos: List<FetchAllMemoUseCaseModel>) {
+    private fun onSuccessGetting(memos: List<GetAllMemoUseCaseModel>) {
         _uiState.update { MemoIndexUiState.from(memos) }
     }
 
