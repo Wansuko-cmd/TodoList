@@ -2,9 +2,11 @@ package repository
 
 import api.MemoApi
 import api.MemoApiModel
+import api.MemoApiModel.Companion.toDomain
 import com.wsr.di.IODispatcher
 import com.wsr.exception.DomainException
 import com.wsr.memo.Memo
+import com.wsr.memo.MemoId
 import com.wsr.memo.MemoRepository
 import com.wsr.result.ApiResult
 import kotlinx.coroutines.CoroutineDispatcher
@@ -16,6 +18,19 @@ class MemoRepositoryImpl @Inject constructor(
     private val memoApi: MemoApi,
     @IODispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : MemoRepository {
+    override suspend fun getAll(): ApiResult<List<Memo>, DomainException> =
+        withContext(dispatcher) {
+            runCatchDomainException {
+                memoApi.getAll().map { it.toDomain() }
+            }
+        }
+
+    override suspend fun getById(memoId: MemoId): ApiResult<Memo, DomainException> =
+        withContext(dispatcher) {
+            runCatchDomainException {
+                memoApi.getById(memoId.value).toDomain()
+            }
+        }
 
     override suspend fun upsert(memo: Memo): ApiResult<Unit, DomainException> =
         withContext(dispatcher) {

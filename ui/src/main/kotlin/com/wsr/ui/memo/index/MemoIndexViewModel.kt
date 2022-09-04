@@ -3,7 +3,7 @@ package com.wsr.ui.memo.index
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wsr.CreateMemoUseCase
-import com.wsr.FetchAllMemoUseCase
+import com.wsr.GetAllMemoUseCase
 import com.wsr.FetchAllMemoUseCaseModel
 import com.wsr.memo.MemoTitle
 import com.wsr.result.consume
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MemoIndexViewModel @Inject constructor(
-    private val fetchAllMemoUseCase: FetchAllMemoUseCase,
+    private val fetchAllMemoUseCase: GetAllMemoUseCase,
     private val createMemoUseCase: CreateMemoUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(MemoIndexUiState())
@@ -29,19 +29,14 @@ class MemoIndexViewModel @Inject constructor(
 
     private fun observeLatestMemos() {
         viewModelScope.launch {
-            fetchAllMemoUseCase()
+            fetchAllMemoUseCase().consume(
+                success = ::onSuccessGetting,
+                failure = {},
+            )
         }
     }
 
     private fun setCollectAndUpdateUiState() {
-        viewModelScope.launch {
-            fetchAllMemoUseCase.flow.collect { data ->
-                data.consume(
-                    success = ::onSuccessGetting,
-                    failure = {},
-                )
-            }
-        }
     }
 
     private fun onSuccessGetting(memos: List<FetchAllMemoUseCaseModel>) {

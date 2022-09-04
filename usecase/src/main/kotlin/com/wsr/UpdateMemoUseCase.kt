@@ -22,6 +22,7 @@ class UpdateMemoUseCase @Inject constructor(
     suspend operator fun invoke(memo: UpdateMemoUseCaseModel) =
         withContext(dispatcher) {
             memoRepository.upsert(memo.toDomain())
+            println("HERE: ${memo.toDomain()}")
         }
 }
 

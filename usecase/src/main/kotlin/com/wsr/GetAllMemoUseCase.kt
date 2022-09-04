@@ -5,6 +5,7 @@ import com.wsr.di.DefaultDispatcher
 import com.wsr.exception.DomainException
 import com.wsr.memo.Memo
 import com.wsr.memo.MemoId
+import com.wsr.memo.MemoRepository
 import com.wsr.memo.MemoTitle
 import com.wsr.result.ApiResult
 import com.wsr.result.map
@@ -15,20 +16,13 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class FetchAllMemoUseCase @Inject constructor(
-    private val queryService: FetchAllMemoQueryService,
+class GetAllMemoUseCase @Inject constructor(
+    private val memoRepository: MemoRepository,
     @DefaultDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) {
-    val flow = queryService.flow.map { data ->
-        data.map { memos ->
-            memos.map { it.toGetAllMemoUseCaseModel() }
-        }
-    }
 
-    suspend operator fun invoke() {
-        withContext(dispatcher) {
-            queryService()
-        }
+    suspend operator fun invoke() = withContext(dispatcher) {
+        memoRepository.getAll().map { memos -> memos.map { it.toGetAllMemoUseCaseModel() } }
     }
 }
 

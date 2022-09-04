@@ -9,6 +9,7 @@ import com.wsr.memo.ItemContent
 import com.wsr.memo.ItemId
 import com.wsr.memo.Memo
 import com.wsr.memo.MemoId
+import com.wsr.memo.MemoRepository
 import com.wsr.memo.MemoTitle
 import com.wsr.result.ApiResult
 import com.wsr.result.map
@@ -19,16 +20,13 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class FetchMemoByIdUseCase @Inject constructor(
-    private val queryService: FetchMemoByIdQueryService,
+class GetMemoByIdUseCase @Inject constructor(
+    private val memoRepository: MemoRepository,
     @DefaultDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) {
-    val flow = queryService.flow.map { data -> data.map { it.toGetMemoByIdUseCaseModel() } }
 
-    suspend operator fun invoke(memoId: MemoId) {
-        withContext(dispatcher) {
-            queryService(memoId)
-        }
+    suspend operator fun invoke(memoId: MemoId) = withContext(dispatcher) {
+        memoRepository.getById(memoId).map { it.toGetMemoByIdUseCaseModel() }
     }
 }
 

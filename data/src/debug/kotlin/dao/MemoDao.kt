@@ -14,11 +14,11 @@ import kotlinx.coroutines.flow.Flow
 interface MemoDao {
     @Transaction
     @Query("SELECT * FROM memos")
-    fun getMemos(): Flow<List<MemoWithItems>>
+    suspend fun getMemos(): List<MemoWithItems>
 
     @Transaction
     @Query("SELECT * FROM memos WHERE id=:id")
-    fun getMemoById(id: String): Flow<MemoWithItems>
+    suspend fun getMemoById(id: String): MemoWithItems
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertMemo(memoEntity: MemoEntity)

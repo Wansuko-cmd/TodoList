@@ -32,6 +32,7 @@ fun MemoShowScreen(
         uiState = uiState,
         navController = navController,
         onChecked = viewModel::changeItemChecked,
+        onChangeContent = viewModel::changeItemContent
     )
 }
 
@@ -42,6 +43,7 @@ fun MemoShowScreen(
     uiState: MemoShowUiState,
     navController: NavHostController,
     onChecked: (itemId: String) -> Unit,
+    onChangeContent: (itemId: String, content: String) -> Unit,
 ) {
     Scaffold(
         modifier = modifier,
@@ -66,6 +68,7 @@ fun MemoShowScreen(
                     modifier = Modifier.animateItemPlacement(),
                     itemUiState = it,
                     onChecked = onChecked,
+                    onChangeContent = onChangeContent,
                 )
             }
         }
