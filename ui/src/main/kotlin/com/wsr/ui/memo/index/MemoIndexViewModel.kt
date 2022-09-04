@@ -23,20 +23,16 @@ class MemoIndexViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
-        observeLatestMemos()
-        setCollectAndUpdateUiState()
+        getMemosAndUpdateUiState()
     }
 
-    private fun observeLatestMemos() {
+    private fun getMemosAndUpdateUiState() {
         viewModelScope.launch {
             fetchAllMemoUseCase().consume(
                 success = ::onSuccessGetting,
                 failure = {},
             )
         }
-    }
-
-    private fun setCollectAndUpdateUiState() {
     }
 
     private fun onSuccessGetting(memos: List<FetchAllMemoUseCaseModel>) {

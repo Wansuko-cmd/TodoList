@@ -36,17 +36,10 @@ class MemoShowViewModel @AssistedInject constructor(
         )
 
     init {
-        observeLatestMemo()
-        setCollectAndUpdateUiState()
+        getMemoAndUpdateUiState()
     }
 
-    private fun observeLatestMemo() {
-        viewModelScope.launch {
-            fetchMemoByIdUseCase(MemoId(memoId))
-        }
-    }
-
-    private fun setCollectAndUpdateUiState() {
+    private fun getMemoAndUpdateUiState() {
         viewModelScope.launch {
             fetchMemoByIdUseCase(MemoId(memoId)).consume(
                 success = ::onSuccessFetching,
