@@ -9,5 +9,5 @@ inline fun <T> runCatchDomainException(block: () -> T): ApiResult<T, DomainExcep
 } catch (e: CancellationException) {
     throw e
 } catch (e: Exception) {
-    ApiResult.Failure(DomainException.SystemError("", e))
+    ApiResult.Failure(DomainException.SystemError("Repository層にてエラー", e))
 }

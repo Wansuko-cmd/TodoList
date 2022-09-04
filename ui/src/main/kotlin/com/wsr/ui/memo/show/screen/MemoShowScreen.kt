@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.wsr.common.effect.observeToastEffect
 import com.wsr.ui.memo.show.MemoShowUiState
 import com.wsr.ui.memo.show.component.MemoShowItemTile
 import com.wsr.ui.memo.show.viewmodel.MemoShowViewModel
@@ -41,6 +42,8 @@ fun MemoShowScreen(
         addItem = viewModel::addItem,
         deleteCheckedItems = viewModel::deleteCheckedItem,
     )
+
+    observeToastEffect(viewModel.toastEffect)
 }
 
 @OptIn(ExperimentalFoundationApi::class)

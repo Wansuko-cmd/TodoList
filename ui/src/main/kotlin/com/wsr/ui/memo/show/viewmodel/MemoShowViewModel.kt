@@ -2,19 +2,23 @@ package com.wsr.ui.memo.show.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.wsr.common.effect.ToastEffect
 import com.wsr.create.CreateItemUseCase
 import com.wsr.get.GetMemoByIdUseCase
 import com.wsr.get.GetMemoByIdUseCaseModel
 import com.wsr.memo.MemoId
 import com.wsr.result.consume
+import com.wsr.ui.R
 import com.wsr.ui.memo.show.MemoShowItemUiState
 import com.wsr.ui.memo.show.MemoShowUiState
 import com.wsr.ui.memo.show.MemoShowUiState.Companion.toUpdateMemoUseCaseModel
 import com.wsr.update.UpdateMemoUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -37,18 +41,27 @@ class MemoShowViewModel @AssistedInject constructor(
             MemoShowUiState(),
         )
 
+    private val _toastEffect = MutableSharedFlow<ToastEffect>()
+    val toastEffect = _toastEffect.asSharedFlow()
+
     fun getMemoAndUpdateUiState() {
         viewModelScope.launch {
             getMemoByIdUseCase(MemoId(memoId)).consume(
-                success = ::onSuccessFetching,
-                failure = {},
+                success = ::onSuccessGetting,
+                failure = { onFailureGetting() },
             )
         }
     }
 
-    private fun onSuccessFetching(data: GetMemoByIdUseCaseModel) {
+    private fun onSuccessGetting(data: GetMemoByIdUseCaseModel) {
         viewModelScope.launch {
             _uiState.emit(MemoShowUiState.from(data))
+        }
+    }
+
+    private fun onFailureGetting() {
+        viewModelScope.launch {
+            _toastEffect.emit(ToastEffect(R.string.system_error_message))
         }
     }
 

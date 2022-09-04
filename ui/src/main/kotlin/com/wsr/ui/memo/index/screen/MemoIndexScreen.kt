@@ -16,6 +16,7 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.wsr.Route
+import com.wsr.common.effect.observeToastEffect
 import com.wsr.ui.memo.index.MemoIndexUiState
 import com.wsr.ui.memo.index.MemoIndexViewModel
 import com.wsr.ui.memo.index.component.MemoIndexCreateMemoDialog
@@ -48,6 +49,8 @@ fun MemoIndexScreen(
             onConfirm = viewModel::createMemo,
         )
     }
+
+    observeToastEffect(viewModel.toastEffect)
 }
 
 @OptIn(ExperimentalFoundationApi::class)

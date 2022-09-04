@@ -1,6 +1,5 @@
 package api
 
-import api.MemoApi
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
