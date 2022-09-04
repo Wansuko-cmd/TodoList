@@ -1,5 +1,6 @@
-package api
+package repository.room
 
+import api.MemoApi
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -8,8 +9,8 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-interface ApiBindModule {
+interface RoomApiBindModule {
     @Singleton
     @Binds
-    fun bindMemoApi(impl: MemoApiImpl): MemoApi
+    fun bindMemoApi(impl: RoomMemoApiImpl): MemoApi
 }

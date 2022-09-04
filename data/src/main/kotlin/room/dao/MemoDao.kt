@@ -1,13 +1,13 @@
-package dao
+package repository.room.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import entity.ItemEntity
-import entity.MemoEntity
-import entity.MemoWithItems
+import repository.room.entity.ItemEntity
+import repository.room.entity.MemoEntity
+import repository.room.entity.MemoWithItems
 
 @Dao
 interface MemoDao {

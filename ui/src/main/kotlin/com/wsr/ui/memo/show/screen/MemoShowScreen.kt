@@ -34,6 +34,7 @@ fun MemoShowScreen(
         onChecked = viewModel::changeItemChecked,
         onChangeContent = viewModel::changeItemContent,
         addItem = viewModel::addItem,
+        deleteCheckedItems = viewModel::deleteCheckedItem,
     )
 }
 
@@ -46,6 +47,7 @@ fun MemoShowScreen(
     onChecked: (itemId: String) -> Unit,
     onChangeContent: (itemId: String, content: String) -> Unit,
     addItem: () -> Unit,
+    deleteCheckedItems: () -> Unit,
 ) {
     Scaffold(
         modifier = modifier,
@@ -53,6 +55,7 @@ fun MemoShowScreen(
             MemoShowTopBar(
                 navController = navController,
                 memoTitle = uiState.title,
+                deleteCheckedItems = deleteCheckedItems,
             )
         },
         floatingActionButton = {

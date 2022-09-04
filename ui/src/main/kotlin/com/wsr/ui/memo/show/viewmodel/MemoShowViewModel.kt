@@ -66,10 +66,11 @@ class MemoShowViewModel @AssistedInject constructor(
 
     fun addItem() {
         val newItem = MemoShowItemUiState.from(createItemInstanceUsecase())
-        _uiState.update { uiState ->
-            uiState.copy(items = uiState.items + newItem)
-        }
-        saveToDatabase()
+        updateItems { it + newItem }
+    }
+
+    fun deleteCheckedItem() {
+        updateItems { items -> items.filter { !it.checked } }
     }
 
     override fun onCleared() {
@@ -83,6 +84,15 @@ class MemoShowViewModel @AssistedInject constructor(
                 items = uiState.items.map { item ->
                     if (item.id == itemId) block(item) else item
                 }
+            )
+        }
+        saveToDatabase()
+    }
+
+    private fun updateItems(block: (List<MemoShowItemUiState>) -> List<MemoShowItemUiState>) {
+        _uiState.update { uiState ->
+            uiState.copy(
+                items = block(uiState.items)
             )
         }
         saveToDatabase()

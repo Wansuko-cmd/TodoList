@@ -1,4 +1,4 @@
-package entity
+package repository.room.entity
 
 import androidx.room.Embedded
 import androidx.room.Relation

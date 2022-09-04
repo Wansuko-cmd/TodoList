@@ -1,13 +1,14 @@
-package api
+package repository.room
 
-import dao.MemoDao
-import entity.ItemEntity
-import entity.MemoEntity
-import entity.MemoEntity.Companion.toApiModel
-import kotlinx.coroutines.flow.map
+import api.MemoApi
+import api.MemoApiModel
+import repository.room.dao.MemoDao
+import repository.room.entity.ItemEntity
+import repository.room.entity.MemoEntity
+import repository.room.entity.MemoEntity.Companion.toApiModel
 import javax.inject.Inject
 
-class MemoApiImpl @Inject constructor(
+class RoomMemoApiImpl @Inject constructor(
     private val memoDao: MemoDao,
 ) : MemoApi {
     override suspend fun getAll(): List<MemoApiModel> =

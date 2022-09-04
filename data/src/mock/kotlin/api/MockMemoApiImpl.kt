@@ -1,25 +1,35 @@
 package api
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
 class MockMemoApiImpl @Inject constructor() : MemoApi {
-    override suspend fun getAll(): Flow<List<MemoApiModel>> = flowOf(
-        List(10) { index ->
-            MemoApiModel(
-                id = "id$index",
-                title = "title$index",
-                items = listOf(),
-            )
-        }
-    )
+    override suspend fun getAll(): List<MemoApiModel> = List(10) { memoIndex ->
+        MemoApiModel(
+            id = "id$memoIndex",
+            title = "title$memoIndex",
+            items = List(10) { itemIndex ->
+                ItemApiModel(
+                    id = "itemId$memoIndex$itemIndex",
+                    checked = itemIndex % 2 == 0,
+                    content = "content$itemIndex",
+                )
+            },
+        )
+    }
 
-    override suspend fun getById(memoId: String): Flow<MemoApiModel> = flowOf(
+    override suspend fun getById(memoId: String): MemoApiModel =
         MemoApiModel(
             id = memoId,
             title = "title",
-            items = listOf(),
+            items = List(10) { itemIndex ->
+                ItemApiModel(
+                    id = "itemId$memoId$itemIndex",
+                    checked = itemIndex % 2 == 0,
+                    content = "content$itemIndex",
+                )
+            },
         )
-    )
+
+    override suspend fun upsert(memo: MemoApiModel) {
+    }
 }

@@ -1,9 +1,9 @@
-package entity
+package repository.room.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import api.MemoApiModel
-import entity.ItemEntity.Companion.toApiModel
+import repository.room.entity.ItemEntity.Companion.toApiModel
 
 @Entity(tableName = "memos")
 data class MemoEntity(

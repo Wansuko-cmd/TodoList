@@ -6,9 +6,10 @@ plugins {
 android {
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles.add(getDefaultProguardFile("proguard-android-optimize.txt"))
             proguardFiles.add(file("proguard-rules.pro"))
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     packagingOptions {

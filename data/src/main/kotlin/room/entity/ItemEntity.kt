@@ -1,4 +1,4 @@
-package entity
+package repository.room.entity
 
 import androidx.room.Entity
 import androidx.room.ForeignKey

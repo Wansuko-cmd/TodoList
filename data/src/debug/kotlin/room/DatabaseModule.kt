@@ -1,4 +1,4 @@
-package api
+package room
 
 import android.content.Context
 import androidx.room.Room
@@ -7,9 +7,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import entity.ItemEntity
-import entity.MemoEntity
 import kotlinx.coroutines.runBlocking
+import repository.room.entity.ItemEntity
+import repository.room.entity.MemoEntity
 import javax.inject.Singleton
 
 @Module
@@ -20,14 +20,14 @@ object DatabaseModule {
     fun provideDatabase(
         @ApplicationContext context: Context
     ) = Room
-        .databaseBuilder(context, AppDatabase::class.java, "dev_db")
+        .databaseBuilder(context, DevDatabase::class.java, "dev_db")
         .build()
         .also { db -> memos.forEach { runBlocking { db.memoDao().upsertMemo(it) } } }
         .also { db -> runBlocking { db.memoDao().upsertItems(items) } }
 
     @Singleton
     @Provides
-    fun provideMemoDao(db: AppDatabase) = db.memoDao()
+    fun provideMemoDao(db: DevDatabase) = db.memoDao()
 }
 
 val memos = List(10) { index ->
