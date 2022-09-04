@@ -3,8 +3,8 @@ package com.wsr.ui.memo.index
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wsr.CreateMemoUseCase
-import com.wsr.GetAllMemoUseCase
 import com.wsr.FetchAllMemoUseCaseModel
+import com.wsr.GetAllMemoUseCase
 import com.wsr.memo.MemoTitle
 import com.wsr.result.consume
 import dagger.hilt.android.lifecycle.HiltViewModel

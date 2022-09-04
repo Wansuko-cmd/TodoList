@@ -8,7 +8,6 @@ import androidx.room.Transaction
 import entity.ItemEntity
 import entity.MemoEntity
 import entity.MemoWithItems
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MemoDao {
