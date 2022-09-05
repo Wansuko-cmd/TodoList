@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.wsr.common.effect.ToastEffect
 import com.wsr.create.CreateMemoUseCase
 import com.wsr.delete.DeleteMemoUseCase
-import com.wsr.exception.DomainException
 import com.wsr.get.GetAllMemoUseCase
 import com.wsr.get.GetAllMemoUseCaseModel
 import com.wsr.memo.MemoId
