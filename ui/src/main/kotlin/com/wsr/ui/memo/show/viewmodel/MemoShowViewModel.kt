@@ -71,7 +71,12 @@ class MemoShowViewModel @AssistedInject constructor(
 
     fun changeItemContent(itemId: String, content: String) {
         updateItem(itemId) { it.copy(content = content.replace("\n", "")) }
-        if (content.endsWith("\n")) addItem()
+
+        // 最後のItemでEnterが押された場合、新しいItemを追加する
+        if (
+            content.endsWith("\n") &&
+            _uiState.value.items.lastOrNull()?.id == itemId
+        ) addItem()
     }
 
     fun addItem() {
