@@ -88,10 +88,11 @@ fun MemoShowScreen(
         ) {
 
             items(uiState.items, key = { it.id }) { item ->
-                ReorderableItem(reorderState, key = item.id) {
+                ReorderableItem(reorderState, key = item.id) { isDragging ->
                     MemoShowItemTile(
                         modifier = Modifier.animateItemPlacement(),
                         itemUiState = item,
+                        isDragging = isDragging,
                         onChecked = onChecked,
                         onChangeContent = onChangeContent,
                     )

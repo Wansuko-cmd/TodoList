@@ -14,16 +14,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.wsr.theme.LightBlue
+import com.wsr.theme.LightPink
 import com.wsr.ui.memo.show.MemoShowItemUiState
 
 @Composable
 fun MemoShowItemTile(
     modifier: Modifier = Modifier,
     itemUiState: MemoShowItemUiState,
+    isDragging: Boolean,
     onChecked: (itemId: String) -> Unit,
     onChangeContent: (itemId: String, content: String) -> Unit,
 ) {
-    val backgroundColor = if (itemUiState.checked) Color.White else LightBlue
+    val backgroundColor = when {
+        isDragging -> LightPink
+        itemUiState.checked -> Color.White
+        else -> LightBlue
+    }
 
     Card(
         modifier = modifier
@@ -40,6 +46,7 @@ fun MemoShowItemTile(
                 value = itemUiState.content,
                 onValueChange = { onChangeContent(itemUiState.id, it) },
                 textStyle = MaterialTheme.typography.h4,
+                enabled = !isDragging,
                 colors = TextFieldDefaults.textFieldColors(
                     backgroundColor = backgroundColor,
                     unfocusedIndicatorColor = backgroundColor,
