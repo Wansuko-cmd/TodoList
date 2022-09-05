@@ -33,11 +33,9 @@ dependencies {
     implementation(Deps.Compose.navigation)
     implementation(Deps.Compose.lifecycle)
     implementation(Deps.Compose.hilt)
-    implementation(Deps.Compose.constraintLayout)
-    implementation(Deps.Compose.coil)
     implementation(Deps.Compose.activity)
     implementation(Deps.Compose.systemUiController)
-    implementation(Deps.Compose.pager)
+    implementation(Deps.Compose.reorderable)
 
     testImplementation(Deps.Test.junit4)
     androidTestImplementation(Deps.AndroidX.Test.junit)

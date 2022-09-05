@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.util.*
 
 class MemoShowViewModel @AssistedInject constructor(
     private val getMemoByIdUseCase: GetMemoByIdUseCase,
@@ -82,12 +83,20 @@ class MemoShowViewModel @AssistedInject constructor(
         updateItems { items -> items.filter { !it.checked } }
     }
 
+    fun swapItem(from: String, to: String) {
+        updateItems { items ->
+            val fromIndex = items.indexOfFirst { it.id == from }
+            val toIndex = items.indexOfFirst { it.id == to }
+            items.toMutableList().apply { add(toIndex, removeAt(fromIndex)) }
+        }
+    }
+
     override fun onCleared() {
         super.onCleared()
         saveToDatabase()
     }
 
-    private fun updateItem(itemId: String, block: (MemoShowItemUiState) -> MemoShowItemUiState) {
+    private inline fun updateItem(itemId: String, block: (MemoShowItemUiState) -> MemoShowItemUiState) {
         _uiState.update { uiState ->
             uiState.copy(
                 items = uiState.items.map { item ->
@@ -98,7 +107,7 @@ class MemoShowViewModel @AssistedInject constructor(
         saveToDatabase()
     }
 
-    private fun updateItems(block: (List<MemoShowItemUiState>) -> List<MemoShowItemUiState>) {
+    private inline fun updateItems(block: (List<MemoShowItemUiState>) -> List<MemoShowItemUiState>) {
         _uiState.update { uiState ->
             uiState.copy(
                 items = block(uiState.items)
