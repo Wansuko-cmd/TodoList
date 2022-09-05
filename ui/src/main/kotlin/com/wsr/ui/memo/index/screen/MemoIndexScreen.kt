@@ -2,6 +2,7 @@ package com.wsr.ui.memo.index.screen
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -72,7 +73,8 @@ fun MemoIndexScreen(
         }
     ) { innerPadding ->
         LazyColumn(
-            modifier = Modifier.padding(innerPadding),
+            modifier = Modifier.padding(innerPadding)
+                .fillMaxSize(),
         ) {
             // TODO:いい感じのComposableを入れることで一番上の要素をクリックしたときの挙動修正
             item {
