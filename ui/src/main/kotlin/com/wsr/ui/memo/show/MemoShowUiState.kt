@@ -33,6 +33,7 @@ data class MemoShowItemUiState(
     val id: String,
     val checked: Boolean,
     val content: String,
+    val shouldFocus: Boolean = false,
 ) {
     companion object {
         fun from(fetchMemoByIdItemUseCaseModel: GetMemoByIdItemUseCaseModel) =

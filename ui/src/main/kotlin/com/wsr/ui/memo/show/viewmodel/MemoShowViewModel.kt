@@ -71,11 +71,14 @@ class MemoShowViewModel @AssistedInject constructor(
     }
 
     fun changeItemContent(itemId: String, content: String) {
-        updateItem(itemId) { it.copy(content = content) }
+        updateItem(itemId) { it.copy(content = content.replace("\n", "")) }
+        if (content.endsWith("\n")) addItem()
     }
 
     fun addItem() {
-        val newItem = MemoShowItemUiState.from(createItemInstanceUsecase())
+        val newItem = MemoShowItemUiState
+            .from(createItemInstanceUsecase())
+            .copy(shouldFocus = true)
         updateItems { it + newItem }
     }
 
@@ -99,9 +102,9 @@ class MemoShowViewModel @AssistedInject constructor(
     private inline fun updateItem(itemId: String, block: (MemoShowItemUiState) -> MemoShowItemUiState) {
         _uiState.update { uiState ->
             uiState.copy(
-                items = uiState.items.map { item ->
-                    if (item.id == itemId) block(item) else item
-                }
+                items = uiState.items
+                    .map { it.copy(shouldFocus = false) }
+                    .map { item -> if (item.id == itemId) block(item) else item }
             )
         }
         saveToDatabase()
@@ -110,7 +113,7 @@ class MemoShowViewModel @AssistedInject constructor(
     private inline fun updateItems(block: (List<MemoShowItemUiState>) -> List<MemoShowItemUiState>) {
         _uiState.update { uiState ->
             uiState.copy(
-                items = block(uiState.items)
+                items = block(uiState.items.map { it.copy(shouldFocus = false) })
             )
         }
         saveToDatabase()

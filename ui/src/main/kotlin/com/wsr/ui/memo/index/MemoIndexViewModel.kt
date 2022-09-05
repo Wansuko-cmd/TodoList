@@ -44,7 +44,6 @@ class MemoIndexViewModel @Inject constructor(
 
     private fun onSuccessGetting(memos: List<GetAllMemoUseCaseModel>) {
         _uiState.update { MemoIndexUiState.from(memos) }
-        println(memos.map { it.title })
     }
 
     private fun onFailureGetting() {
