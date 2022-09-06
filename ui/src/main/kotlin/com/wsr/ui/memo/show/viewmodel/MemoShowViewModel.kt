@@ -94,7 +94,10 @@ class MemoShowViewModel @AssistedInject constructor(
         updateItems { items ->
             val fromIndex = items.indexOfFirst { it.id == from }
             val toIndex = items.indexOfFirst { it.id == to }
-            items.toMutableList().apply { add(toIndex, removeAt(fromIndex)) }
+            if(fromIndex != -1 && toIndex != -1) {
+                items.toMutableList().apply { add(toIndex, removeAt(fromIndex)) }
+            }
+            else items
         }
     }
 

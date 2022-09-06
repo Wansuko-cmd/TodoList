@@ -14,7 +14,7 @@ class Memo private constructor(
         fun create(title: MemoTitle) = Memo(
             id = MemoId(UUID.randomUUID().toString()),
             title = title,
-            items = listOf(),
+            items = listOf(Item.create()),
             accessedAt = Clock.System.now(),
         )
 
