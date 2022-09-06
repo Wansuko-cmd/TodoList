@@ -57,11 +57,7 @@ fun WithoutPaddingTextField(
         value = value,
         modifier = modifier
             .background(colors.backgroundColor(enabled).value, shape)
-            .indicatorLine(enabled, isError, interactionSource, colors)
-            .defaultMinSize(
-                minWidth = TextFieldDefaults.MinWidth,
-                minHeight = TextFieldDefaults.MinHeight
-            ),
+            .indicatorLine(enabled, isError, interactionSource, colors),
         onValueChange = onValueChange,
         enabled = enabled,
         readOnly = readOnly,
