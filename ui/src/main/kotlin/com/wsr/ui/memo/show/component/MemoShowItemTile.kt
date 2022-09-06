@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
 import androidx.compose.material.Checkbox
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -17,6 +16,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.wsr.common.composable.WithoutPaddingTextField
 import com.wsr.theme.LightBlue
 import com.wsr.theme.LightPink
 import com.wsr.ui.memo.show.MemoShowItemUiState
@@ -52,11 +52,11 @@ fun MemoShowItemTile(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Checkbox(checked = itemUiState.checked, onCheckedChange = { onChecked(itemUiState.id) })
-            TextField(
+            WithoutPaddingTextField(
                 modifier = Modifier.focusRequester(focusRequester),
                 value = itemUiState.content,
                 onValueChange = { onChangeContent(itemUiState.id, it) },
-                textStyle = MaterialTheme.typography.h4,
+                textStyle = MaterialTheme.typography.h5,
                 enabled = !isDragging,
                 colors = TextFieldDefaults.textFieldColors(
                     backgroundColor = backgroundColor,
