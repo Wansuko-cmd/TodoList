@@ -1,8 +1,6 @@
 package com.wsr.get
 
 import com.wsr.di.DefaultDispatcher
-import com.wsr.get.GetMemoByIdItemUseCaseModel.Companion.toGetMemoByIdItemUseCaseModel
-import com.wsr.get.GetMemoByIdUseCaseModel.Companion.toGetMemoByIdUseCaseModel
 import com.wsr.memo.Item
 import com.wsr.memo.ItemContent
 import com.wsr.memo.ItemId
@@ -22,7 +20,7 @@ class GetMemoByIdUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(memoId: MemoId) = withContext(dispatcher) {
-        memoRepository.getById(memoId).map { it.toGetMemoByIdUseCaseModel() }
+        memoRepository.getById(memoId).map(GetMemoByIdUseCaseModel::from)
     }
 }
 
@@ -32,10 +30,10 @@ data class GetMemoByIdUseCaseModel(
     val items: List<GetMemoByIdItemUseCaseModel>,
 ) {
     companion object {
-        fun Memo.toGetMemoByIdUseCaseModel() = GetMemoByIdUseCaseModel(
-            id = id,
-            title = title,
-            items = items.map { it.toGetMemoByIdItemUseCaseModel() },
+        fun from(memo: Memo) = GetMemoByIdUseCaseModel(
+            id = memo.id,
+            title = memo.title,
+            items = memo.items.map(GetMemoByIdItemUseCaseModel::from),
         )
     }
 }
@@ -46,10 +44,10 @@ data class GetMemoByIdItemUseCaseModel(
     val content: ItemContent,
 ) {
     companion object {
-        fun Item.toGetMemoByIdItemUseCaseModel() = GetMemoByIdItemUseCaseModel(
-            id = id,
-            checked = checked,
-            content = content,
+        fun from(item: Item) = GetMemoByIdItemUseCaseModel(
+            id = item.id,
+            checked = item.checked,
+            content = item.content,
         )
     }
 }

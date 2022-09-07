@@ -1,7 +1,6 @@
 package com.wsr.get
 
 import com.wsr.di.DefaultDispatcher
-import com.wsr.get.GetAllMemoUseCaseModel.Companion.toGetAllMemoUseCaseModel
 import com.wsr.memo.Memo
 import com.wsr.memo.MemoId
 import com.wsr.memo.MemoRepository
@@ -20,7 +19,7 @@ class GetAllMemoUseCase @Inject constructor(
     suspend operator fun invoke() = withContext(dispatcher) {
         memoRepository.getAll()
             .map { memos -> memos.sortedByDescending { it.accessedAt } }
-            .map { memos -> memos.map { it.toGetAllMemoUseCaseModel() } }
+            .map { memos -> memos.map(GetAllMemoUseCaseModel::from) }
     }
 }
 
@@ -29,10 +28,10 @@ data class GetAllMemoUseCaseModel(
     val title: MemoTitle,
 ) {
     companion object {
-        fun Memo.toGetAllMemoUseCaseModel() =
+        fun from(memo: Memo) =
             GetAllMemoUseCaseModel(
-                id = id,
-                title = title,
+                id = memo.id,
+                title = memo.title,
             )
     }
 }

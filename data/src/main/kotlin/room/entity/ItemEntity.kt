@@ -26,7 +26,7 @@ data class ItemEntity(
     val index: Int,
 ) {
     companion object {
-        fun ItemEntity.toApiModel() = ItemApiModel(
+        fun ItemEntity.toItemApiModel() = ItemApiModel(
             id = id,
             checked = checked,
             content = content,

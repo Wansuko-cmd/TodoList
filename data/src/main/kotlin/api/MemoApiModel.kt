@@ -1,6 +1,6 @@
 package api
 
-import api.ItemApiModel.Companion.toDomain
+import api.ItemApiModel.Companion.toItem
 import com.wsr.memo.Item
 import com.wsr.memo.ItemContent
 import com.wsr.memo.ItemId
@@ -16,10 +16,10 @@ data class MemoApiModel(
     val accessedAt: Instant
 ) {
     companion object {
-        fun MemoApiModel.toDomain(): Memo = Memo.reconstruct(
+        fun MemoApiModel.toMemo(): Memo = Memo.reconstruct(
             id = MemoId(id),
             title = MemoTitle(title),
-            items = items.map { it.toDomain() },
+            items = items.map { it.toItem() },
             accessedAt = accessedAt,
         )
 
@@ -38,7 +38,7 @@ data class ItemApiModel(
     val content: String,
 ) {
     companion object {
-        fun ItemApiModel.toDomain(): Item = Item.reconstruct(
+        fun ItemApiModel.toItem(): Item = Item.reconstruct(
             id = ItemId(id),
             checked = checked,
             content = ItemContent(content),

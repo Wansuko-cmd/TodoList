@@ -8,8 +8,8 @@ import com.wsr.memo.Memo
 import com.wsr.memo.MemoId
 import com.wsr.memo.MemoRepository
 import com.wsr.memo.MemoTitle
-import com.wsr.update.UpdateMemoItemUseCaseModel.Companion.toDomain
-import com.wsr.update.UpdateMemoUseCaseModel.Companion.toDomain
+import com.wsr.update.UpdateMemoItemUseCaseModel.Companion.toItem
+import com.wsr.update.UpdateMemoUseCaseModel.Companion.toMemo
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -22,7 +22,7 @@ class UpdateMemoUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(memo: UpdateMemoUseCaseModel) =
         withContext(dispatcher) {
-            memoRepository.upsert(memo.toDomain())
+            memoRepository.upsert(memo.toMemo())
         }
 }
 
@@ -32,10 +32,10 @@ data class UpdateMemoUseCaseModel(
     val items: List<UpdateMemoItemUseCaseModel>,
 ) {
     companion object {
-        fun UpdateMemoUseCaseModel.toDomain() = Memo.reconstruct(
+        fun UpdateMemoUseCaseModel.toMemo() = Memo.reconstruct(
             id = id,
             title = title,
-            items = items.map { it.toDomain() },
+            items = items.map { it.toItem() },
             accessedAt = Clock.System.now(),
         )
     }
@@ -47,7 +47,7 @@ data class UpdateMemoItemUseCaseModel(
     val content: ItemContent,
 ) {
     companion object {
-        fun UpdateMemoItemUseCaseModel.toDomain() = Item.reconstruct(
+        fun UpdateMemoItemUseCaseModel.toItem() = Item.reconstruct(
             id = id,
             checked = checked,
             content = content,

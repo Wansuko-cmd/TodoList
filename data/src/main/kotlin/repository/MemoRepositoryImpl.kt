@@ -2,7 +2,7 @@ package repository
 
 import api.MemoApi
 import api.MemoApiModel
-import api.MemoApiModel.Companion.toDomain
+import api.MemoApiModel.Companion.toMemo
 import com.wsr.di.IODispatcher
 import com.wsr.exception.DomainException
 import com.wsr.memo.Memo
@@ -21,14 +21,14 @@ class MemoRepositoryImpl @Inject constructor(
     override suspend fun getAll(): ApiResult<List<Memo>, DomainException> =
         withContext(dispatcher) {
             runCatchDomainException {
-                memoApi.getAll().map { it.toDomain() }
+                memoApi.getAll().map { it.toMemo() }
             }
         }
 
     override suspend fun getById(memoId: MemoId): ApiResult<Memo, DomainException> =
         withContext(dispatcher) {
             runCatchDomainException {
-                memoApi.getById(memoId.value).toDomain()
+                memoApi.getById(memoId.value).toMemo()
             }
         }
 

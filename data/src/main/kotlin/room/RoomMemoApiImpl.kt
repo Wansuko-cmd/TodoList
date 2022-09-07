@@ -5,7 +5,7 @@ import api.MemoApiModel
 import repository.room.dao.MemoDao
 import repository.room.entity.ItemEntity
 import repository.room.entity.MemoEntity
-import repository.room.entity.MemoEntity.Companion.toApiModel
+import repository.room.entity.MemoEntity.Companion.toMemoApiModel
 import javax.inject.Inject
 
 class RoomMemoApiImpl @Inject constructor(
@@ -13,12 +13,12 @@ class RoomMemoApiImpl @Inject constructor(
 ) : MemoApi {
     override suspend fun getAll(): List<MemoApiModel> =
         memoDao.getMemos().map { (memo, items) ->
-            memo.toApiModel(items)
+            memo.toMemoApiModel(items)
         }
 
     override suspend fun getById(memoId: String): MemoApiModel =
         memoDao.getMemoById(memoId).let { (memo, items) ->
-            memo.toApiModel(items)
+            memo.toMemoApiModel(items)
         }
 
     override suspend fun upsert(memo: MemoApiModel) {

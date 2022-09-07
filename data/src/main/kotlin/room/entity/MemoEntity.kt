@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import api.MemoApiModel
 import kotlinx.datetime.Instant
-import repository.room.entity.ItemEntity.Companion.toApiModel
+import repository.room.entity.ItemEntity.Companion.toItemApiModel
 
 @Entity(tableName = "memos")
 data class MemoEntity(
@@ -13,10 +13,10 @@ data class MemoEntity(
     val accessedAt: Instant,
 ) {
     companion object {
-        fun MemoEntity.toApiModel(items: List<ItemEntity>) = MemoApiModel(
+        fun MemoEntity.toMemoApiModel(items: List<ItemEntity>) = MemoApiModel(
             id = id,
             title = title,
-            items = items.sortedBy { it.index }.map { it.toApiModel() },
+            items = items.sortedBy { it.index }.map { it.toItemApiModel() },
             accessedAt = accessedAt,
         )
 
