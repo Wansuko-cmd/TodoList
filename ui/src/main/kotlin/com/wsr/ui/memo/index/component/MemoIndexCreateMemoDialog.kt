@@ -55,7 +55,10 @@ fun MemoIndexCreateMemoDialog(
                     TextButton(onClick = onDismiss) {
                         Text(text = stringResource(id = R.string.memo_index_create_memo_dismiss_button))
                     }
-                    TextButton(onClick = { onConfirm(text) }) {
+                    TextButton(
+                        onClick = { onConfirm(text) },
+                        enabled = text.isNotBlank(),
+                    ) {
                         Text(text = stringResource(id = R.string.memo_index_create_memo_confirm_button))
                     }
                 }
