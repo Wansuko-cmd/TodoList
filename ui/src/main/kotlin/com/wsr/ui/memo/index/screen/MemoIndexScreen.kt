@@ -57,7 +57,7 @@ fun MemoIndexScreen(
 ) {
     Scaffold(
         modifier = modifier,
-        topBar = { MemoIndexTopBar() },
+        topBar = { MemoIndexTopBar(navController = navController) },
         floatingActionButton = {
             MemoIndexFloatActionButton(
                 onClick = onClickFab,

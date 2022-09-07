@@ -14,4 +14,10 @@ object Route {
             fun with(memoId: String) = "$root/$memoId"
         }
     }
+
+    object Setting : Root {
+        override val root: String = "root"
+
+        object Index : Path { override val path = "$root/index" }
+    }
 }
