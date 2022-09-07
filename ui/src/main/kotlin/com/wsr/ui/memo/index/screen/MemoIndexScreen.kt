@@ -1,18 +1,11 @@
 package com.wsr.ui.memo.index.screen
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
@@ -21,7 +14,7 @@ import com.wsr.common.effect.observeToastEffect
 import com.wsr.ui.memo.index.MemoIndexUiState
 import com.wsr.ui.memo.index.MemoIndexViewModel
 import com.wsr.ui.memo.index.component.MemoIndexCreateMemoDialog
-import com.wsr.ui.memo.index.component.MemoIndexMemoTile
+import com.wsr.ui.memo.index.section.MemoIndexMemoSection
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
@@ -54,7 +47,6 @@ fun MemoIndexScreen(
     observeToastEffect(viewModel.toastEffect)
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MemoIndexScreen(
     modifier: Modifier = Modifier,
@@ -72,25 +64,11 @@ fun MemoIndexScreen(
             )
         }
     ) { innerPadding ->
-        LazyColumn(
-            modifier = Modifier.padding(innerPadding)
-                .fillMaxSize(),
-        ) {
-            // TODO:いい感じのComposableを入れることで一番上の要素をクリックしたときの挙動修正
-            item {
-                Spacer(modifier = Modifier.height(4.dp))
-            }
-
-            items(uiState.memos, key = { it.id }) {
-                MemoIndexMemoTile(
-                    modifier = Modifier.animateItemPlacement(),
-                    memoUiState = it,
-                    onClickTile = { memoId ->
-                        navController.navigate(Route.Memo.Show.with(memoId))
-                    },
-                    onClickDeleteButton = onClickDeleteButton,
-                )
-            }
-        }
+        MemoIndexMemoSection(
+            modifier = Modifier.padding(innerPadding),
+            uiState = uiState,
+            onClickTile = { memoId -> navController.navigate(Route.Memo.Show.with(memoId)) },
+            onClickDeleteButton = onClickDeleteButton,
+        )
     }
 }

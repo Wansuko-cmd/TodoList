@@ -4,7 +4,6 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
@@ -30,15 +29,14 @@ fun MemoIndexMemoTile(
     onClickTile: (memoId: String) -> Unit,
     onClickDeleteButton: (memoId: String) -> Unit,
 ) {
-    var expanded by remember { mutableStateOf(false) }
+    var expandedDropdownMenu by remember { mutableStateOf(false) }
 
     Card(
         modifier = modifier
-            .padding(16.dp)
             .fillMaxWidth()
             .combinedClickable(
                 onClick = { onClickTile(memoUiState.id) },
-                onLongClick = { expanded = true },
+                onLongClick = { expandedDropdownMenu = true },
             ),
         elevation = 4.dp,
     ) {
@@ -50,7 +48,10 @@ fun MemoIndexMemoTile(
                 style = MaterialTheme.typography.h4,
             )
 
-            DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+            DropdownMenu(
+                expanded = expandedDropdownMenu,
+                onDismissRequest = { expandedDropdownMenu = false },
+            ) {
                 DropdownMenuItem(onClick = { onClickDeleteButton(memoUiState.id) }) {
                     Text(text = stringResource(id = R.string.memo_index_delete_memo))
                 }

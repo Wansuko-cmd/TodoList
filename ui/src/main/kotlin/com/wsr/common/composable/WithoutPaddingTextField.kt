@@ -2,7 +2,6 @@ package com.wsr.common.composable
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.shape.ZeroCornerSize
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
@@ -12,7 +11,6 @@ import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.TextFieldColors
 import androidx.compose.material.TextFieldDefaults
-import androidx.compose.material.TextFieldDefaults.indicatorLine
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -56,8 +54,7 @@ fun WithoutPaddingTextField(
     BasicTextField(
         value = value,
         modifier = modifier
-            .background(colors.backgroundColor(enabled).value, shape)
-            .indicatorLine(enabled, isError, interactionSource, colors),
+            .background(colors.backgroundColor(enabled).value, shape),
         onValueChange = onValueChange,
         enabled = enabled,
         readOnly = readOnly,

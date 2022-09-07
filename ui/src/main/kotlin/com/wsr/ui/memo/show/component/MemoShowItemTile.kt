@@ -2,7 +2,6 @@ package com.wsr.ui.memo.show.component
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
 import androidx.compose.material.Checkbox
 import androidx.compose.material.MaterialTheme
@@ -43,7 +42,6 @@ fun MemoShowItemTile(
 
     Card(
         modifier = modifier
-            .padding(16.dp)
             .fillMaxWidth(),
         elevation = 4.dp,
         backgroundColor = backgroundColor,
