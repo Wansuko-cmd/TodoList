@@ -1,15 +1,14 @@
-package com.wsr.ui.setting.index
+package com.wsr.ui.settings.index
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import com.wsr.ui.setting.index.screen.SettingIndexScreen
+import com.wsr.ui.settings.index.screen.SettingsIndexScreen
 
-fun NavGraphBuilder.settingIndex(
+fun NavGraphBuilder.settingsIndex(
     route: String,
-    navController: NavHostController,
 ) {
     composable(route = route) {
-        SettingIndexScreen()
+        SettingsIndexScreen()
     }
 }

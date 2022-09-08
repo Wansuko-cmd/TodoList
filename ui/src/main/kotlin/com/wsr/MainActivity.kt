@@ -1,5 +1,8 @@
 package com.wsr
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -30,5 +33,13 @@ class MainActivity : ComponentActivity() {
                 MainNavHost(navController = navController)
             }
         }
+    }
+
+    companion object {
+        fun restartActivity(context: Context) = context
+            .let { it as Activity }
+            .also { it.finish() }
+            .let { Intent(it, MainActivity::class.java) }
+            .let { context.startActivity(it) }
     }
 }

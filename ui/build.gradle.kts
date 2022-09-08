@@ -36,6 +36,8 @@ dependencies {
     implementation(Deps.Compose.activity)
     implementation(Deps.Compose.systemUiController)
     implementation(Deps.Compose.reorderable)
+    implementation(Deps.Compose.settings)
+    implementation(Deps.Compose.settingsStorage)
 
     testImplementation(Deps.Test.junit4)
     androidTestImplementation(Deps.AndroidX.Test.junit)

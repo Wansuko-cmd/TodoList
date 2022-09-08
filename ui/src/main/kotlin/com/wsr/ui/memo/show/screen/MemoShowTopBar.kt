@@ -29,12 +29,18 @@ fun MemoShowTopBar(
         },
         navigationIcon = {
             IconButton(onClick = { navController.popBackStack() }) {
-                Icon(Icons.Filled.ArrowBack, null)
+                Icon(
+                    imageVector = Icons.Filled.ArrowBack,
+                    contentDescription = null,
+                )
             }
         },
         actions = {
             IconButton(onClick = deleteCheckedItems) {
-                Icon(Icons.Filled.Delete, null)
+                Icon(
+                    imageVector = Icons.Filled.Delete,
+                    contentDescription = null,
+                )
             }
         },
     )

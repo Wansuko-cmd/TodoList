@@ -50,6 +50,8 @@ object Deps {
         const val activity = "androidx.activity:activity-compose:1.3.1"
         const val systemUiController = "com.google.accompanist:accompanist-systemuicontroller:0.23.1" // ktlint-disable max-line-length
         const val reorderable = "org.burnoutcrew.composereorderable:reorderable:0.9.2"
+        const val settings = "com.github.alorma:compose-settings-ui:0.11.0"
+        const val settingsStorage = "com.github.alorma:compose-settings-storage-preferences:0.11.0"
 
         object Test {
             const val junit4 = "androidx.compose.ui:ui-test-junit4:$composeVersion"

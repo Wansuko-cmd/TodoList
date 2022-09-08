@@ -15,8 +15,8 @@ object Route {
         }
     }
 
-    object Setting : Root {
-        override val root: String = "root"
+    object Settings : Root {
+        override val root: String = "settings"
 
         object Index : Path { override val path = "$root/index" }
     }

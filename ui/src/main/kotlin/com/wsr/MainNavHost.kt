@@ -5,7 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.wsr.ui.memo.memoGraph
-import com.wsr.ui.setting.settingGraph
+import com.wsr.ui.settings.settingsGraph
 
 @Composable
 fun MainNavHost(
@@ -18,6 +18,6 @@ fun MainNavHost(
         startDestination = Route.Memo.root,
     ) {
         memoGraph(navController)
-        settingGraph(navController)
+        settingsGraph(navController)
     }
 }

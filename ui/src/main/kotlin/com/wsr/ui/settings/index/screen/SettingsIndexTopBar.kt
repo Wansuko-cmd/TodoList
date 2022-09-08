@@ -1,4 +1,4 @@
-package com.wsr.ui.memo.index.screen
+package com.wsr.ui.settings.index.screen
 
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -6,36 +6,37 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavHostController
-import com.wsr.Route
+import com.wsr.MainActivity
 import com.wsr.ui.R
 
 @Composable
-fun MemoIndexTopBar(
+fun SettingsIndexTopBar(
     modifier: Modifier = Modifier,
-    navController: NavHostController,
 ) {
+    val context = LocalContext.current
+
     TopAppBar(
         modifier = modifier,
         title = {
             Text(
-                text = stringResource(id = R.string.app_name),
+                text = stringResource(id = R.string.setting_index_top_bar),
                 style = MaterialTheme.typography.h5,
             )
         },
-        actions = {
-            IconButton(
-                onClick = { navController.navigate(Route.Settings.Index.path) },
-            ) {
+        navigationIcon = {
+            IconButton(onClick = {
+                MainActivity.restartActivity(context)
+            }) {
                 Icon(
-                    imageVector = Icons.Filled.Settings,
+                    imageVector = Icons.Filled.ArrowBack,
                     contentDescription = null,
                 )
             }
-        },
+        }
     )
 }
