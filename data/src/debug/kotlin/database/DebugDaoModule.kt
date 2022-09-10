@@ -1,4 +1,4 @@
-package room
+package database
 
 import android.content.Context
 import androidx.room.Room
@@ -7,10 +7,10 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import database.entity.ItemEntity
+import database.entity.MemoEntity
 import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Clock
-import repository.room.entity.ItemEntity
-import repository.room.entity.MemoEntity
 import javax.inject.Singleton
 
 @Module

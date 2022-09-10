@@ -1,4 +1,4 @@
-package room
+package database
 
 import android.content.Context
 import androidx.room.Room
@@ -11,7 +11,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DatabaseModule {
+object DaoModule {
     @Singleton
     @Provides
     fun provideDatabase(

@@ -1,12 +1,12 @@
-package repository.room.dao
+package database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import repository.room.entity.ItemEntity
-import repository.room.entity.MemoEntity
+import database.entity.ItemEntity
+import database.entity.MemoEntity
 import repository.room.entity.MemoWithItems
 
 @Dao
