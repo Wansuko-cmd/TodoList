@@ -27,8 +27,6 @@ dependencies {
     implementation(project(":utils"))
     implementation(project(":domain"))
 
-    implementation(Deps.AndroidX.core)
-    implementation(Deps.AndroidX.lifecycleRuntime)
-
-    testImplementation(Deps.Test.junit4)
+    implementation(libs.bundles.androidx)
+    testImplementation(libs.bundles.test)
 }

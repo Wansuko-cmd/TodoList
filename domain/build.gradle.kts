@@ -4,10 +4,8 @@ plugins {
 
 dependencies {
     implementation(project(":utils"))
+    implementation(libs.kotlin.coroutine)
+    implementation(libs.kotlin.datetime)
 
-    implementation(Deps.Kotlin.coroutine)
-
-    implementation(Deps.Kotlin.datetime)
-
-    testImplementation(Deps.Test.truth)
+    testImplementation(libs.bundles.test)
 }

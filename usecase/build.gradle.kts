@@ -6,10 +6,8 @@ plugins {
 dependencies {
     implementation(project(":domain"))
     implementation(project(":utils"))
-    implementation(Deps.Kotlin.coroutine)
-    implementation(Deps.Kotlin.datetime)
+    implementation(libs.kotlin.coroutine)
+    implementation(libs.kotlin.datetime)
 
-    testImplementation(Deps.Test.truth)
-    testImplementation(Deps.Test.mockk)
-    testImplementation(Deps.Test.turbine)
+    testImplementation(libs.bundles.test)
 }

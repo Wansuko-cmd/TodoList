@@ -8,11 +8,11 @@ dependencies {
     implementation(project(":usecase"))
     implementation(project(":utils"))
 
-    implementation(Deps.Kotlin.coroutine)
-    implementation(Deps.Kotlin.datetime)
+    implementation(libs.kotlin.coroutine)
+    implementation(libs.kotlin.datetime)
 
-    implementation(Deps.AndroidX.Room.runtime)
-    annotationProcessor(Deps.AndroidX.Room.compiler)
-    kapt(Deps.AndroidX.Room.compiler)
-    implementation(Deps.AndroidX.Room.ktx)
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    annotationProcessor(libs.androidx.room.compiler)
+    kapt(libs.androidx.room.compiler)
 }

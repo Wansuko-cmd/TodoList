@@ -22,28 +22,12 @@ dependencies {
     implementation(project(":usecase"))
     implementation(project(":utils"))
 
-    implementation(Deps.AndroidX.core)
-    implementation(Deps.AndroidX.lifecycleRuntime)
+    implementation(libs.bundles.androidx)
 
-    implementation(Deps.Compose.ui)
-    implementation(Deps.Compose.material)
-    implementation(Deps.Compose.icon)
-    debugImplementation(Deps.Compose.tooling)
-    implementation(Deps.Compose.preview)
-    implementation(Deps.Compose.navigation)
-    implementation(Deps.Compose.lifecycle)
-    implementation(Deps.Compose.hilt)
-    implementation(Deps.Compose.activity)
-    implementation(Deps.Compose.systemUiController)
-    implementation(Deps.Compose.reorderable)
-    implementation(Deps.Compose.settings)
-    implementation(Deps.Compose.settingsStorage)
+    implementation(libs.bundles.androidx.compose)
 
-    testImplementation(Deps.Test.junit4)
-    androidTestImplementation(Deps.AndroidX.Test.junit)
-    androidTestImplementation(Deps.AndroidX.Test.espresso)
-    androidTestImplementation(Deps.Compose.Test.junit4)
+    testImplementation(libs.bundles.test)
+    testImplementation(libs.bundles.androidx.compose.test)
 
-    debugImplementation(Deps.Compose.Test.uiTooling)
-    debugImplementation(Deps.Compose.Test.manifest)
+    androidTestImplementation(libs.bundles.androidx.test)
 }
