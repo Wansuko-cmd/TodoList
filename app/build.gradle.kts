@@ -4,6 +4,18 @@ plugins {
 }
 
 android {
+    defaultConfig {
+        applicationId = "com.wsr.todolist"
+        versionCode = 1
+        versionName = "0.1"
+
+        // Custom test runner to set up Hilt dependency graph
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = true

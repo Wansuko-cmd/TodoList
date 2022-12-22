@@ -4,14 +4,10 @@ import com.android.build.api.dsl.CommonExtension
 import org.gradle.api.JavaVersion
 
 fun CommonExtension<*, *, *, *>.configureCommonAndroidSetting() {
-    compileSdk = Android.compileSdk
+    compileSdk = 33
 
     defaultConfig {
-        minSdk = Android.minSdk
-        testInstrumentationRunner = Android.testInstrumentationRunner
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+        minSdk = 26
     }
 
     compileOptions {
