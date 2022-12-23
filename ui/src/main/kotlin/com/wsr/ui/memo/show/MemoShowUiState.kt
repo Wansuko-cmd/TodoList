@@ -12,7 +12,7 @@ import com.wsr.update.UpdateMemoItemUseCaseModel
 import com.wsr.update.UpdateMemoUseCaseModel
 
 data class MemoShowUiState(
-    val title: String = "",
+    val title: MemoTitle = MemoTitle(""),
     val items: List<MemoShowItemUiState> = listOf(),
     val isLoading: Boolean = false,
 ) {
@@ -23,43 +23,42 @@ data class MemoShowUiState(
 
     fun toUpdateMemoUseCaseModel(memoId: String) = UpdateMemoUseCaseModel(
         id = MemoId(memoId),
-        title = MemoTitle(title),
+        title = title,
         items = items.map { it.toUpdateMemoUseCaseModel() }
     )
 
     companion object {
         fun from(fetchMemoByIdUseCaseModel: GetMemoByIdUseCaseModel) = MemoShowUiState(
-            title = fetchMemoByIdUseCaseModel.title.value,
+            title = fetchMemoByIdUseCaseModel.title,
             items = fetchMemoByIdUseCaseModel.items.map { MemoShowItemUiState.from(it) },
         )
     }
 }
 
 data class MemoShowItemUiState(
-    val id: String,
+    val id: ItemId,
     val checked: Boolean,
-    val content: String,
-    val shouldFocus: Boolean = false,
+    val content: ItemContent,
 ) {
     companion object {
         fun from(fetchMemoByIdItemUseCaseModel: GetMemoByIdItemUseCaseModel) =
             MemoShowItemUiState(
-                id = fetchMemoByIdItemUseCaseModel.id.value,
+                id = fetchMemoByIdItemUseCaseModel.id,
                 checked = fetchMemoByIdItemUseCaseModel.checked,
-                content = fetchMemoByIdItemUseCaseModel.content.value,
+                content = fetchMemoByIdItemUseCaseModel.content,
             )
 
         fun from(createItemUseCaseModel: CreateItemUseCaseModel) =
             MemoShowItemUiState(
-                id = createItemUseCaseModel.id.value,
+                id = createItemUseCaseModel.id,
                 checked = createItemUseCaseModel.checked,
-                content = createItemUseCaseModel.content.value,
+                content = createItemUseCaseModel.content,
             )
 
         fun MemoShowItemUiState.toUpdateMemoUseCaseModel() = UpdateMemoItemUseCaseModel(
-            id = ItemId(id),
+            id = id,
             checked = checked,
-            content = ItemContent(content),
+            content = content,
         )
     }
 }

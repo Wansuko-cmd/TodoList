@@ -6,6 +6,8 @@ import com.wsr.common.effect.ToastEffect
 import com.wsr.create.CreateItemUseCase
 import com.wsr.get.GetMemoByIdUseCase
 import com.wsr.get.GetMemoByIdUseCaseModel
+import com.wsr.memo.ItemContent
+import com.wsr.memo.ItemId
 import com.wsr.memo.MemoId
 import com.wsr.result.consume
 import com.wsr.ui.R
@@ -36,6 +38,10 @@ class MemoShowViewModel @AssistedInject constructor(
     private val _toastEffect = MutableSharedFlow<ToastEffect>()
     val toastEffect = _toastEffect.asSharedFlow()
 
+    private val _focusEffect = MutableSharedFlow<FocusEffect>()
+    val focusEffect = _focusEffect
+        .stateIn(viewModelScope, SharingStarted.Lazily, FocusEffect(null))
+
     fun getMemoAndUpdateUiState() {
         viewModelScope.launch {
             getMemoByIdUseCase(MemoId(memoId)).consume(
@@ -57,16 +63,22 @@ class MemoShowViewModel @AssistedInject constructor(
         }
     }
 
-    fun changeItemChecked(itemId: String) {
+    fun changeItemChecked(itemId: ItemId) {
         updateItem(itemId) { it.copy(checked = !it.checked) }
     }
 
-    fun changeItemContent(itemId: String, content: String) {
-        updateItem(itemId) { it.copy(content = content.replace("\n", "")) }
+    fun changeItemContent(itemId: ItemId, content: ItemContent) {
+        updateItem(itemId) {
+            it.copy(
+                content = ItemContent(
+                    content.value.replace("\n", ""),
+                )
+            )
+        }
 
         // 最後のItemでEnterが押された場合、新しいItemを追加する
         if (
-            content.endsWith("\n") &&
+            content.value.endsWith("\n") &&
             _uiState.value.items.lastOrNull()?.id == itemId
         ) addItem()
     }
@@ -74,15 +86,15 @@ class MemoShowViewModel @AssistedInject constructor(
     fun addItem() {
         val newItem = MemoShowItemUiState
             .from(createItemInstanceUsecase())
-            .copy(shouldFocus = true)
         updateItems { it + newItem }
+        viewModelScope.launch { _focusEffect.emit(FocusEffect(newItem.id)) }
     }
 
     fun deleteCheckedItem() {
         updateItems { items -> items.filter { !it.checked } }
     }
 
-    fun swapItem(from: String, to: String) {
+    fun swapItem(from: ItemId, to: ItemId) {
         updateItems { items ->
             val fromIndex = items.indexOfFirst { it.id == from }
             val toIndex = items.indexOfFirst { it.id == to }
@@ -98,13 +110,12 @@ class MemoShowViewModel @AssistedInject constructor(
     }
 
     private inline fun updateItem(
-        itemId: String,
+        itemId: ItemId,
         crossinline block: (MemoShowItemUiState) -> MemoShowItemUiState,
     ) {
         _uiState.update { uiState ->
             uiState.mapItems { items ->
                 items
-                    .map { it.copy(shouldFocus = false) }
                     .map { item -> if (item.id == itemId) block(item) else item }
             }
         }
@@ -115,7 +126,7 @@ class MemoShowViewModel @AssistedInject constructor(
         crossinline block: (List<MemoShowItemUiState>) -> List<MemoShowItemUiState>,
     ) {
         _uiState.update { uiState ->
-            uiState.mapItems { items -> block(items).map { it.copy(shouldFocus = false) } }
+            uiState.mapItems { items -> block(items) }
         }
         saveToDatabase()
     }
@@ -128,3 +139,5 @@ class MemoShowViewModel @AssistedInject constructor(
         }
     }
 }
+
+data class FocusEffect(val itemId: ItemId?)

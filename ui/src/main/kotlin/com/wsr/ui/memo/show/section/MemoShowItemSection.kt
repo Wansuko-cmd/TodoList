@@ -10,6 +10,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.wsr.memo.ItemContent
+import com.wsr.memo.ItemId
 import com.wsr.ui.memo.show.MemoShowUiState
 import com.wsr.ui.memo.show.component.MemoShowItemTile
 import org.burnoutcrew.reorderable.ReorderableItem
@@ -22,14 +24,15 @@ import org.burnoutcrew.reorderable.reorderable
 fun MemoShowItemSection(
     modifier: Modifier = Modifier,
     uiState: MemoShowUiState,
-    onChecked: (itemId: String) -> Unit,
-    onChangeContent: (itemId: String, content: String) -> Unit,
-    onMoveItem: (from: String, to: String) -> Unit,
+    shouldFocusItemId: ItemId?,
+    onChecked: (itemId: ItemId) -> Unit,
+    onChangeContent: (itemId: ItemId, content: ItemContent) -> Unit,
+    onMoveItem: (from: ItemId, to: ItemId) -> Unit,
 ) {
 
     val reorderItemState = rememberReorderableLazyListState(
         onMove = { from, to ->
-            onMoveItem(from.key.toString(), to.key.toString())
+            onMoveItem(ItemId(from.key.toString()), ItemId(to.key.toString()))
         },
         // 一番上のアイテムだけ動かないようにする
         canDragOver = { it.index != 0 }
@@ -47,7 +50,7 @@ fun MemoShowItemSection(
             Spacer(modifier = Modifier.height(4.dp))
         }
 
-        items(uiState.items, key = { it.id }) { item ->
+        items(uiState.items, key = { it.id.value }) { item ->
             ReorderableItem(reorderItemState, key = item.id) { isDragging ->
                 MemoShowItemTile(
                     modifier = Modifier
@@ -55,6 +58,7 @@ fun MemoShowItemSection(
                         .padding(vertical = 8.dp, horizontal = 16.dp),
                     itemUiState = item,
                     isDragging = isDragging,
+                    shouldFocus = item.id == shouldFocusItemId,
                     onChecked = onChecked,
                     onChangeContent = onChangeContent,
                 )

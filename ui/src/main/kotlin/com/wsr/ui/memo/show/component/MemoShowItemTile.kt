@@ -16,6 +16,8 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.wsr.common.composable.WithoutPaddingTextField
+import com.wsr.memo.ItemContent
+import com.wsr.memo.ItemId
 import com.wsr.theme.LightBlue
 import com.wsr.theme.LightPink
 import com.wsr.ui.memo.show.MemoShowItemUiState
@@ -25,8 +27,9 @@ fun MemoShowItemTile(
     modifier: Modifier = Modifier,
     itemUiState: MemoShowItemUiState,
     isDragging: Boolean,
-    onChecked: (itemId: String) -> Unit,
-    onChangeContent: (itemId: String, content: String) -> Unit,
+    shouldFocus: Boolean,
+    onChecked: (itemId: ItemId) -> Unit,
+    onChangeContent: (itemId: ItemId, content: ItemContent) -> Unit,
 ) {
     val backgroundColor = when {
         isDragging -> LightPink
@@ -36,8 +39,8 @@ fun MemoShowItemTile(
 
     val focusRequester = remember { FocusRequester() }
 
-    LaunchedEffect(itemUiState.shouldFocus) {
-        if (itemUiState.shouldFocus) focusRequester.requestFocus()
+    LaunchedEffect(shouldFocus) {
+        if (shouldFocus) focusRequester.requestFocus()
     }
 
     Card(
@@ -52,8 +55,8 @@ fun MemoShowItemTile(
             Checkbox(checked = itemUiState.checked, onCheckedChange = { onChecked(itemUiState.id) })
             WithoutPaddingTextField(
                 modifier = Modifier.focusRequester(focusRequester),
-                value = itemUiState.content,
-                onValueChange = { onChangeContent(itemUiState.id, it) },
+                value = itemUiState.content.value,
+                onValueChange = { onChangeContent(itemUiState.id, ItemContent(it)) },
                 textStyle = MaterialTheme.typography.h5,
                 enabled = !isDragging,
                 colors = TextFieldDefaults.textFieldColors(
