@@ -27,20 +27,16 @@ fun MemoShowScreen(
         viewModel.getMemoAndUpdateUiState()
     }
 
-    when (uiState) {
-        is MemoShowUiState.Loading -> Unit
-        is MemoShowUiState.Success ->
-            MemoShowScreen(
-                modifier = modifier,
-                uiState = uiState as MemoShowUiState.Success,
-                navController = navController,
-                onChecked = viewModel::changeItemChecked,
-                onChangeContent = viewModel::changeItemContent,
-                addItem = viewModel::addItem,
-                deleteCheckedItems = viewModel::deleteCheckedItem,
-                onMoveItem = viewModel::swapItem,
-            )
-    }
+    MemoShowScreen(
+        modifier = modifier,
+        uiState = uiState,
+        navController = navController,
+        onChecked = viewModel::changeItemChecked,
+        onChangeContent = viewModel::changeItemContent,
+        addItem = viewModel::addItem,
+        deleteCheckedItems = viewModel::deleteCheckedItem,
+        onMoveItem = viewModel::swapItem,
+    )
 
     observeToastEffect(viewModel.toastEffect)
 }
@@ -48,7 +44,7 @@ fun MemoShowScreen(
 @Composable
 fun MemoShowScreen(
     modifier: Modifier = Modifier,
-    uiState: MemoShowUiState.Success,
+    uiState: MemoShowUiState,
     navController: NavHostController,
     onChecked: (itemId: String) -> Unit,
     onChangeContent: (itemId: String, content: String) -> Unit,
@@ -69,6 +65,7 @@ fun MemoShowScreen(
             MemoShowFloatActionButton(onClick = addItem)
         }
     ) { innerPadding ->
+        if (uiState.isLoading) MemoShowLoadingScreen()
         MemoShowItemSection(
             modifier = Modifier.padding(innerPadding),
             uiState = uiState,

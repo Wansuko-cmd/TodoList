@@ -11,36 +11,24 @@ import com.wsr.ui.memo.show.MemoShowItemUiState.Companion.toUpdateMemoUseCaseMod
 import com.wsr.update.UpdateMemoItemUseCaseModel
 import com.wsr.update.UpdateMemoUseCaseModel
 
-sealed interface MemoShowUiState {
+data class MemoShowUiState(
+    val title: String = "",
+    val items: List<MemoShowItemUiState> = listOf(),
+    val isLoading: Boolean = false,
+) {
 
     fun mapItems(
         block: (List<MemoShowItemUiState>) -> List<MemoShowItemUiState>,
-    ): MemoShowUiState
+    ): MemoShowUiState = this.copy(items = block(items))
 
-    object Loading : MemoShowUiState {
-        override fun mapItems(
-            block: (List<MemoShowItemUiState>) -> List<MemoShowItemUiState>,
-        ): MemoShowUiState = this
-    }
-
-    class Success(
-        val title: String = "",
-        val items: List<MemoShowItemUiState> = listOf(),
-    ) : MemoShowUiState {
-
-        override fun mapItems(
-            block: (List<MemoShowItemUiState>) -> List<MemoShowItemUiState>,
-        ): MemoShowUiState = Success(title, block(items))
-
-        fun toUpdateMemoUseCaseModel(memoId: String) = UpdateMemoUseCaseModel(
-            id = MemoId(memoId),
-            title = MemoTitle(title),
-            items = items.map { it.toUpdateMemoUseCaseModel() }
-        )
-    }
+    fun toUpdateMemoUseCaseModel(memoId: String) = UpdateMemoUseCaseModel(
+        id = MemoId(memoId),
+        title = MemoTitle(title),
+        items = items.map { it.toUpdateMemoUseCaseModel() }
+    )
 
     companion object {
-        fun from(fetchMemoByIdUseCaseModel: GetMemoByIdUseCaseModel) = Success(
+        fun from(fetchMemoByIdUseCaseModel: GetMemoByIdUseCaseModel) = MemoShowUiState(
             title = fetchMemoByIdUseCaseModel.title.value,
             items = fetchMemoByIdUseCaseModel.items.map { MemoShowItemUiState.from(it) },
         )

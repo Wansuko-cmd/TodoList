@@ -8,7 +8,7 @@ import repository.room.entity.MemoWithItems
 import javax.inject.Inject
 
 class MockMemoDao @Inject constructor() : MemoDao {
-    override suspend fun getMemos(): List<MemoWithItems> = memos
+    override suspend fun getMemos(): List<MemoWithItems> memos
 
     override suspend fun getMemoById(id: String): MemoWithItems = memos.first { id == id }
 

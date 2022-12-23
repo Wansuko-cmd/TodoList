@@ -14,14 +14,7 @@ import com.wsr.ui.memo.show.MemoShowUiState
 import com.wsr.update.UpdateMemoUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class MemoShowViewModel @AssistedInject constructor(
@@ -30,14 +23,14 @@ class MemoShowViewModel @AssistedInject constructor(
     private val createItemInstanceUsecase: CreateItemUseCase,
     @Assisted("memoId") private val memoId: String,
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow<MemoShowUiState>(MemoShowUiState.Loading)
+    private val _uiState = MutableStateFlow(MemoShowUiState(isLoading = true))
     val uiState = _uiState
         .map { uiState ->
             uiState.mapItems { items -> items.sortedBy { it.checked } }
         }.stateIn(
             viewModelScope,
             SharingStarted.Lazily,
-            MemoShowUiState.Loading,
+            MemoShowUiState(isLoading = true),
         )
 
     private val _toastEffect = MutableSharedFlow<ToastEffect>()
@@ -74,8 +67,7 @@ class MemoShowViewModel @AssistedInject constructor(
         // 最後のItemでEnterが押された場合、新しいItemを追加する
         if (
             content.endsWith("\n") &&
-            _uiState.value is MemoShowUiState.Success &&
-            (_uiState.value as MemoShowUiState.Success).items.lastOrNull()?.id == itemId
+            _uiState.value.items.lastOrNull()?.id == itemId
         ) addItem()
     }
 
@@ -130,10 +122,8 @@ class MemoShowViewModel @AssistedInject constructor(
 
     private fun saveToDatabase() {
         viewModelScope.launch {
-            if (_uiState.value is MemoShowUiState.Success) {
-                updateMemoUseCase(
-                    (_uiState.value as MemoShowUiState.Success).toUpdateMemoUseCaseModel(memoId),
-                )
+            if (!_uiState.value.isLoading) {
+                updateMemoUseCase(_uiState.value.toUpdateMemoUseCaseModel(memoId))
             }
         }
     }

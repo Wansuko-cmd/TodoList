@@ -11,7 +11,8 @@ fun NavGraphBuilder.memoShow(
     navController: NavHostController,
 ) {
     composable(route = route) {
-        val memoId = it.arguments?.getString("memoId") ?: ""
+        val memoId = it.arguments?.getString("memoId")
+            ?: run { navController.popBackStack(); "" }
         MemoShowScreen(
             viewModel = memoShowViewModel(memoId = memoId),
             navController = navController,

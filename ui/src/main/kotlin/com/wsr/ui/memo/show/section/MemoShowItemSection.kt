@@ -21,7 +21,7 @@ import org.burnoutcrew.reorderable.reorderable
 @Composable
 fun MemoShowItemSection(
     modifier: Modifier = Modifier,
-    uiState: MemoShowUiState.Success,
+    uiState: MemoShowUiState,
     onChecked: (itemId: String) -> Unit,
     onChangeContent: (itemId: String, content: String) -> Unit,
     onMoveItem: (from: String, to: String) -> Unit,
