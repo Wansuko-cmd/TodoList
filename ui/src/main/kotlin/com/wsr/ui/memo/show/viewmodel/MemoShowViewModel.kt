@@ -11,7 +11,6 @@ import com.wsr.result.consume
 import com.wsr.ui.R
 import com.wsr.ui.memo.show.MemoShowItemUiState
 import com.wsr.ui.memo.show.MemoShowUiState
-import com.wsr.ui.memo.show.MemoShowUiState.Companion.toUpdateMemoUseCaseModel
 import com.wsr.update.UpdateMemoUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -31,14 +30,14 @@ class MemoShowViewModel @AssistedInject constructor(
     private val createItemInstanceUsecase: CreateItemUseCase,
     @Assisted("memoId") private val memoId: String,
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(MemoShowUiState())
-    val uiState = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow<MemoShowUiState>(MemoShowUiState.Loading)
+    val uiState = _uiState
         .map { uiState ->
-            uiState.copy(items = uiState.items.sortedBy { it.checked })
+            uiState.mapItems { items -> items.sortedBy { it.checked } }
         }.stateIn(
             viewModelScope,
             SharingStarted.Lazily,
-            MemoShowUiState(),
+            MemoShowUiState.Loading,
         )
 
     private val _toastEffect = MutableSharedFlow<ToastEffect>()
@@ -75,7 +74,8 @@ class MemoShowViewModel @AssistedInject constructor(
         // 最後のItemでEnterが押された場合、新しいItemを追加する
         if (
             content.endsWith("\n") &&
-            _uiState.value.items.lastOrNull()?.id == itemId
+            _uiState.value is MemoShowUiState.Success &&
+            (_uiState.value as MemoShowUiState.Success).items.lastOrNull()?.id == itemId
         ) addItem()
     }
 
@@ -105,29 +105,36 @@ class MemoShowViewModel @AssistedInject constructor(
         saveToDatabase()
     }
 
-    private inline fun updateItem(itemId: String, block: (MemoShowItemUiState) -> MemoShowItemUiState) {
+    private inline fun updateItem(
+        itemId: String,
+        crossinline block: (MemoShowItemUiState) -> MemoShowItemUiState,
+    ) {
         _uiState.update { uiState ->
-            uiState.copy(
-                items = uiState.items
+            uiState.mapItems { items ->
+                items
                     .map { it.copy(shouldFocus = false) }
                     .map { item -> if (item.id == itemId) block(item) else item }
-            )
+            }
         }
         saveToDatabase()
     }
 
-    private inline fun updateItems(block: (List<MemoShowItemUiState>) -> List<MemoShowItemUiState>) {
+    private inline fun updateItems(
+        crossinline block: (List<MemoShowItemUiState>) -> List<MemoShowItemUiState>,
+    ) {
         _uiState.update { uiState ->
-            uiState.copy(
-                items = block(uiState.items.map { it.copy(shouldFocus = false) })
-            )
+            uiState.mapItems { items -> block(items).map { it.copy(shouldFocus = false) } }
         }
         saveToDatabase()
     }
 
     private fun saveToDatabase() {
         viewModelScope.launch {
-            updateMemoUseCase(_uiState.value.toUpdateMemoUseCaseModel(memoId))
+            if (_uiState.value is MemoShowUiState.Success) {
+                updateMemoUseCase(
+                    (_uiState.value as MemoShowUiState.Success).toUpdateMemoUseCaseModel(memoId),
+                )
+            }
         }
     }
 }

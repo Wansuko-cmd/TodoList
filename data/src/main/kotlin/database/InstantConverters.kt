@@ -1,4 +1,4 @@
-package repository.room
+package database
 
 import androidx.room.TypeConverter
 import kotlinx.datetime.Instant

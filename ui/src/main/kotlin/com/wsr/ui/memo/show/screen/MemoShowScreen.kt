@@ -27,16 +27,20 @@ fun MemoShowScreen(
         viewModel.getMemoAndUpdateUiState()
     }
 
-    MemoShowScreen(
-        modifier = modifier,
-        uiState = uiState,
-        navController = navController,
-        onChecked = viewModel::changeItemChecked,
-        onChangeContent = viewModel::changeItemContent,
-        addItem = viewModel::addItem,
-        deleteCheckedItems = viewModel::deleteCheckedItem,
-        onMoveItem = viewModel::swapItem,
-    )
+    when (uiState) {
+        is MemoShowUiState.Loading -> Unit
+        is MemoShowUiState.Success ->
+            MemoShowScreen(
+                modifier = modifier,
+                uiState = uiState as MemoShowUiState.Success,
+                navController = navController,
+                onChecked = viewModel::changeItemChecked,
+                onChangeContent = viewModel::changeItemContent,
+                addItem = viewModel::addItem,
+                deleteCheckedItems = viewModel::deleteCheckedItem,
+                onMoveItem = viewModel::swapItem,
+            )
+    }
 
     observeToastEffect(viewModel.toastEffect)
 }
@@ -44,7 +48,7 @@ fun MemoShowScreen(
 @Composable
 fun MemoShowScreen(
     modifier: Modifier = Modifier,
-    uiState: MemoShowUiState,
+    uiState: MemoShowUiState.Success,
     navController: NavHostController,
     onChecked: (itemId: String) -> Unit,
     onChangeContent: (itemId: String, content: String) -> Unit,
