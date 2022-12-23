@@ -3,20 +3,22 @@ package database
 import database.dao.MemoDao
 import database.entity.ItemEntity
 import database.entity.MemoEntity
+import kotlinx.coroutines.delay
 import kotlinx.datetime.Clock
 import repository.room.entity.MemoWithItems
 import javax.inject.Inject
 
 class MockMemoDao @Inject constructor() : MemoDao {
-    override suspend fun getMemos(): List<MemoWithItems> memos
+    override suspend fun getMemos(): List<MemoWithItems> = memos.also { delay(1000L) }
 
-    override suspend fun getMemoById(id: String): MemoWithItems = memos.first { id == id }
+    override suspend fun getMemoById(id: String): MemoWithItems =
+        memos.first { it.memo.id == id }.also { delay(1000L) }
 
-    override suspend fun upsertMemo(memoEntity: MemoEntity) = Unit
+    override suspend fun upsertMemo(memoEntity: MemoEntity) = Unit.also { delay(1000L) }
 
-    override suspend fun upsertItems(items: List<ItemEntity>) = Unit
+    override suspend fun upsertItems(items: List<ItemEntity>) = Unit.also { delay(1000L) }
 
-    override suspend fun deleteMemo(id: String) = Unit
+    override suspend fun deleteMemo(id: String) = Unit.also { delay(1000L) }
 }
 
 val memos = List(10) { memoIndex ->

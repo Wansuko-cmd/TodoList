@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.wsr.common.composable.LoadingScreen
 import com.wsr.common.effect.observeToastEffect
 import com.wsr.ui.memo.show.MemoShowUiState
 import com.wsr.ui.memo.show.section.MemoShowItemSection
@@ -65,7 +66,6 @@ fun MemoShowScreen(
             MemoShowFloatActionButton(onClick = addItem)
         }
     ) { innerPadding ->
-        if (uiState.isLoading) MemoShowLoadingScreen()
         MemoShowItemSection(
             modifier = Modifier.padding(innerPadding),
             uiState = uiState,
@@ -73,5 +73,6 @@ fun MemoShowScreen(
             onChangeContent = onChangeContent,
             onMoveItem = onMoveItem,
         )
+        if (uiState.isLoading) LoadingScreen()
     }
 }
