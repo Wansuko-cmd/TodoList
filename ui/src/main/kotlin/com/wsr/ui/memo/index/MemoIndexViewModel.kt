@@ -26,7 +26,7 @@ class MemoIndexViewModel @Inject constructor(
     private val createMemoUseCase: CreateMemoUseCase,
     private val deleteMemoUseCase: DeleteMemoUseCase,
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(MemoIndexUiState())
+    private val _uiState = MutableStateFlow(MemoIndexUiState(isLoading = true))
     val uiState = _uiState.asStateFlow()
 
     private val _toastEffect = MutableSharedFlow<ToastEffect>()
@@ -61,13 +61,13 @@ class MemoIndexViewModel @Inject constructor(
 
     fun showDialog() {
         viewModelScope.launch {
-            _uiState.update { it.copy(showCreateMemoDialog = true) }
+            _uiState.update { it.copy(isShowingCreateMemoDialog = true) }
         }
     }
 
     fun dismissDialog() {
         viewModelScope.launch {
-            _uiState.update { it.copy(showCreateMemoDialog = false) }
+            _uiState.update { it.copy(isShowingCreateMemoDialog = false) }
         }
     }
 

@@ -10,6 +10,7 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.wsr.Route
+import com.wsr.common.composable.LoadingScreen
 import com.wsr.common.effect.observeToastEffect
 import com.wsr.ui.memo.index.MemoIndexUiState
 import com.wsr.ui.memo.index.MemoIndexViewModel
@@ -37,7 +38,7 @@ fun MemoIndexScreen(
         onClickDeleteButton = viewModel::deleteMemo,
     )
 
-    if (uiState.showCreateMemoDialog) {
+    if (uiState.isShowingCreateMemoDialog) {
         MemoIndexCreateMemoDialog(
             onDismiss = viewModel::dismissDialog,
             onConfirm = viewModel::createMemo,
@@ -70,5 +71,6 @@ fun MemoIndexScreen(
             onClickTile = { memoId -> navController.navigate(Route.Memo.Show.with(memoId)) },
             onClickDeleteButton = onClickDeleteButton,
         )
+        if (uiState.isLoading) LoadingScreen()
     }
 }
