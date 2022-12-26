@@ -20,6 +20,7 @@ fun MemoShowTopBar(
     modifier: Modifier = Modifier,
     navController: NavController,
     memoTitle: String,
+    createSharedText: () -> String,
     deleteCheckedItems: () -> Unit,
 ) {
     val context = LocalContext.current
@@ -45,7 +46,7 @@ fun MemoShowTopBar(
                 val intent = Intent().apply {
                     action = Intent.ACTION_SEND
                     type = "text/plain"
-                    putExtra(Intent.EXTRA_TEXT, "text")
+                    putExtra(Intent.EXTRA_TEXT, createSharedText())
                 }
                 context.startActivity(intent)
             }) {

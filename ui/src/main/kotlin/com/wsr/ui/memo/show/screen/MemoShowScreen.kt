@@ -39,6 +39,7 @@ fun MemoShowScreen(
         onChecked = viewModel::changeItemChecked,
         onChangeContent = viewModel::changeItemContent,
         addItem = viewModel::addItem,
+        createSharedText = viewModel::createSharedText,
         deleteCheckedItems = viewModel::deleteCheckedItem,
         onMoveItem = viewModel::swapItem,
     )
@@ -55,6 +56,7 @@ fun MemoShowScreen(
     onChecked: (itemId: ItemId) -> Unit,
     onChangeContent: (itemId: ItemId, content: ItemContent) -> Unit,
     addItem: () -> Unit,
+    createSharedText: () -> String,
     deleteCheckedItems: () -> Unit,
     onMoveItem: (from: ItemId, to: ItemId) -> Unit,
 ) {
@@ -64,6 +66,7 @@ fun MemoShowScreen(
             MemoShowTopBar(
                 navController = navController,
                 memoTitle = uiState.title.value,
+                createSharedText = createSharedText,
                 deleteCheckedItems = deleteCheckedItems,
             )
         },

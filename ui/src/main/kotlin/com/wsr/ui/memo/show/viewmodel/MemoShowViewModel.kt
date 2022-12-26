@@ -104,9 +104,11 @@ class MemoShowViewModel @AssistedInject constructor(
         }
     }
 
-    fun createSharedText() {
-
-    }
+    fun createSharedText(): String =
+        _uiState.value
+            .items
+            .filterNot { it.checked }
+            .joinToString(prefix = "・ ", separator = "\n・ ") { it.content.value }
 
     override fun onCleared() {
         super.onCleared()
