@@ -4,8 +4,6 @@ kotlin = "1.7.0"
 coroutine = "1.6.4"
 datetime = "0.4.0"
 
-androidGradlePlugin = "7.3.1"
-
 # AndroidX
 androidx = "1.8.0"
 androidx-lifecycle-runtime = "2.5.1"
@@ -105,9 +103,3 @@ androidx-compose = [
 ]
 androidx-compose-test = ["androidx-compose-test-junit4", "androidx-compose-test-manifest", "androidx-compose-test-uitooling"]
 test = ["test-truth", "test-junit4", "test-turbine", "test-mockk", "test-kotlin-test"]
-
-[plugins]
-kapt = { id = "org.jetbrains.kotlin.kapt" }
-android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }

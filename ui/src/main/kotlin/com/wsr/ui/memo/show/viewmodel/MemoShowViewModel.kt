@@ -110,7 +110,6 @@ class MemoShowViewModel @AssistedInject constructor(
         }
     }
 
-
     override fun onCleared() {
         super.onCleared()
         saveToDatabase()
@@ -147,3 +146,4 @@ class MemoShowViewModel @AssistedInject constructor(
     }
 }
 
+data class FocusEffect(val itemId: ItemId?)
