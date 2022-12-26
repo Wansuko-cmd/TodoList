@@ -39,10 +39,6 @@ class MemoShowViewModel @AssistedInject constructor(
     private val _toastEffect = MutableSharedFlow<ToastEffect>()
     val toastEffect = _toastEffect.asSharedFlow()
 
-    private val _focusEffect = MutableSharedFlow<FocusEffect>()
-    val focusEffect = _focusEffect
-        .stateIn(viewModelScope, SharingStarted.Lazily, FocusEffect(null))
-
     private val _sharedTextEffect = MutableSharedFlow<ShareItemsEffect>()
     val sharedTextEffect = _sharedTextEffect.asSharedFlow()
 
@@ -91,7 +87,7 @@ class MemoShowViewModel @AssistedInject constructor(
         val newItem = MemoShowItemUiState
             .from(createItemInstanceUsecase())
         updateItems { it + newItem }
-        viewModelScope.launch { _focusEffect.emit(FocusEffect(newItem.id)) }
+        _uiState.update { it.copy(shouldFocusItemId = newItem.id) }
     }
 
     fun deleteCheckedItem() {
@@ -151,4 +147,3 @@ class MemoShowViewModel @AssistedInject constructor(
     }
 }
 
-data class FocusEffect(val itemId: ItemId?)

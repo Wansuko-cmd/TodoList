@@ -14,6 +14,7 @@ import com.wsr.update.UpdateMemoUseCaseModel
 data class MemoShowUiState(
     val title: MemoTitle = MemoTitle(""),
     val items: List<MemoShowItemUiState> = listOf(),
+    val shouldFocusItemId: ItemId? = null,
     val isLoading: Boolean = false,
 ) {
 

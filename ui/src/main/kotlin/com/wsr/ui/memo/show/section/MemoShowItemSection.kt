@@ -24,7 +24,6 @@ import org.burnoutcrew.reorderable.reorderable
 fun MemoShowItemSection(
     modifier: Modifier = Modifier,
     uiState: MemoShowUiState,
-    shouldFocusItemId: ItemId?,
     onChecked: (itemId: ItemId) -> Unit,
     onChangeContent: (itemId: ItemId, content: ItemContent) -> Unit,
     onMoveItem: (from: ItemId, to: ItemId) -> Unit,
@@ -58,7 +57,7 @@ fun MemoShowItemSection(
                         .padding(vertical = 8.dp, horizontal = 16.dp),
                     itemUiState = item,
                     isDragging = isDragging,
-                    shouldFocus = item.id == shouldFocusItemId,
+                    shouldFocus = item.id == uiState.shouldFocusItemId,
                     onChecked = onChecked,
                     onChangeContent = onChangeContent,
                 )

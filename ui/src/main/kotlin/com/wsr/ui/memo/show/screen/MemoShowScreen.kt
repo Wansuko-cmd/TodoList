@@ -26,7 +26,6 @@ fun MemoShowScreen(
     navController: NavHostController,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val shouldFocusItemId by viewModel.focusEffect.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
         viewModel.getMemoAndUpdateUiState()
@@ -35,12 +34,11 @@ fun MemoShowScreen(
     MemoShowScreen(
         modifier = modifier,
         uiState = uiState,
-        shouldFocusItemId = shouldFocusItemId.itemId,
         navController = navController,
         onChecked = viewModel::changeItemChecked,
         onChangeContent = viewModel::changeItemContent,
-        shareItems = viewModel::shareItems,
         addItem = viewModel::addItem,
+        shareItems = viewModel::shareItems,
         deleteCheckedItems = viewModel::deleteCheckedItem,
         onMoveItem = viewModel::swapItem,
     )
@@ -53,7 +51,6 @@ fun MemoShowScreen(
 fun MemoShowScreen(
     modifier: Modifier = Modifier,
     uiState: MemoShowUiState,
-    shouldFocusItemId: ItemId?,
     navController: NavHostController,
     onChecked: (itemId: ItemId) -> Unit,
     onChangeContent: (itemId: ItemId, content: ItemContent) -> Unit,
@@ -79,7 +76,6 @@ fun MemoShowScreen(
         MemoShowItemSection(
             modifier = Modifier.padding(innerPadding),
             uiState = uiState,
-            shouldFocusItemId = shouldFocusItemId,
             onChecked = onChecked,
             onChangeContent = onChangeContent,
             onMoveItem = onMoveItem,
