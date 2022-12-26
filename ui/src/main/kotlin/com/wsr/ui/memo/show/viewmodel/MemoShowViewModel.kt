@@ -104,6 +104,10 @@ class MemoShowViewModel @AssistedInject constructor(
         }
     }
 
+    fun createSharedText() {
+
+    }
+
     override fun onCleared() {
         super.onCleared()
         saveToDatabase()
