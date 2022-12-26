@@ -54,7 +54,6 @@ fun MemoShowTopBar(
                     imageVector = Icons.Filled.Share,
                     contentDescription = null,
                 )
-
             }
             IconButton(onClick = deleteCheckedItems) {
                 Icon(

@@ -42,6 +42,9 @@ class MemoShowViewModel @AssistedInject constructor(
     val focusEffect = _focusEffect
         .stateIn(viewModelScope, SharingStarted.Lazily, FocusEffect(null))
 
+    private val _sharedTextEffect = MutableSharedFlow<SharedTextEffect>()
+    val sharedTextEffect = _sharedTextEffect.asSharedFlow()
+
     fun getMemoAndUpdateUiState() {
         viewModelScope.launch {
             getMemoByIdUseCase(MemoId(memoId)).consume(
@@ -147,3 +150,5 @@ class MemoShowViewModel @AssistedInject constructor(
 }
 
 data class FocusEffect(val itemId: ItemId?)
+
+data class SharedTextEffect(val text: String)
