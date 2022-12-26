@@ -6,6 +6,8 @@
     <string name="memo_index_create_memo_confirm_button">完了</string>
     <string name="memo_index_delete_memo">削除</string>
 
+    <string name="memo_show_share_items_on_loading_error_message">ローディング中・・・</string>
+    <string name="memo_show_share_items_no_items_error_message">共有するアイテムがありません</string>
     <string name="memo_show_share_items_prefix">・ </string>
 
     <string name="setting_index_top_bar">設定</string>

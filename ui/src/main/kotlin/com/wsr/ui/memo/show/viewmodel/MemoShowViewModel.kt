@@ -106,7 +106,14 @@ class MemoShowViewModel @AssistedInject constructor(
 
     fun shareItems() {
         viewModelScope.launch {
-            _sharedTextEffect.emit(ShareItemsEffect(_uiState.value.items))
+            when {
+                _uiState.value.isLoading ->
+                    _toastEffect.emit(ToastEffect(R.string.memo_show_share_items_on_loading_error_message))
+                _uiState.value.items.isEmpty() ->
+                    _toastEffect.emit(ToastEffect(R.string.memo_show_share_items_no_items_error_message))
+                else ->
+                    _sharedTextEffect.emit(ShareItemsEffect(_uiState.value.items))
+            }
         }
     }
 
@@ -145,5 +152,3 @@ class MemoShowViewModel @AssistedInject constructor(
         }
     }
 }
-
-data class FocusEffect(val itemId: ItemId?)
