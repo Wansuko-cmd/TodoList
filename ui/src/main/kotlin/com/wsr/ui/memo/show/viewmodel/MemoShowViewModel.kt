@@ -9,6 +9,7 @@ import com.wsr.get.GetMemoByIdUseCaseModel
 import com.wsr.memo.ItemContent
 import com.wsr.memo.ItemId
 import com.wsr.memo.MemoId
+import com.wsr.memo.MemoTitle
 import com.wsr.result.consume
 import com.wsr.ui.R
 import com.wsr.ui.memo.show.MemoShowItemUiState
@@ -117,8 +118,26 @@ class MemoShowViewModel @AssistedInject constructor(
         }
     }
 
+    fun showDialog() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isShowingEditMemoTitleDialog = true) }
+        }
+    }
+
+    fun dismissDialog() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isShowingEditMemoTitleDialog = false) }
+        }
+    }
+
     override fun onCleared() {
         super.onCleared()
+        saveToDatabase()
+    }
+
+    fun updateMemoTitle(title: String) {
+        dismissDialog()
+        _uiState.update { uiState -> uiState.copy(title = MemoTitle(title))}
         saveToDatabase()
     }
 

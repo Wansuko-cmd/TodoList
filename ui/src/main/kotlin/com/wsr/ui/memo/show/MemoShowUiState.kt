@@ -16,6 +16,7 @@ data class MemoShowUiState(
     val items: List<MemoShowItemUiState> = listOf(),
     val shouldFocusItemId: ItemId? = null,
     val isLoading: Boolean = false,
+    val isShowingEditMemoTitleDialog: Boolean = false,
 ) {
 
     fun mapItems(

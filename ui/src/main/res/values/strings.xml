@@ -6,6 +6,9 @@
     <string name="memo_index_create_memo_confirm_button">完了</string>
     <string name="memo_index_delete_memo">削除</string>
 
+    <string name="memo_show_edit_title_memo_title_title">タイトル</string>
+    <string name="memo_show_edit_title_dismiss_button">キャンセル</string>
+    <string name="memo_show_edit_title_confirm_button">完了</string>
     <string name="memo_show_share_items_on_loading_error_message">ローディング中・・・</string>
     <string name="memo_show_share_items_no_items_error_message">共有するアイテムがありません</string>
     <string name="memo_show_share_items_prefix">・ </string>

@@ -13,7 +13,9 @@ import com.wsr.common.composable.LoadingScreen
 import com.wsr.common.effect.ObserveToastEffect
 import com.wsr.memo.ItemContent
 import com.wsr.memo.ItemId
+import com.wsr.ui.memo.index.component.MemoIndexCreateMemoDialog
 import com.wsr.ui.memo.show.MemoShowUiState
+import com.wsr.ui.memo.show.component.MemoShowEditMemoTitleDialog
 import com.wsr.ui.memo.show.effect.ObserveShareItemsEffect
 import com.wsr.ui.memo.show.section.MemoShowItemSection
 import com.wsr.ui.memo.show.viewmodel.MemoShowViewModel
@@ -38,10 +40,19 @@ fun MemoShowScreen(
         onChecked = viewModel::changeItemChecked,
         onChangeContent = viewModel::changeItemContent,
         addItem = viewModel::addItem,
+        onClickTitle = viewModel::showDialog,
         shareItems = viewModel::shareItems,
         deleteCheckedItems = viewModel::deleteCheckedItem,
         onMoveItem = viewModel::swapItem,
     )
+
+    if (uiState.isShowingEditMemoTitleDialog) {
+        MemoShowEditMemoTitleDialog(
+            initialValue = uiState.title.value,
+            onDismiss = viewModel::dismissDialog,
+            onConfirm = viewModel::updateMemoTitle,
+        )
+    }
 
     ObserveToastEffect(viewModel.toastEffect)
     ObserveShareItemsEffect(viewModel.sharedTextEffect)
@@ -55,6 +66,7 @@ fun MemoShowScreen(
     onChecked: (itemId: ItemId) -> Unit,
     onChangeContent: (itemId: ItemId, content: ItemContent) -> Unit,
     addItem: () -> Unit,
+    onClickTitle: () -> Unit,
     shareItems: () -> Unit,
     deleteCheckedItems: () -> Unit,
     onMoveItem: (from: ItemId, to: ItemId) -> Unit,
@@ -65,6 +77,7 @@ fun MemoShowScreen(
             MemoShowTopBar(
                 navController = navController,
                 memoTitle = uiState.title.value,
+                onClickTitle = onClickTitle,
                 shareItems = shareItems,
                 deleteCheckedItems = deleteCheckedItems,
             )
