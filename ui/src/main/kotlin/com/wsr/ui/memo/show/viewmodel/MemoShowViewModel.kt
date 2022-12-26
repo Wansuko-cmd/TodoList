@@ -13,6 +13,7 @@ import com.wsr.result.consume
 import com.wsr.ui.R
 import com.wsr.ui.memo.show.MemoShowItemUiState
 import com.wsr.ui.memo.show.MemoShowUiState
+import com.wsr.ui.memo.show.effect.ShareItemsEffect
 import com.wsr.update.UpdateMemoUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -42,7 +43,7 @@ class MemoShowViewModel @AssistedInject constructor(
     val focusEffect = _focusEffect
         .stateIn(viewModelScope, SharingStarted.Lazily, FocusEffect(null))
 
-    private val _sharedTextEffect = MutableSharedFlow<SharedTextEffect>()
+    private val _sharedTextEffect = MutableSharedFlow<ShareItemsEffect>()
     val sharedTextEffect = _sharedTextEffect.asSharedFlow()
 
     fun getMemoAndUpdateUiState() {
@@ -107,11 +108,16 @@ class MemoShowViewModel @AssistedInject constructor(
         }
     }
 
-    fun createSharedText(): String =
-        _uiState.value
+    fun shareItems() {
+        val text = _uiState.value
             .items
             .filterNot { it.checked }
             .joinToString(prefix = "・ ", separator = "\n・ ") { it.content.value }
+        viewModelScope.launch {
+            _sharedTextEffect.emit(ShareItemsEffect(text))
+        }
+    }
+
 
     override fun onCleared() {
         super.onCleared()
@@ -150,5 +156,3 @@ class MemoShowViewModel @AssistedInject constructor(
 }
 
 data class FocusEffect(val itemId: ItemId?)
-
-data class SharedTextEffect(val text: String)

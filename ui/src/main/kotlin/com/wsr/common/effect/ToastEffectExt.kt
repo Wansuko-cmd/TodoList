@@ -12,7 +12,7 @@ data class ToastEffect(
 )
 
 @Composable
-fun observeToastEffect(flow: Flow<ToastEffect>) {
+fun ObserveToastEffect(flow: Flow<ToastEffect>) {
     val context = LocalContext.current
     LaunchedEffect(Unit) {
         flow.collectLatest {

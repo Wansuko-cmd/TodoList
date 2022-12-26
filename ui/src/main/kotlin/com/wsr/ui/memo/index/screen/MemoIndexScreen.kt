@@ -11,7 +11,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.wsr.Route
 import com.wsr.common.composable.LoadingScreen
-import com.wsr.common.effect.observeToastEffect
+import com.wsr.common.effect.ObserveToastEffect
 import com.wsr.ui.memo.index.MemoIndexUiState
 import com.wsr.ui.memo.index.MemoIndexViewModel
 import com.wsr.ui.memo.index.component.MemoIndexCreateMemoDialog
@@ -45,7 +45,7 @@ fun MemoIndexScreen(
         )
     }
 
-    observeToastEffect(viewModel.toastEffect)
+    ObserveToastEffect(viewModel.toastEffect)
 }
 
 @Composable
