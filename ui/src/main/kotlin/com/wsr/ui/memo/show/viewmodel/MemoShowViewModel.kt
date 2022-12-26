@@ -109,12 +109,8 @@ class MemoShowViewModel @AssistedInject constructor(
     }
 
     fun shareItems() {
-        val text = _uiState.value
-            .items
-            .filterNot { it.checked }
-            .joinToString(prefix = "・ ", separator = "\n・ ") { it.content.value }
         viewModelScope.launch {
-            _sharedTextEffect.emit(ShareItemsEffect(text))
+            _sharedTextEffect.emit(ShareItemsEffect(_uiState.value.items))
         }
     }
 

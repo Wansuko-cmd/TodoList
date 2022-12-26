@@ -6,6 +6,8 @@
     <string name="memo_index_create_memo_confirm_button">完了</string>
     <string name="memo_index_delete_memo">削除</string>
 
+    <string name="memo_show_share_items_prefix">・ </string>
+
     <string name="setting_index_top_bar">設定</string>
     <string name="setting_index_text_size">文字の大きさ</string>
 
