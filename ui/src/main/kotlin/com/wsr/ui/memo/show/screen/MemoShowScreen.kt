@@ -13,7 +13,6 @@ import com.wsr.common.composable.LoadingScreen
 import com.wsr.common.effect.ObserveToastEffect
 import com.wsr.memo.ItemContent
 import com.wsr.memo.ItemId
-import com.wsr.ui.memo.index.component.MemoIndexCreateMemoDialog
 import com.wsr.ui.memo.show.MemoShowUiState
 import com.wsr.ui.memo.show.component.MemoShowEditMemoTitleDialog
 import com.wsr.ui.memo.show.effect.ObserveShareItemsEffect

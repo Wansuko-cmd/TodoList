@@ -34,7 +34,7 @@ fun MemoShowItemSection(
             onMoveItem(ItemId(from.key.toString()), ItemId(to.key.toString()))
         },
         // 一番上のアイテムだけ動かないようにする
-        canDragOver = { draggedOver, _ ->  draggedOver.index != 0 },
+        canDragOver = { draggedOver, _ -> draggedOver.index != 0 },
     )
 
     LazyColumn(
