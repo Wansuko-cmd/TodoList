@@ -8,6 +8,7 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
@@ -36,6 +37,13 @@ fun MemoShowTopBar(
             }
         },
         actions = {
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(
+                    imageVector = Icons.Filled.Share,
+                    contentDescription = null,
+                )
+
+            }
             IconButton(onClick = deleteCheckedItems) {
                 Icon(
                     imageVector = Icons.Filled.Delete,
