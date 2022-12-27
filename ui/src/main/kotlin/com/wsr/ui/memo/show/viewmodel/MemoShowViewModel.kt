@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wsr.common.effect.ToastEffect
 import com.wsr.create.CreateItemUseCase
-import com.wsr.divide.DivideMemoUseCase
+import com.wsr.operate.DivideMemoUseCase
 import com.wsr.get.GetMemoByIdUseCase
 import com.wsr.get.GetMemoByIdUseCaseModel
 import com.wsr.memo.ItemContent

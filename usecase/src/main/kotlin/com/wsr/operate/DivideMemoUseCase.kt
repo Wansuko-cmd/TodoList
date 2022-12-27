@@ -1,4 +1,4 @@
-package com.wsr.divide
+package com.wsr.operate
 
 import com.wsr.di.DefaultDispatcher
 import com.wsr.exception.DomainException
