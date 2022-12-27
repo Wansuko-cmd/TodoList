@@ -36,7 +36,6 @@ data class UpdateMemoUseCaseModel(
             id = id,
             title = title,
             items = items.map { it.toItem() },
-            accessedAt = Clock.System.now(),
         )
     }
 }

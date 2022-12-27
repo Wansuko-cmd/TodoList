@@ -11,10 +11,13 @@ class Memo private constructor(
     val accessedAt: Instant,
 ) {
     companion object {
-        fun create(title: MemoTitle) = Memo(
+        fun create(
+            title: MemoTitle,
+            items: List<Item> = listOf(Item.create()),
+        ) = Memo(
             id = MemoId(UUID.randomUUID().toString()),
             title = title,
-            items = listOf(Item.create()),
+            items = items,
             accessedAt = Clock.System.now(),
         )
 
@@ -22,7 +25,7 @@ class Memo private constructor(
             id: MemoId,
             title: MemoTitle,
             items: List<Item>,
-            accessedAt: Instant,
+            accessedAt: Instant = Clock.System.now(),
         ) = Memo(
             id = id,
             title = title,
