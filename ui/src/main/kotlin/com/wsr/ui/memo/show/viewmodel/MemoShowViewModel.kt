@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wsr.common.effect.ToastEffect
 import com.wsr.create.CreateItemUseCase
+import com.wsr.divide.DivideMemoUseCase
 import com.wsr.get.GetMemoByIdUseCase
 import com.wsr.get.GetMemoByIdUseCaseModel
 import com.wsr.memo.ItemContent
@@ -31,6 +32,7 @@ class MemoShowViewModel @AssistedInject constructor(
     private val getMemoByIdUseCase: GetMemoByIdUseCase,
     private val updateMemoUseCase: UpdateMemoUseCase,
     private val createItemInstanceUsecase: CreateItemUseCase,
+    private val divideMemoUseCase: DivideMemoUseCase,
     @Assisted("memoId") private val memoId: String,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(MemoShowUiState(isLoading = true))
@@ -121,6 +123,13 @@ class MemoShowViewModel @AssistedInject constructor(
                 else ->
                     _sharedTextEffect.emit(ShareItemsEffect(_uiState.value.items))
             }
+        }
+    }
+
+    fun divideItems() {
+        viewModelScope.launch {
+            divideMemoUseCase(MemoId(memoId), MemoTitle("Test"))
+            getMemoAndUpdateUiState()
         }
     }
 
