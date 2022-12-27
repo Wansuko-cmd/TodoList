@@ -10,6 +10,14 @@ class Memo private constructor(
     val items: List<Item>,
     val accessedAt: Instant,
 ) {
+
+    fun addItem() = Memo.reconstruct(
+        id = id,
+        title = title,
+        items = items + Item.create(),
+        accessedAt = Clock.System.now(),
+    )
+
     companion object {
         fun create(
             title: MemoTitle,
