@@ -1,4 +1,4 @@
-package com.wsr.create
+package com.wsr.command
 
 import com.wsr.di.DefaultDispatcher
 import com.wsr.memo.Memo

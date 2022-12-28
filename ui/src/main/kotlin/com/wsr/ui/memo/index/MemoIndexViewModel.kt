@@ -3,8 +3,8 @@ package com.wsr.ui.memo.index
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wsr.common.effect.ToastEffect
-import com.wsr.create.CreateMemoUseCase
-import com.wsr.delete.DeleteMemoUseCase
+import com.wsr.command.CreateMemoUseCase
+import com.wsr.command.DeleteMemoUseCase
 import com.wsr.get.GetAllMemoUseCase
 import com.wsr.get.GetAllMemoUseCaseModel
 import com.wsr.memo.MemoId

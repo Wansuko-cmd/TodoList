@@ -1,4 +1,4 @@
-package com.wsr.operate
+package com.wsr.command
 
 import com.wsr.di.DefaultDispatcher
 import com.wsr.exception.DomainException

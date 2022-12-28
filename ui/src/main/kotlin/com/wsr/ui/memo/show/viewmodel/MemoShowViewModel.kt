@@ -10,8 +10,8 @@ import com.wsr.memo.ItemContent
 import com.wsr.memo.ItemId
 import com.wsr.memo.MemoId
 import com.wsr.memo.MemoTitle
-import com.wsr.operate.AddItemUseCase
-import com.wsr.operate.DivideMemoUseCase
+import com.wsr.command.AddItemUseCase
+import com.wsr.command.DivideMemoUseCase
 import com.wsr.result.consume
 import com.wsr.ui.R
 import com.wsr.ui.memo.show.MemoShowItemUiState
