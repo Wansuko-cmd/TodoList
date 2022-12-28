@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.wsr.command.AddItemUseCase
 import com.wsr.command.ChangeItemCheckedUseCase
 import com.wsr.command.DivideMemoUseCase
+import com.wsr.command.UpdateItemContentUseCase
 import com.wsr.common.effect.ToastEffect
 import com.wsr.create.CreateItemUseCase
 import com.wsr.get.GetMemoByIdUseCase
@@ -18,7 +19,6 @@ import com.wsr.ui.R
 import com.wsr.ui.memo.show.MemoShowItemUiState
 import com.wsr.ui.memo.show.MemoShowUiState
 import com.wsr.ui.memo.show.effect.ShareItemsEffect
-import com.wsr.update.UpdateMemoUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -32,9 +32,8 @@ import kotlinx.coroutines.launch
 
 class MemoShowViewModel @AssistedInject constructor(
     private val getMemoFlowByIdUseCase: GetMemoByIdUseCase,
-    private val updateMemoUseCase: UpdateMemoUseCase,
-    private val createItemInstanceUsecase: CreateItemUseCase,
     private val changeItemCheckedUseCase: ChangeItemCheckedUseCase,
+    private val updateItemContentUseCase: UpdateItemContentUseCase,
     private val addItemUseCase: AddItemUseCase,
     private val divideMemoUseCase: DivideMemoUseCase,
     @Assisted("memoId") private val memoId: String,
@@ -85,12 +84,8 @@ class MemoShowViewModel @AssistedInject constructor(
     }
 
     fun changeItemContent(itemId: ItemId, content: ItemContent) {
-        updateItem(itemId) {
-            it.copy(
-                content = ItemContent(
-                    content.value.replace("\n", ""),
-                ),
-            )
+        viewModelScope.launch {
+            updateItemContentUseCase(MemoId(memoId), itemId, content)
         }
 
         // 最後のItemでEnterが押された場合、新しいItemを追加する

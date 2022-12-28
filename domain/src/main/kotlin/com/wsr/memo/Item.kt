@@ -7,6 +7,12 @@ class Item private constructor(
     val checked: Boolean,
     val content: ItemContent,
 ) {
+    fun updateContent(content: ItemContent) = reconstruct(
+        id = id,
+        checked = checked,
+        content = ItemContent(content.value.replace("\n", "")),
+    )
+
     fun changeChecked() = reconstruct(
         id = id,
         checked = !checked,
