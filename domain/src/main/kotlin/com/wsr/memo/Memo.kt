@@ -10,8 +10,14 @@ class Memo private constructor(
     val items: List<Item>,
     val accessedAt: Instant,
 ) {
+    fun changeChecked(itemId: ItemId) = reconstruct(
+        id = id,
+        title = title,
+        items = items.map { item -> if (item.id == itemId) item.changeChecked() else item },
+        accessedAt = Clock.System.now(),
+    )
 
-    fun addItem() = Memo.reconstruct(
+    fun addItem() = reconstruct(
         id = id,
         title = title,
         items = items + Item.create(),

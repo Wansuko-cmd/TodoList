@@ -7,6 +7,12 @@ class Item private constructor(
     val checked: Boolean,
     val content: ItemContent,
 ) {
+    fun changeChecked() = reconstruct(
+        id = id,
+        checked = !checked,
+        content = content,
+    )
+
     companion object {
         fun create() = Item(
             id = ItemId(UUID.randomUUID().toString()),

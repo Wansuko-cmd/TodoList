@@ -2,6 +2,9 @@ package com.wsr.ui.memo.show.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.wsr.command.AddItemUseCase
+import com.wsr.command.ChangeItemCheckedUseCase
+import com.wsr.command.DivideMemoUseCase
 import com.wsr.common.effect.ToastEffect
 import com.wsr.create.CreateItemUseCase
 import com.wsr.get.GetMemoByIdUseCase
@@ -10,8 +13,6 @@ import com.wsr.memo.ItemContent
 import com.wsr.memo.ItemId
 import com.wsr.memo.MemoId
 import com.wsr.memo.MemoTitle
-import com.wsr.command.AddItemUseCase
-import com.wsr.command.DivideMemoUseCase
 import com.wsr.result.consume
 import com.wsr.ui.R
 import com.wsr.ui.memo.show.MemoShowItemUiState
@@ -33,6 +34,7 @@ class MemoShowViewModel @AssistedInject constructor(
     private val getMemoFlowByIdUseCase: GetMemoByIdUseCase,
     private val updateMemoUseCase: UpdateMemoUseCase,
     private val createItemInstanceUsecase: CreateItemUseCase,
+    private val changeItemCheckedUseCase: ChangeItemCheckedUseCase,
     private val addItemUseCase: AddItemUseCase,
     private val divideMemoUseCase: DivideMemoUseCase,
     @Assisted("memoId") private val memoId: String,
@@ -77,7 +79,9 @@ class MemoShowViewModel @AssistedInject constructor(
     }
 
     fun changeItemChecked(itemId: ItemId) {
-        updateItem(itemId) { it.copy(checked = !it.checked) }
+        viewModelScope.launch {
+            changeItemCheckedUseCase(MemoId(memoId), itemId)
+        }
     }
 
     fun changeItemContent(itemId: ItemId, content: ItemContent) {
@@ -97,10 +101,10 @@ class MemoShowViewModel @AssistedInject constructor(
     }
 
     fun addItem() {
-        val newItem = MemoShowItemUiState
-            .from(createItemInstanceUsecase())
-        updateItems { it + newItem }
-        _uiState.update { it.copy(shouldFocusItemId = newItem.id) }
+        // TODO: Focusをつける
+        viewModelScope.launch {
+            addItemUseCase(MemoId(memoId))
+        }
     }
 
     fun deleteCheckedItem() {
