@@ -11,6 +11,7 @@ import com.wsr.memo.ItemContent
 import com.wsr.memo.ItemId
 import com.wsr.memo.MemoId
 import com.wsr.memo.MemoTitle
+import com.wsr.operate.AddItemUseCase
 import com.wsr.result.consume
 import com.wsr.ui.R
 import com.wsr.ui.memo.show.MemoShowItemUiState
@@ -32,6 +33,7 @@ class MemoShowViewModel @AssistedInject constructor(
     private val getMemoByIdUseCase: GetMemoByIdUseCase,
     private val updateMemoUseCase: UpdateMemoUseCase,
     private val createItemInstanceUsecase: CreateItemUseCase,
+    private val addItemUseCase: AddItemUseCase,
     private val divideMemoUseCase: DivideMemoUseCase,
     @Assisted("memoId") private val memoId: String,
 ) : ViewModel() {
