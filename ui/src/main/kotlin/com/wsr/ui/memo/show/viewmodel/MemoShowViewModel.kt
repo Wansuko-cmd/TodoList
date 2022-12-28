@@ -4,9 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wsr.common.effect.ToastEffect
 import com.wsr.create.CreateItemUseCase
-import com.wsr.operate.DivideMemoUseCase
-import com.wsr.get.GetMemoByIdUseCase
-import com.wsr.get.GetMemoByIdUseCaseModel
 import com.wsr.get.GetMemoFlowByIdUseCase
 import com.wsr.get.GetMemoFlowByIdUseCaseModel
 import com.wsr.memo.ItemContent
@@ -14,6 +11,7 @@ import com.wsr.memo.ItemId
 import com.wsr.memo.MemoId
 import com.wsr.memo.MemoTitle
 import com.wsr.operate.AddItemUseCase
+import com.wsr.operate.DivideMemoUseCase
 import com.wsr.result.consume
 import com.wsr.ui.R
 import com.wsr.ui.memo.show.MemoShowItemUiState
@@ -32,7 +30,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class MemoShowViewModel @AssistedInject constructor(
-    private val getMemoByIdUseCase: GetMemoByIdUseCase,
     private val getMemoFlowByIdUseCase: GetMemoFlowByIdUseCase,
     private val updateMemoUseCase: UpdateMemoUseCase,
     private val createItemInstanceUsecase: CreateItemUseCase,
@@ -67,12 +64,6 @@ class MemoShowViewModel @AssistedInject constructor(
         }
     }
 
-    private fun onSuccessGetting(data: GetMemoByIdUseCaseModel) {
-        viewModelScope.launch {
-            _uiState.emit(MemoShowUiState.from(data))
-        }
-    }
-
     private fun onSuccessGetting(data: GetMemoFlowByIdUseCaseModel) {
         viewModelScope.launch {
             _uiState.emit(MemoShowUiState.from(data))
@@ -94,7 +85,7 @@ class MemoShowViewModel @AssistedInject constructor(
             it.copy(
                 content = ItemContent(
                     content.value.replace("\n", ""),
-                )
+                ),
             )
         }
 
