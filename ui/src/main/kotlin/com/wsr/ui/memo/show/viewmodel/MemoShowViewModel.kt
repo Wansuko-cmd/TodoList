@@ -8,6 +8,7 @@ import com.wsr.command.DeleteCheckedItemsUseCase
 import com.wsr.command.DivideMemoUseCase
 import com.wsr.command.SwapItemUseCase
 import com.wsr.command.UpdateItemContentUseCase
+import com.wsr.command.UpdateMemoTitleUseCase
 import com.wsr.common.effect.ToastEffect
 import com.wsr.get.GetMemoByIdUseCase
 import com.wsr.get.GetMemoByIdUseCaseModel
@@ -35,6 +36,7 @@ class MemoShowViewModel @AssistedInject constructor(
     private val getMemoFlowByIdUseCase: GetMemoByIdUseCase,
     private val changeItemCheckedUseCase: ChangeItemCheckedUseCase,
     private val updateItemContentUseCase: UpdateItemContentUseCase,
+    private val updateMemoTitleUseCase: UpdateMemoTitleUseCase,
     private val addItemUseCase: AddItemUseCase,
     private val deleteCheckedItemsUseCase: DeleteCheckedItemsUseCase,
     private val swapItemUseCase: SwapItemUseCase,
@@ -151,6 +153,8 @@ class MemoShowViewModel @AssistedInject constructor(
 
     fun updateMemoTitle(title: String) {
         dismissDialog()
-        _uiState.update { uiState -> uiState.copy(title = MemoTitle(title)) }
+        viewModelScope.launch {
+            updateMemoTitleUseCase(MemoId(memoId), MemoTitle(title))
+        }
     }
 }

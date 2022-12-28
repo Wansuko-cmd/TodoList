@@ -10,6 +10,13 @@ class Memo private constructor(
     val items: List<Item>,
     val accessedAt: Instant,
 ) {
+    fun updateTitle(title: MemoTitle) = reconstruct(
+        id = id,
+        title = title,
+        items = items,
+        accessedAt = Clock.System.now(),
+    )
+
     fun updateItemContent(itemId: ItemId, content: ItemContent) =
         updateSpecifyItem(itemId) { it.updateContent(content) }
 
