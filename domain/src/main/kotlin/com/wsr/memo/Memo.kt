@@ -29,6 +29,19 @@ class Memo private constructor(
         accessedAt = Clock.System.now(),
     )
 
+    fun swapItem(from: ItemId, to: ItemId): Memo {
+        val fromIndex = items.indexOfFirst { it.id == from }
+        val toIndex = items.indexOfFirst { it.id == to }
+        return reconstruct(
+            id = id,
+            title = title,
+            items = if (fromIndex != -1 && toIndex != -1) {
+                items.toMutableList().apply { add(toIndex, removeAt(fromIndex)) }
+            } else items,
+            accessedAt = Clock.System.now(),
+        )
+    }
+
     fun addItem() = reconstruct(
         id = id,
         title = title,

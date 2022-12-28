@@ -6,6 +6,7 @@ import com.wsr.command.AddItemUseCase
 import com.wsr.command.ChangeItemCheckedUseCase
 import com.wsr.command.DeleteCheckedItemsUseCase
 import com.wsr.command.DivideMemoUseCase
+import com.wsr.command.SwapItemUseCase
 import com.wsr.command.UpdateItemContentUseCase
 import com.wsr.common.effect.ToastEffect
 import com.wsr.get.GetMemoByIdUseCase
@@ -36,6 +37,7 @@ class MemoShowViewModel @AssistedInject constructor(
     private val updateItemContentUseCase: UpdateItemContentUseCase,
     private val addItemUseCase: AddItemUseCase,
     private val deleteCheckedItemsUseCase: DeleteCheckedItemsUseCase,
+    private val swapItemUseCase: SwapItemUseCase,
     private val divideMemoUseCase: DivideMemoUseCase,
     @Assisted("memoId") private val memoId: String,
 ) : ViewModel() {
@@ -110,12 +112,8 @@ class MemoShowViewModel @AssistedInject constructor(
     }
 
     fun swapItem(from: ItemId, to: ItemId) {
-        updateItems { items ->
-            val fromIndex = items.indexOfFirst { it.id == from }
-            val toIndex = items.indexOfFirst { it.id == to }
-            if (fromIndex != -1 && toIndex != -1) {
-                items.toMutableList().apply { add(toIndex, removeAt(fromIndex)) }
-            } else items
+        viewModelScope.launch {
+            swapItemUseCase(MemoId(memoId), from, to)
         }
     }
 
@@ -151,44 +149,8 @@ class MemoShowViewModel @AssistedInject constructor(
         }
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        saveToDatabase()
-    }
-
     fun updateMemoTitle(title: String) {
         dismissDialog()
         _uiState.update { uiState -> uiState.copy(title = MemoTitle(title)) }
-        saveToDatabase()
-    }
-
-    private inline fun updateItem(
-        itemId: ItemId,
-        crossinline block: (MemoShowItemUiState) -> MemoShowItemUiState,
-    ) {
-        _uiState.update { uiState ->
-            uiState.mapItems { items ->
-                items
-                    .map { item -> if (item.id == itemId) block(item) else item }
-            }
-        }
-        saveToDatabase()
-    }
-
-    private inline fun updateItems(
-        crossinline block: (List<MemoShowItemUiState>) -> List<MemoShowItemUiState>,
-    ) {
-        _uiState.update { uiState ->
-            uiState.mapItems { items -> block(items) }
-        }
-        saveToDatabase()
-    }
-
-    private fun saveToDatabase() {
-//        viewModelScope.launch {
-//            if (!_uiState.value.isLoading) {
-//                updateMemoUseCase(_uiState.value.toUpdateMemoUseCaseModel(memoId))
-//            }
-//        }
     }
 }
