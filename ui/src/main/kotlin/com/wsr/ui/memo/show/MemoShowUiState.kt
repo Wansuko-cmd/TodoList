@@ -1,8 +1,8 @@
 package com.wsr.ui.memo.show
 
 import com.wsr.create.CreateItemUseCaseModel
-import com.wsr.get.GetMemoFlowByIdItemUseCaseModel
-import com.wsr.get.GetMemoFlowByIdUseCaseModel
+import com.wsr.get.GetMemoByIdItemUseCaseModel
+import com.wsr.get.GetMemoByIdUseCaseModel
 import com.wsr.memo.ItemContent
 import com.wsr.memo.ItemId
 import com.wsr.memo.MemoId
@@ -30,7 +30,7 @@ data class MemoShowUiState(
     )
 
     companion object {
-        fun from(fetchMemoByIdUseCaseModel: GetMemoFlowByIdUseCaseModel) = MemoShowUiState(
+        fun from(fetchMemoByIdUseCaseModel: GetMemoByIdUseCaseModel) = MemoShowUiState(
             title = fetchMemoByIdUseCaseModel.title,
             items = fetchMemoByIdUseCaseModel.items.map { MemoShowItemUiState.from(it) },
         )
@@ -43,7 +43,7 @@ data class MemoShowItemUiState(
     val content: ItemContent,
 ) {
     companion object {
-        fun from(fetchMemoByIdItemUseCaseModel: GetMemoFlowByIdItemUseCaseModel) =
+        fun from(fetchMemoByIdItemUseCaseModel: GetMemoByIdItemUseCaseModel) =
             MemoShowItemUiState(
                 id = fetchMemoByIdItemUseCaseModel.id,
                 checked = fetchMemoByIdItemUseCaseModel.checked,

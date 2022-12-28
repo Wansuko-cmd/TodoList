@@ -1,6 +1,6 @@
 package com.wsr.ui.memo.index
 
-import com.wsr.get.GetAllMemoFlowUseCaseModel
+import com.wsr.get.GetAllMemoUseCaseModel
 
 data class MemoIndexUiState(
     val memos: List<MemoIndexMemoUiState> = listOf(),
@@ -8,7 +8,7 @@ data class MemoIndexUiState(
     val isShowingCreateMemoDialog: Boolean = false,
 ) {
     companion object {
-        fun from(memos: List<GetAllMemoFlowUseCaseModel>) =
+        fun from(memos: List<GetAllMemoUseCaseModel>) =
             MemoIndexUiState(memos = memos.map { MemoIndexMemoUiState.from(it) })
     }
 }
@@ -18,7 +18,7 @@ data class MemoIndexMemoUiState(
     val title: String,
 ) {
     companion object {
-        fun from(memo: GetAllMemoFlowUseCaseModel) =
+        fun from(memo: GetAllMemoUseCaseModel) =
             MemoIndexMemoUiState(
                 id = memo.id.value,
                 title = memo.title.value,
