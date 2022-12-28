@@ -10,50 +10,41 @@ class Memo private constructor(
     val items: List<Item>,
     val accessedAt: Instant,
 ) {
-    fun updateTitle(title: MemoTitle) = reconstruct(
+    fun updateTitle(title: MemoTitle) = update(
+        title = title,
+        items = items,
+    )
+
+    fun updateItemContent(itemId: ItemId, content: ItemContent) =
+        updateSpecifyItem(itemId) { it.updateContent(content) }
+
+    fun updateItemChecked(itemId: ItemId) = updateSpecifyItem(itemId) { it.changeChecked() }
+
+    fun deleteCheckedItems() = updateItems(items.filterNot { it.checked })
+
+    fun swapItem(from: ItemId, to: ItemId): Memo {
+        val fromIndex = items.indexOfFirst { it.id == from }
+        val toIndex = items.indexOfFirst { it.id == to }
+        val items = if (fromIndex != -1 && toIndex != -1) {
+            items.toMutableList().apply { add(toIndex, removeAt(fromIndex)) }
+        } else items
+        return updateItems(items)
+    }
+
+    fun addItem() = updateItems(items + Item.create())
+
+    private fun update(title: MemoTitle, items: List<Item>) = reconstruct(
         id = id,
         title = title,
         items = items,
         accessedAt = Clock.System.now(),
     )
 
-    fun updateItemContent(itemId: ItemId, content: ItemContent) =
-        updateSpecifyItem(itemId) { it.updateContent(content) }
+    private fun updateItems(items: List<Item>) = update(title, items)
 
-    fun changeChecked(itemId: ItemId) = updateSpecifyItem(itemId) { it.changeChecked() }
-
-    private fun updateSpecifyItem(itemId: ItemId, block: (Item) -> Item) = reconstruct(
-        id = id,
+    private fun updateSpecifyItem(itemId: ItemId, block: (Item) -> Item) = update(
         title = title,
         items = items.map { item -> if (item.id == itemId) block(item) else item },
-        accessedAt = Clock.System.now(),
-    )
-
-    fun deleteCheckedItems() = reconstruct(
-        id = id,
-        title = title,
-        items = items.filterNot { it.checked },
-        accessedAt = Clock.System.now(),
-    )
-
-    fun swapItem(from: ItemId, to: ItemId): Memo {
-        val fromIndex = items.indexOfFirst { it.id == from }
-        val toIndex = items.indexOfFirst { it.id == to }
-        return reconstruct(
-            id = id,
-            title = title,
-            items = if (fromIndex != -1 && toIndex != -1) {
-                items.toMutableList().apply { add(toIndex, removeAt(fromIndex)) }
-            } else items,
-            accessedAt = Clock.System.now(),
-        )
-    }
-
-    fun addItem() = reconstruct(
-        id = id,
-        title = title,
-        items = items + Item.create(),
-        accessedAt = Clock.System.now(),
     )
 
     companion object {

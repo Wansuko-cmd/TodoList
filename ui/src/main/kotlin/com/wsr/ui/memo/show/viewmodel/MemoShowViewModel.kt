@@ -3,10 +3,10 @@ package com.wsr.ui.memo.show.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wsr.command.AddItemUseCase
-import com.wsr.command.ChangeItemCheckedUseCase
 import com.wsr.command.DeleteCheckedItemsUseCase
 import com.wsr.command.DivideMemoUseCase
 import com.wsr.command.SwapItemUseCase
+import com.wsr.command.UpdateItemCheckedUseCase
 import com.wsr.command.UpdateItemContentUseCase
 import com.wsr.command.UpdateMemoTitleUseCase
 import com.wsr.common.effect.ToastEffect
@@ -18,7 +18,6 @@ import com.wsr.memo.MemoId
 import com.wsr.memo.MemoTitle
 import com.wsr.result.consume
 import com.wsr.ui.R
-import com.wsr.ui.memo.show.MemoShowItemUiState
 import com.wsr.ui.memo.show.MemoShowUiState
 import com.wsr.ui.memo.show.effect.ShareItemsEffect
 import dagger.assisted.Assisted
@@ -34,7 +33,7 @@ import kotlinx.coroutines.launch
 
 class MemoShowViewModel @AssistedInject constructor(
     private val getMemoFlowByIdUseCase: GetMemoByIdUseCase,
-    private val changeItemCheckedUseCase: ChangeItemCheckedUseCase,
+    private val updateItemCheckedUseCase: UpdateItemCheckedUseCase,
     private val updateItemContentUseCase: UpdateItemContentUseCase,
     private val updateMemoTitleUseCase: UpdateMemoTitleUseCase,
     private val addItemUseCase: AddItemUseCase,
@@ -47,7 +46,8 @@ class MemoShowViewModel @AssistedInject constructor(
     val uiState = _uiState
         .map { uiState ->
             uiState.mapItems { items -> items.sortedBy { it.checked } }
-        }.stateIn(
+        }
+        .stateIn(
             viewModelScope,
             SharingStarted.Lazily,
             MemoShowUiState(isLoading = true),
@@ -84,7 +84,7 @@ class MemoShowViewModel @AssistedInject constructor(
 
     fun changeItemChecked(itemId: ItemId) {
         viewModelScope.launch {
-            changeItemCheckedUseCase(MemoId(memoId), itemId)
+            updateItemCheckedUseCase(MemoId(memoId), itemId)
         }
     }
 
@@ -135,7 +135,6 @@ class MemoShowViewModel @AssistedInject constructor(
     fun divideItems() {
         viewModelScope.launch {
             divideMemoUseCase(MemoId(memoId), MemoTitle("Test"))
-            getMemoAndUpdateUiState()
         }
     }
 

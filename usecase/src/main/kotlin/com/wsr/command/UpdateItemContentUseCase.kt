@@ -7,10 +7,10 @@ import com.wsr.memo.MemoId
 import com.wsr.memo.MemoRepository
 import com.wsr.result.flatMap
 import com.wsr.result.map
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 class UpdateItemContentUseCase @Inject constructor(
     private val memoRepository: MemoRepository,

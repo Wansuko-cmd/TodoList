@@ -13,7 +13,6 @@ import com.wsr.update.UpdateMemoUseCaseModel.Companion.toMemo
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import kotlinx.datetime.Clock
 import javax.inject.Inject
 
 class UpdateMemoUseCase @Inject constructor(
