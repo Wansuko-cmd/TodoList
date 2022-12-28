@@ -7,6 +7,8 @@ import com.wsr.create.CreateItemUseCase
 import com.wsr.operate.DivideMemoUseCase
 import com.wsr.get.GetMemoByIdUseCase
 import com.wsr.get.GetMemoByIdUseCaseModel
+import com.wsr.get.GetMemoFlowByIdUseCase
+import com.wsr.get.GetMemoFlowByIdUseCaseModel
 import com.wsr.memo.ItemContent
 import com.wsr.memo.ItemId
 import com.wsr.memo.MemoId
@@ -31,6 +33,7 @@ import kotlinx.coroutines.launch
 
 class MemoShowViewModel @AssistedInject constructor(
     private val getMemoByIdUseCase: GetMemoByIdUseCase,
+    private val getMemoFlowByIdUseCase: GetMemoFlowByIdUseCase,
     private val updateMemoUseCase: UpdateMemoUseCase,
     private val createItemInstanceUsecase: CreateItemUseCase,
     private val addItemUseCase: AddItemUseCase,
@@ -55,14 +58,22 @@ class MemoShowViewModel @AssistedInject constructor(
 
     fun getMemoAndUpdateUiState() {
         viewModelScope.launch {
-            getMemoByIdUseCase(MemoId(memoId)).consume(
-                success = ::onSuccessGetting,
-                failure = { onFailureGetting() },
-            )
+            getMemoFlowByIdUseCase(MemoId(memoId)).collect { data ->
+                data.consume(
+                    success = ::onSuccessGetting,
+                    failure = { onFailureGetting() },
+                )
+            }
         }
     }
 
     private fun onSuccessGetting(data: GetMemoByIdUseCaseModel) {
+        viewModelScope.launch {
+            _uiState.emit(MemoShowUiState.from(data))
+        }
+    }
+
+    private fun onSuccessGetting(data: GetMemoFlowByIdUseCaseModel) {
         viewModelScope.launch {
             _uiState.emit(MemoShowUiState.from(data))
         }
@@ -181,10 +192,10 @@ class MemoShowViewModel @AssistedInject constructor(
     }
 
     private fun saveToDatabase() {
-        viewModelScope.launch {
-            if (!_uiState.value.isLoading) {
-                updateMemoUseCase(_uiState.value.toUpdateMemoUseCaseModel(memoId))
-            }
-        }
+//        viewModelScope.launch {
+//            if (!_uiState.value.isLoading) {
+//                updateMemoUseCase(_uiState.value.toUpdateMemoUseCaseModel(memoId))
+//            }
+//        }
     }
 }

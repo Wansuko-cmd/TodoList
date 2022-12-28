@@ -3,6 +3,8 @@ package com.wsr.ui.memo.show
 import com.wsr.create.CreateItemUseCaseModel
 import com.wsr.get.GetMemoByIdItemUseCaseModel
 import com.wsr.get.GetMemoByIdUseCaseModel
+import com.wsr.get.GetMemoFlowByIdItemUseCaseModel
+import com.wsr.get.GetMemoFlowByIdUseCaseModel
 import com.wsr.memo.ItemContent
 import com.wsr.memo.ItemId
 import com.wsr.memo.MemoId
@@ -26,11 +28,16 @@ data class MemoShowUiState(
     fun toUpdateMemoUseCaseModel(memoId: String) = UpdateMemoUseCaseModel(
         id = MemoId(memoId),
         title = title,
-        items = items.map { it.toUpdateMemoUseCaseModel() }
+        items = items.map { it.toUpdateMemoUseCaseModel() },
     )
 
     companion object {
         fun from(fetchMemoByIdUseCaseModel: GetMemoByIdUseCaseModel) = MemoShowUiState(
+            title = fetchMemoByIdUseCaseModel.title,
+            items = fetchMemoByIdUseCaseModel.items.map { MemoShowItemUiState.from(it) },
+        )
+
+        fun from(fetchMemoByIdUseCaseModel: GetMemoFlowByIdUseCaseModel) = MemoShowUiState(
             title = fetchMemoByIdUseCaseModel.title,
             items = fetchMemoByIdUseCaseModel.items.map { MemoShowItemUiState.from(it) },
         )
@@ -44,6 +51,13 @@ data class MemoShowItemUiState(
 ) {
     companion object {
         fun from(fetchMemoByIdItemUseCaseModel: GetMemoByIdItemUseCaseModel) =
+            MemoShowItemUiState(
+                id = fetchMemoByIdItemUseCaseModel.id,
+                checked = fetchMemoByIdItemUseCaseModel.checked,
+                content = fetchMemoByIdItemUseCaseModel.content,
+            )
+
+        fun from(fetchMemoByIdItemUseCaseModel: GetMemoFlowByIdItemUseCaseModel) =
             MemoShowItemUiState(
                 id = fetchMemoByIdItemUseCaseModel.id,
                 checked = fetchMemoByIdItemUseCaseModel.checked,
