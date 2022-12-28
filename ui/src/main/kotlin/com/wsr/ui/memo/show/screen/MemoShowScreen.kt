@@ -41,7 +41,7 @@ fun MemoShowScreen(
         addItem = viewModel::addItem,
         onClickTitle = viewModel::showDialog,
         shareItems = viewModel::shareItems,
-        deleteCheckedItems = viewModel::deleteCheckedItem,
+        deleteCheckedItems = viewModel::deleteCheckedItems,
         onMoveItem = viewModel::swapItem,
     )
 

@@ -4,10 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wsr.command.AddItemUseCase
 import com.wsr.command.ChangeItemCheckedUseCase
+import com.wsr.command.DeleteCheckedItemsUseCase
 import com.wsr.command.DivideMemoUseCase
 import com.wsr.command.UpdateItemContentUseCase
 import com.wsr.common.effect.ToastEffect
-import com.wsr.create.CreateItemUseCase
 import com.wsr.get.GetMemoByIdUseCase
 import com.wsr.get.GetMemoByIdUseCaseModel
 import com.wsr.memo.ItemContent
@@ -35,6 +35,7 @@ class MemoShowViewModel @AssistedInject constructor(
     private val changeItemCheckedUseCase: ChangeItemCheckedUseCase,
     private val updateItemContentUseCase: UpdateItemContentUseCase,
     private val addItemUseCase: AddItemUseCase,
+    private val deleteCheckedItemsUseCase: DeleteCheckedItemsUseCase,
     private val divideMemoUseCase: DivideMemoUseCase,
     @Assisted("memoId") private val memoId: String,
 ) : ViewModel() {
@@ -102,8 +103,10 @@ class MemoShowViewModel @AssistedInject constructor(
         }
     }
 
-    fun deleteCheckedItem() {
-        updateItems { items -> items.filter { !it.checked } }
+    fun deleteCheckedItems() {
+        viewModelScope.launch {
+            deleteCheckedItemsUseCase(MemoId(memoId))
+        }
     }
 
     fun swapItem(from: ItemId, to: ItemId) {

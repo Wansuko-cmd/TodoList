@@ -22,6 +22,13 @@ class Memo private constructor(
         accessedAt = Clock.System.now(),
     )
 
+    fun deleteCheckedItems() = reconstruct(
+        id = id,
+        title = title,
+        items = items.filterNot { it.checked },
+        accessedAt = Clock.System.now(),
+    )
+
     fun addItem() = reconstruct(
         id = id,
         title = title,
