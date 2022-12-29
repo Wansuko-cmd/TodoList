@@ -6,9 +6,10 @@ import androidx.navigation.NavHostController
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 
-data class NavigateEffect(
-    val route: String,
-)
+sealed class NavigateEffect {
+    data class Navigate(val route: String): NavigateEffect()
+    object PopBackStack: NavigateEffect()
+}
 
 @Composable
 fun ObserveNavigateEffect(
@@ -17,7 +18,12 @@ fun ObserveNavigateEffect(
 ) {
     LaunchedEffect(Unit) {
         flow.collectLatest {
-            navController.navigate(it.route)
+            when (it) {
+                is NavigateEffect.Navigate ->
+                    navController.navigate(it.route)
+                is NavigateEffect.PopBackStack ->
+                    navController.popBackStack()
+            }
         }
     }
 }
