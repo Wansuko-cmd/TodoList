@@ -21,10 +21,6 @@ data class MemoShowUiState(
         items = items.map { it.toUseCaseModel() },
     )
 
-    fun mapItems(
-        block: (List<MemoShowItemUiState>) -> List<MemoShowItemUiState>,
-    ): MemoShowUiState = this.copy(items = block(items))
-
     companion object {
         fun from(memo: MemoUseCaseModel) = MemoShowUiState(
             title = memo.title,
@@ -43,6 +39,7 @@ data class MemoShowItemUiState(
         checked = checked,
         content = content,
     )
+
     companion object {
         fun from(item: ItemUseCaseModel) = MemoShowItemUiState(
             id = item.id,

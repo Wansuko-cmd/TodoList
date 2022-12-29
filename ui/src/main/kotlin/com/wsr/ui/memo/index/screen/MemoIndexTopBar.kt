@@ -10,14 +10,12 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavHostController
-import com.wsr.Route
 import com.wsr.ui.R
 
 @Composable
 fun MemoIndexTopBar(
     modifier: Modifier = Modifier,
-    navController: NavHostController,
+    onClickSetting: () -> Unit,
 ) {
     TopAppBar(
         modifier = modifier,
@@ -29,7 +27,7 @@ fun MemoIndexTopBar(
         },
         actions = {
             IconButton(
-                onClick = { navController.navigate(Route.Settings.Index.path) },
+                onClick = onClickSetting,
             ) {
                 Icon(
                     imageVector = Icons.Filled.Settings,

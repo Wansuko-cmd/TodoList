@@ -3,8 +3,10 @@ package com.wsr.ui.memo.index
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wsr.MemoUseCaseModel
+import com.wsr.Route
 import com.wsr.command.CreateMemoUseCase
 import com.wsr.command.DeleteMemoUseCase
+import com.wsr.common.effect.NavigateEffect
 import com.wsr.common.effect.ToastEffect
 import com.wsr.get.GetAllMemoUseCase
 import com.wsr.memo.MemoId
@@ -32,6 +34,9 @@ class MemoIndexViewModel @Inject constructor(
     private val _toastEffect = MutableSharedFlow<ToastEffect>()
     val toastEffect = _toastEffect.asSharedFlow()
 
+    private val _navigateEffect = MutableSharedFlow<NavigateEffect>()
+    val navigateEffect = _navigateEffect.asSharedFlow()
+
     fun getMemosAndUpdateUiState() {
         viewModelScope.launch {
             getAllMemoFlowUseCase().consume(
@@ -48,6 +53,18 @@ class MemoIndexViewModel @Inject constructor(
     private fun onFailureGetting() {
         viewModelScope.launch {
             _toastEffect.emit(ToastEffect(R.string.system_error_message))
+        }
+    }
+
+    fun onClickTile(memoId: MemoId) {
+        viewModelScope.launch {
+            _navigateEffect.emit(NavigateEffect(Route.Memo.Show.with(memoId.value)))
+        }
+    }
+
+    fun onClickSetting() {
+        viewModelScope.launch {
+            _navigateEffect.emit(NavigateEffect(Route.Settings.Index.path))
         }
     }
 

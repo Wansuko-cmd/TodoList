@@ -45,7 +45,7 @@ class MemoShowViewModel @AssistedInject constructor(
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(MemoShowUiState(isLoading = true))
     val uiState = _uiState
-        .map { uiState -> uiState.mapItems { items -> items.sortedBy { it.checked } } }
+        .map { uiState -> uiState.copy(items = uiState.items.sortedBy { it.checked }) }
         .stateIn(
             viewModelScope,
             SharingStarted.Lazily,

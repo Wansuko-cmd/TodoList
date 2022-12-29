@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.wsr.memo.MemoId
 import com.wsr.ui.R
 import com.wsr.ui.memo.index.MemoIndexMemoUiState
 
@@ -26,7 +27,7 @@ import com.wsr.ui.memo.index.MemoIndexMemoUiState
 fun MemoIndexMemoTile(
     modifier: Modifier = Modifier,
     memoUiState: MemoIndexMemoUiState,
-    onClickTile: (memoId: String) -> Unit,
+    onClickTile: (memoId: MemoId) -> Unit,
     onClickDeleteButton: (memoId: String) -> Unit,
 ) {
     var expandedDropdownMenu by remember { mutableStateOf(false) }
@@ -35,7 +36,7 @@ fun MemoIndexMemoTile(
         modifier = modifier
             .fillMaxWidth()
             .combinedClickable(
-                onClick = { onClickTile(memoUiState.id) },
+                onClick = { onClickTile(MemoId(memoUiState.id)) },
                 onLongClick = { expandedDropdownMenu = true },
             ),
         elevation = 4.dp,

@@ -9,9 +9,10 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import com.wsr.Route
 import com.wsr.common.composable.LoadingScreen
+import com.wsr.common.effect.ObserveNavigateEffect
 import com.wsr.common.effect.ObserveToastEffect
+import com.wsr.memo.MemoId
 import com.wsr.ui.memo.index.MemoIndexUiState
 import com.wsr.ui.memo.index.MemoIndexViewModel
 import com.wsr.ui.memo.index.component.MemoIndexCreateMemoDialog
@@ -33,7 +34,8 @@ fun MemoIndexScreen(
     MemoIndexScreen(
         modifier = modifier,
         uiState = uiState,
-        navController = navController,
+        onClickTile = viewModel::onClickTile,
+        onClickSetting = viewModel::onClickSetting,
         onClickFab = viewModel::showDialog,
         onClickDeleteButton = viewModel::deleteMemo,
     )
@@ -46,29 +48,31 @@ fun MemoIndexScreen(
     }
 
     ObserveToastEffect(viewModel.toastEffect)
+    ObserveNavigateEffect(navController, viewModel.navigateEffect)
 }
 
 @Composable
 fun MemoIndexScreen(
     modifier: Modifier = Modifier,
     uiState: MemoIndexUiState,
-    navController: NavHostController,
+    onClickTile: (MemoId) -> Unit,
+    onClickSetting: () -> Unit,
     onClickFab: () -> Unit,
     onClickDeleteButton: (memoId: String) -> Unit,
 ) {
     Scaffold(
         modifier = modifier,
-        topBar = { MemoIndexTopBar(navController = navController) },
+        topBar = { MemoIndexTopBar(onClickSetting = onClickSetting) },
         floatingActionButton = {
             MemoIndexFloatActionButton(
                 onClick = onClickFab,
             )
-        }
+        },
     ) { innerPadding ->
         MemoIndexMemoSection(
             modifier = Modifier.padding(innerPadding),
             uiState = uiState,
-            onClickTile = { memoId -> navController.navigate(Route.Memo.Show.with(memoId)) },
+            onClickTile = onClickTile,
             onClickDeleteButton = onClickDeleteButton,
         )
         if (uiState.isLoading) LoadingScreen()

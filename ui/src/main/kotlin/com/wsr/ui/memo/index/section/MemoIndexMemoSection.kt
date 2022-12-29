@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.wsr.memo.MemoId
 import com.wsr.ui.memo.index.MemoIndexUiState
 import com.wsr.ui.memo.index.component.MemoIndexMemoTile
 
@@ -18,7 +19,7 @@ import com.wsr.ui.memo.index.component.MemoIndexMemoTile
 fun MemoIndexMemoSection(
     modifier: Modifier = Modifier,
     uiState: MemoIndexUiState,
-    onClickTile: (memoId: String) -> Unit,
+    onClickTile: (memoId: MemoId) -> Unit,
     onClickDeleteButton: (memoId: String) -> Unit,
 ) {
     LazyColumn(
