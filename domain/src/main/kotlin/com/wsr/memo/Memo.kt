@@ -36,7 +36,7 @@ class Memo private constructor(
         items
             .partition { !it.checked }
             .let { (original, new) ->
-                mapItems { original } to create(newTitle, new)
+                mapItems { original } to create(newTitle, new.map { it.switchChecked() })
             }
 
     private fun update(title: MemoTitle, items: List<Item>) = reconstruct(

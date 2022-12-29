@@ -20,12 +20,13 @@ class DivideMemoUseCase @Inject constructor(
     suspend operator fun invoke(
         originalMemoId: MemoId,
         newTitle: MemoTitle,
-    ): ApiResult<Unit, DomainException> = withContext(dispatcher) {
+    ) = withContext(dispatcher) {
         memoRepository.getById(originalMemoId)
             .map { it.divideMemo(newTitle) }
-            .flatMap { (original, new) ->
+            .map { (original, new) ->
                 memoRepository.upsert(original)
                 memoRepository.upsert(new)
+                new
             }
     }
 }

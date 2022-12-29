@@ -3,6 +3,7 @@ package com.wsr.ui.memo.show.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wsr.MemoUseCaseModel
+import com.wsr.Route
 import com.wsr.command.DivideMemoUseCase
 import com.wsr.command.element.AddItemUseCase
 import com.wsr.command.element.DeleteCheckedItemsUseCase
@@ -18,6 +19,7 @@ import com.wsr.memo.ItemId
 import com.wsr.memo.MemoId
 import com.wsr.memo.MemoTitle
 import com.wsr.result.consume
+import com.wsr.result.map
 import com.wsr.ui.R
 import com.wsr.ui.memo.show.MemoShowUiState
 import com.wsr.ui.memo.show.effect.ShareItemsEffect
@@ -128,6 +130,11 @@ class MemoShowViewModel @AssistedInject constructor(
     fun divideItems() {
         viewModelScope.launch {
             divideMemoUseCase(MemoId(memoId), MemoTitle("Test"))
+                .map {
+                    _navigateEffect.emit(
+                        NavigateEffect.Navigate(Route.Memo.Show.with(it.id.value)),
+                    )
+                }
         }
     }
 
