@@ -13,7 +13,7 @@ class Item private constructor(
         content = ItemContent(content.value.replace("\n", "")),
     )
 
-    fun changeChecked() = reconstruct(
+    fun switchChecked() = reconstruct(
         id = id,
         checked = !checked,
         content = content,

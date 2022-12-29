@@ -2,7 +2,6 @@ package com.wsr.command
 
 import com.wsr.di.DefaultDispatcher
 import com.wsr.exception.DomainException
-import com.wsr.memo.Memo
 import com.wsr.memo.MemoId
 import com.wsr.memo.MemoRepository
 import com.wsr.memo.MemoTitle
@@ -23,21 +22,10 @@ class DivideMemoUseCase @Inject constructor(
         newTitle: MemoTitle,
     ): ApiResult<Unit, DomainException> = withContext(dispatcher) {
         memoRepository.getById(originalMemoId)
-            .divideMemo(newTitle)
+            .map { it.divideMemo(newTitle) }
             .flatMap { (original, new) ->
                 memoRepository.upsert(original)
                 memoRepository.upsert(new)
-            }
-    }
-
-    private fun ApiResult<Memo, DomainException>.divideMemo(
-        newTitle: MemoTitle,
-    ): ApiResult<Pair<Memo, Memo>, DomainException> = this.map { memo ->
-        memo
-            .items
-            .partition { !it.checked }
-            .let { (original, new) ->
-                Memo.reconstruct(memo.id, memo.title, original) to Memo.create(newTitle, new)
             }
     }
 }

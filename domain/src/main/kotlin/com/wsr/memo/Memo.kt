@@ -16,22 +16,28 @@ class Memo private constructor(
     )
 
     fun updateItemContent(itemId: ItemId, content: ItemContent) =
-        updateSpecifyItem(itemId) { it.updateContent(content) }
+        mapSpecifyItem(itemId) { it.updateContent(content) }
 
-    fun updateItemChecked(itemId: ItemId) = updateSpecifyItem(itemId) { it.changeChecked() }
+    fun updateItemChecked(itemId: ItemId) = mapSpecifyItem(itemId) { it.switchChecked() }
 
-    fun deleteCheckedItems() = updateItems(items.filterNot { it.checked })
+    fun addItem() = mapItems { it + Item.create() }
 
-    fun swapItem(from: ItemId, to: ItemId): Memo {
+    fun deleteCheckedItems() = mapItems { items -> items.filterNot { it.checked } }
+
+    fun swapItem(from: ItemId, to: ItemId): Memo = mapItems {
         val fromIndex = items.indexOfFirst { it.id == from }
         val toIndex = items.indexOfFirst { it.id == to }
-        val items = if (fromIndex != -1 && toIndex != -1) {
+        if (fromIndex != -1 && toIndex != -1) {
             items.toMutableList().apply { add(toIndex, removeAt(fromIndex)) }
         } else items
-        return updateItems(items)
     }
 
-    fun addItem() = updateItems(items + Item.create())
+    fun divideMemo(newTitle: MemoTitle) =
+        items
+            .partition { !it.checked }
+            .let { (original, new) ->
+                mapItems { original } to create(newTitle, new)
+            }
 
     private fun update(title: MemoTitle, items: List<Item>) = reconstruct(
         id = id,
@@ -40,12 +46,15 @@ class Memo private constructor(
         accessedAt = Clock.System.now(),
     )
 
-    private fun updateItems(items: List<Item>) = update(title, items)
+    private fun mapItems(block: (List<Item>) -> List<Item>) =
+        update(title, block(items))
 
-    private fun updateSpecifyItem(itemId: ItemId, block: (Item) -> Item) = update(
-        title = title,
-        items = items.map { item -> if (item.id == itemId) block(item) else item },
-    )
+    private fun mapSpecifyItem(itemId: ItemId, block: (Item) -> Item) =
+        mapItems { items ->
+            items.map { item ->
+                if (item.id == itemId) block(item) else item
+            }
+        }
 
     companion object {
         fun create(
@@ -62,7 +71,7 @@ class Memo private constructor(
             id: MemoId,
             title: MemoTitle,
             items: List<Item>,
-            accessedAt: Instant = Clock.System.now(),
+            accessedAt: Instant,
         ) = Memo(
             id = id,
             title = title,

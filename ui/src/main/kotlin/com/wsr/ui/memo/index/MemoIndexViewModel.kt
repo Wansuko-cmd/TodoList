@@ -55,6 +55,7 @@ class MemoIndexViewModel @Inject constructor(
         viewModelScope.launch {
             dismissDialog()
             createMemoUseCase(MemoTitle(title))
+            getMemosAndUpdateUiState()
         }
     }
 

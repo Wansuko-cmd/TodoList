@@ -6,6 +6,7 @@ import com.wsr.memo.ItemId
 import com.wsr.memo.Memo
 import com.wsr.memo.MemoId
 import com.wsr.memo.MemoTitle
+import kotlinx.datetime.Clock
 
 data class MemoUseCaseModel(
     val id: MemoId,
@@ -16,6 +17,7 @@ data class MemoUseCaseModel(
         id = id,
         title = title,
         items = items.map { it.toItem() },
+        accessedAt = Clock.System.now(),
     )
 
     companion object {
