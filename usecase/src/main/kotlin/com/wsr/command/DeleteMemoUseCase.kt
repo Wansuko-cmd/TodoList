@@ -1,5 +1,6 @@
 package com.wsr.command
 
+import com.wsr.MemoUseCaseModel
 import com.wsr.di.DefaultDispatcher
 import com.wsr.memo.MemoId
 import com.wsr.memo.MemoRepository
@@ -12,8 +13,8 @@ class DeleteMemoUseCase @Inject constructor(
     private val memoRepository: MemoRepository,
     @DefaultDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) {
-    suspend operator fun invoke(memoId: MemoId) =
+    suspend operator fun invoke(memo: MemoUseCaseModel) =
         withContext(dispatcher) {
-            memoRepository.delete(memoId)
+            memoRepository.delete(memo.id)
         }
 }
