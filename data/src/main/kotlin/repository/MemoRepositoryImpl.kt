@@ -28,18 +28,12 @@ class MemoRepositoryImpl @Inject constructor(
             }
         }
 
-    override fun getAllFlow(): Flow<ApiResult<List<Memo>, DomainException>> =
-        memoDao.getMemosFlow().map { data -> ApiResult.Success(data.map { it.toMemo() }) }
-
     override suspend fun getById(memoId: MemoId): ApiResult<Memo, DomainException> =
         withContext(dispatcher) {
             runCatchDomainException {
                 memoDao.getMemoById(memoId.value).toMemo()
             }
         }
-
-    override fun getFlowById(memoId: MemoId): Flow<ApiResult<Memo, DomainException>> =
-        memoDao.getMemoFlowById(memoId.value).map { data -> ApiResult.Success(data.toMemo()) }
 
     override suspend fun upsert(memo: Memo): ApiResult<Unit, DomainException> =
         withContext(dispatcher) {
