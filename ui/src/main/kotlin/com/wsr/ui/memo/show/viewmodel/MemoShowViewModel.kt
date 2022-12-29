@@ -10,6 +10,7 @@ import com.wsr.command.element.SwapItemUseCase
 import com.wsr.command.element.UpdateItemCheckedUseCase
 import com.wsr.command.element.UpdateItemContentUseCase
 import com.wsr.command.element.UpdateMemoTitleUseCase
+import com.wsr.common.effect.NavigateEffect
 import com.wsr.common.effect.ToastEffect
 import com.wsr.get.GetMemoByIdUseCase
 import com.wsr.memo.ItemContent
@@ -54,6 +55,9 @@ class MemoShowViewModel @AssistedInject constructor(
 
     private val _toastEffect = MutableSharedFlow<ToastEffect>()
     val toastEffect = _toastEffect.asSharedFlow()
+
+    private val _navigateEffect = MutableSharedFlow<NavigateEffect>()
+    val navigateEffect = _navigateEffect.asSharedFlow()
 
     private val _sharedTextEffect = MutableSharedFlow<ShareItemsEffect>()
     val sharedTextEffect = _sharedTextEffect.asSharedFlow()
@@ -167,6 +171,12 @@ class MemoShowViewModel @AssistedInject constructor(
                 block(uiState.toUseCaseModel(MemoId(memoId)))
                     .let { MemoShowUiState.from(it) }
             }
+        }
+    }
+
+    fun onClickArrowBack() {
+        viewModelScope.launch {
+            _navigateEffect.emit(NavigateEffect.PopBackStack)
         }
     }
 }

@@ -10,6 +10,7 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.wsr.common.composable.LoadingScreen
+import com.wsr.common.effect.ObserveNavigateEffect
 import com.wsr.common.effect.ObserveToastEffect
 import com.wsr.memo.ItemContent
 import com.wsr.memo.ItemId
@@ -35,7 +36,7 @@ fun MemoShowScreen(
     MemoShowScreen(
         modifier = modifier,
         uiState = uiState,
-        navController = navController,
+        onClickArrowBack = viewModel::onClickArrowBack,
         onChecked = viewModel::changeItemChecked,
         onChangeContent = viewModel::changeItemContent,
         addItem = viewModel::addItem,
@@ -54,6 +55,7 @@ fun MemoShowScreen(
     }
 
     ObserveToastEffect(viewModel.toastEffect)
+    ObserveNavigateEffect(navController, viewModel.navigateEffect)
     ObserveShareItemsEffect(viewModel.sharedTextEffect)
 }
 
@@ -61,7 +63,7 @@ fun MemoShowScreen(
 fun MemoShowScreen(
     modifier: Modifier = Modifier,
     uiState: MemoShowUiState,
-    navController: NavHostController,
+    onClickArrowBack: () -> Unit,
     onChecked: (itemId: ItemId) -> Unit,
     onChangeContent: (itemId: ItemId, content: ItemContent) -> Unit,
     addItem: () -> Unit,
@@ -74,8 +76,8 @@ fun MemoShowScreen(
         modifier = modifier,
         topBar = {
             MemoShowTopBar(
-                navController = navController,
                 memoTitle = uiState.title.value,
+                onClickArrowBack = onClickArrowBack,
                 onClickTitle = onClickTitle,
                 shareItems = shareItems,
                 deleteCheckedItems = deleteCheckedItems,
@@ -83,7 +85,7 @@ fun MemoShowScreen(
         },
         floatingActionButton = {
             MemoShowFloatActionButton(onClick = addItem)
-        }
+        },
     ) { innerPadding ->
         MemoShowItemSection(
             modifier = Modifier.padding(innerPadding),

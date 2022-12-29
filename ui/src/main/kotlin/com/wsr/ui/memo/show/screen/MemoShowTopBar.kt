@@ -18,8 +18,8 @@ import androidx.navigation.NavController
 @Composable
 fun MemoShowTopBar(
     modifier: Modifier = Modifier,
-    navController: NavController,
     memoTitle: String,
+    onClickArrowBack: () -> Unit,
     onClickTitle: () -> Unit,
     shareItems: () -> Unit,
     deleteCheckedItems: () -> Unit,
@@ -36,7 +36,7 @@ fun MemoShowTopBar(
             }
         },
         navigationIcon = {
-            IconButton(onClick = { navController.popBackStack() }) {
+            IconButton(onClick = onClickArrowBack) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBack,
                     contentDescription = null,
