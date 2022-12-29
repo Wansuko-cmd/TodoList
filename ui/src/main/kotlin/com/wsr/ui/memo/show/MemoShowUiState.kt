@@ -1,15 +1,11 @@
 package com.wsr.ui.memo.show
 
-import com.wsr.create.CreateItemUseCaseModel
-import com.wsr.get.GetMemoByIdItemUseCaseModel
-import com.wsr.get.GetMemoByIdUseCaseModel
+import com.wsr.ItemUseCaseModel
+import com.wsr.MemoUseCaseModel
 import com.wsr.memo.ItemContent
 import com.wsr.memo.ItemId
 import com.wsr.memo.MemoId
 import com.wsr.memo.MemoTitle
-import com.wsr.ui.memo.show.MemoShowItemUiState.Companion.toUpdateMemoUseCaseModel
-import com.wsr.update.UpdateMemoItemUseCaseModel
-import com.wsr.update.UpdateMemoUseCaseModel
 
 data class MemoShowUiState(
     val title: MemoTitle = MemoTitle(""),
@@ -19,20 +15,20 @@ data class MemoShowUiState(
     val isShowingEditMemoTitleDialog: Boolean = false,
 ) {
 
+    fun toUseCaseModel(id: MemoId) = MemoUseCaseModel(
+        id = id,
+        title = title,
+        items = items.map { it.toUseCaseModel() },
+    )
+
     fun mapItems(
         block: (List<MemoShowItemUiState>) -> List<MemoShowItemUiState>,
     ): MemoShowUiState = this.copy(items = block(items))
 
-    fun toUpdateMemoUseCaseModel(memoId: String) = UpdateMemoUseCaseModel(
-        id = MemoId(memoId),
-        title = title,
-        items = items.map { it.toUpdateMemoUseCaseModel() },
-    )
-
     companion object {
-        fun from(fetchMemoByIdUseCaseModel: GetMemoByIdUseCaseModel) = MemoShowUiState(
-            title = fetchMemoByIdUseCaseModel.title,
-            items = fetchMemoByIdUseCaseModel.items.map { MemoShowItemUiState.from(it) },
+        fun from(memo: MemoUseCaseModel) = MemoShowUiState(
+            title = memo.title,
+            items = memo.items.map { MemoShowItemUiState.from(it) },
         )
     }
 }
@@ -42,25 +38,16 @@ data class MemoShowItemUiState(
     val checked: Boolean,
     val content: ItemContent,
 ) {
+    fun toUseCaseModel() = ItemUseCaseModel(
+        id = id,
+        checked = checked,
+        content = content,
+    )
     companion object {
-        fun from(fetchMemoByIdItemUseCaseModel: GetMemoByIdItemUseCaseModel) =
-            MemoShowItemUiState(
-                id = fetchMemoByIdItemUseCaseModel.id,
-                checked = fetchMemoByIdItemUseCaseModel.checked,
-                content = fetchMemoByIdItemUseCaseModel.content,
-            )
-
-        fun from(createItemUseCaseModel: CreateItemUseCaseModel) =
-            MemoShowItemUiState(
-                id = createItemUseCaseModel.id,
-                checked = createItemUseCaseModel.checked,
-                content = createItemUseCaseModel.content,
-            )
-
-        fun MemoShowItemUiState.toUpdateMemoUseCaseModel() = UpdateMemoItemUseCaseModel(
-            id = id,
-            checked = checked,
-            content = content,
+        fun from(item: ItemUseCaseModel) = MemoShowItemUiState(
+            id = item.id,
+            checked = item.checked,
+            content = item.content,
         )
     }
 }

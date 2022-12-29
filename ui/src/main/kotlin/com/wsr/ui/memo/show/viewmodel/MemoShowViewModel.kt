@@ -2,23 +2,22 @@ package com.wsr.ui.memo.show.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.wsr.command.AddItemUseCase
-import com.wsr.command.ChangeItemCheckedUseCase
-import com.wsr.command.DeleteCheckedItemsUseCase
+import com.wsr.MemoUseCaseModel
 import com.wsr.command.DivideMemoUseCase
-import com.wsr.command.SwapItemUseCase
-import com.wsr.command.UpdateItemContentUseCase
-import com.wsr.command.UpdateMemoTitleUseCase
+import com.wsr.command.element.AddItemUseCase
+import com.wsr.command.element.DeleteCheckedItemsUseCase
+import com.wsr.command.element.SwapItemUseCase
+import com.wsr.command.element.UpdateItemCheckedUseCase
+import com.wsr.command.element.UpdateItemContentUseCase
+import com.wsr.command.element.UpdateMemoTitleUseCase
 import com.wsr.common.effect.ToastEffect
 import com.wsr.get.GetMemoByIdUseCase
-import com.wsr.get.GetMemoByIdUseCaseModel
 import com.wsr.memo.ItemContent
 import com.wsr.memo.ItemId
 import com.wsr.memo.MemoId
 import com.wsr.memo.MemoTitle
 import com.wsr.result.consume
 import com.wsr.ui.R
-import com.wsr.ui.memo.show.MemoShowItemUiState
 import com.wsr.ui.memo.show.MemoShowUiState
 import com.wsr.ui.memo.show.effect.ShareItemsEffect
 import dagger.assisted.Assisted
@@ -31,10 +30,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class MemoShowViewModel @AssistedInject constructor(
-    private val getMemoFlowByIdUseCase: GetMemoByIdUseCase,
-    private val changeItemCheckedUseCase: ChangeItemCheckedUseCase,
+    private val getMemoByIdUseCase: GetMemoByIdUseCase,
+    private val updateItemCheckedUseCase: UpdateItemCheckedUseCase,
     private val updateItemContentUseCase: UpdateItemContentUseCase,
     private val updateMemoTitleUseCase: UpdateMemoTitleUseCase,
     private val addItemUseCase: AddItemUseCase,
@@ -45,9 +45,8 @@ class MemoShowViewModel @AssistedInject constructor(
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(MemoShowUiState(isLoading = true))
     val uiState = _uiState
-        .map { uiState ->
-            uiState.mapItems { items -> items.sortedBy { it.checked } }
-        }.stateIn(
+        .map { uiState -> uiState.mapItems { items -> items.sortedBy { it.checked } } }
+        .stateIn(
             viewModelScope,
             SharingStarted.Lazily,
             MemoShowUiState(isLoading = true),
@@ -61,73 +60,49 @@ class MemoShowViewModel @AssistedInject constructor(
 
     fun getMemoAndUpdateUiState() {
         viewModelScope.launch {
-            getMemoFlowByIdUseCase(MemoId(memoId)).collect { data ->
-                data.consume(
-                    success = ::onSuccessGetting,
-                    failure = { onFailureGetting() },
-                )
-            }
-        }
-    }
-
-    private fun onSuccessGetting(data: GetMemoByIdUseCaseModel) {
-        viewModelScope.launch {
-            _uiState.emit(MemoShowUiState.from(data))
-        }
-    }
-
-    private fun onFailureGetting() {
-        viewModelScope.launch {
-            _toastEffect.emit(ToastEffect(R.string.system_error_message))
+            getMemoByIdUseCase(MemoId(memoId)).consume(
+                success = { _uiState.emit(MemoShowUiState.from(it)) },
+                failure = { _toastEffect.emit(ToastEffect(R.string.system_error_message)) },
+            )
         }
     }
 
     fun changeItemChecked(itemId: ItemId) {
-        viewModelScope.launch {
-            changeItemCheckedUseCase(MemoId(memoId), itemId)
-        }
+        updateMemo { updateItemCheckedUseCase(it, itemId) }
     }
 
     fun changeItemContent(itemId: ItemId, content: ItemContent) {
-        viewModelScope.launch {
-            updateItemContentUseCase(MemoId(memoId), itemId, content)
-        }
+        updateMemoWithRunBlocking { updateItemContentUseCase(it, itemId, content) }
 
         // 最後のItemでEnterが押された場合、新しいItemを追加する
         if (
             content.value.endsWith("\n") &&
-            _uiState.value.items.lastOrNull()?.id == itemId
+            uiState.value.items.lastOrNull()?.id == itemId
         ) addItem()
     }
 
     fun addItem() {
         // TODO: Focusをつける
-        viewModelScope.launch {
-            addItemUseCase(MemoId(memoId))
-        }
+        updateMemo { addItemUseCase(it) }
     }
 
     fun deleteCheckedItems() {
-        viewModelScope.launch {
-            deleteCheckedItemsUseCase(MemoId(memoId))
-        }
+        updateMemo { deleteCheckedItemsUseCase(it) }
     }
 
     fun swapItem(from: ItemId, to: ItemId) {
-        viewModelScope.launch {
-            swapItemUseCase(MemoId(memoId), from, to)
-        }
+        updateMemo { swapItemUseCase(it, from, to) }
     }
 
     fun shareItems() {
         viewModelScope.launch {
             when {
-                _uiState.value.isLoading ->
+                uiState.value.isLoading ->
                     _toastEffect.emit(ToastEffect(R.string.memo_show_share_items_on_loading_error_message))
-                _uiState.value.items.isEmpty() ->
+                uiState.value.items.isEmpty() ->
                     _toastEffect.emit(ToastEffect(R.string.memo_show_share_items_no_items_error_message))
                 else ->
-                    _sharedTextEffect.emit(ShareItemsEffect(_uiState.value.items))
+                    _sharedTextEffect.emit(ShareItemsEffect(uiState.value.items))
             }
         }
     }
@@ -135,7 +110,6 @@ class MemoShowViewModel @AssistedInject constructor(
     fun divideItems() {
         viewModelScope.launch {
             divideMemoUseCase(MemoId(memoId), MemoTitle("Test"))
-            getMemoAndUpdateUiState()
         }
     }
 
@@ -153,8 +127,32 @@ class MemoShowViewModel @AssistedInject constructor(
 
     fun updateMemoTitle(title: String) {
         dismissDialog()
+        updateMemo { updateMemoTitleUseCase(it, MemoTitle(title)) }
+    }
+
+    private inline fun updateMemo(
+        crossinline block: suspend (MemoUseCaseModel) -> MemoUseCaseModel,
+    ) {
         viewModelScope.launch {
-            updateMemoTitleUseCase(MemoId(memoId), MemoTitle(title))
+            _uiState.update { uiState ->
+                block(uiState.toUseCaseModel(MemoId(memoId)))
+                    .let { MemoShowUiState.from(it) }
+            }
+        }
+    }
+
+    /**
+     * 即座に画面に反映させないと挙動がおかしくなる時はこちらの関数を利用
+     * 例：文字の変更を反映させる動作
+     */
+    private inline fun updateMemoWithRunBlocking(
+        crossinline block: suspend (MemoUseCaseModel) -> MemoUseCaseModel,
+    ) {
+        runBlocking {
+            _uiState.update { uiState ->
+                block(uiState.toUseCaseModel(MemoId(memoId)))
+                    .let { MemoShowUiState.from(it) }
+            }
         }
     }
 }

@@ -2,11 +2,11 @@ package com.wsr.ui.memo.index
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.wsr.common.effect.ToastEffect
+import com.wsr.MemoUseCaseModel
 import com.wsr.command.CreateMemoUseCase
 import com.wsr.command.DeleteMemoUseCase
+import com.wsr.common.effect.ToastEffect
 import com.wsr.get.GetAllMemoUseCase
-import com.wsr.get.GetAllMemoUseCaseModel
 import com.wsr.memo.MemoId
 import com.wsr.memo.MemoTitle
 import com.wsr.result.consume
@@ -34,16 +34,14 @@ class MemoIndexViewModel @Inject constructor(
 
     fun getMemosAndUpdateUiState() {
         viewModelScope.launch {
-            getAllMemoFlowUseCase().collect { data ->
-                data.consume(
-                    success = ::onSuccessGetting,
-                    failure = { onFailureGetting() },
-                )
-            }
+            getAllMemoFlowUseCase().consume(
+                success = ::onSuccessGetting,
+                failure = { onFailureGetting() },
+            )
         }
     }
 
-    private fun onSuccessGetting(memos: List<GetAllMemoUseCaseModel>) {
+    private fun onSuccessGetting(memos: List<MemoUseCaseModel>) {
         _uiState.update { MemoIndexUiState.from(memos) }
     }
 
@@ -57,6 +55,7 @@ class MemoIndexViewModel @Inject constructor(
         viewModelScope.launch {
             dismissDialog()
             createMemoUseCase(MemoTitle(title))
+            getMemosAndUpdateUiState()
         }
     }
 
@@ -75,6 +74,7 @@ class MemoIndexViewModel @Inject constructor(
     fun deleteMemo(memoId: String) {
         viewModelScope.launch {
             deleteMemoUseCase(MemoId(memoId))
+            getMemosAndUpdateUiState()
         }
     }
 }
