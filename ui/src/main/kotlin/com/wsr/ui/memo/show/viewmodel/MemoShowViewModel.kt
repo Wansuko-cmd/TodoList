@@ -77,13 +77,27 @@ class MemoShowViewModel @AssistedInject constructor(
         // 最後のItemでEnterが押された場合、新しいItemを追加する
         if (
             content.value.endsWith("\n") &&
-            uiState.value.items.lastOrNull()?.id == itemId
+            uiState.value.items.lastOrNull { !it.checked }?.id == itemId
         ) addItem()
     }
 
     fun addItem() {
-        // TODO: Focusをつける
-        updateMemo { addItemUseCase(it) }
+        // Focusを与える処理が必要なためupdateMemo関数を使わない
+        viewModelScope.launch {
+            _uiState.update { uiState ->
+                val itemIds = uiState.items.map { it.id }
+                addItemUseCase(uiState.toUseCaseModel(MemoId(memoId)))
+                    .let { MemoShowUiState.from(it) }
+                    .let { beforeAttachFocusUiState ->
+                        beforeAttachFocusUiState.copy(
+                            shouldFocusItemId = beforeAttachFocusUiState
+                                .items
+                                .firstOrNull { !itemIds.contains(it.id) }
+                                ?.id,
+                        )
+                    }
+            }
+        }
     }
 
     fun deleteCheckedItems() {
