@@ -2,7 +2,6 @@ package com.wsr.memo
 
 import com.wsr.exception.DomainException
 import com.wsr.result.ApiResult
-import kotlinx.coroutines.flow.Flow
 
 interface MemoRepository {
 
