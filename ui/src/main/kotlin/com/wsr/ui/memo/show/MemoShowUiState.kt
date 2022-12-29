@@ -2,8 +2,6 @@ package com.wsr.ui.memo.show
 
 import com.wsr.ItemUseCaseModel
 import com.wsr.MemoUseCaseModel
-import com.wsr.get.GetMemoByIdItemUseCaseModel
-import com.wsr.get.GetMemoByIdUseCaseModel
 import com.wsr.memo.ItemContent
 import com.wsr.memo.ItemId
 import com.wsr.memo.MemoId
@@ -28,9 +26,9 @@ data class MemoShowUiState(
     ): MemoShowUiState = this.copy(items = block(items))
 
     companion object {
-        fun fromUseCaseModel(memo: MemoUseCaseModel) = MemoShowUiState(
+        fun from(memo: MemoUseCaseModel) = MemoShowUiState(
             title = memo.title,
-            items = memo.items.map { MemoShowItemUiState.fromUseCaseModel(it) },
+            items = memo.items.map { MemoShowItemUiState.from(it) },
         )
     }
 }
@@ -46,7 +44,7 @@ data class MemoShowItemUiState(
         content = content,
     )
     companion object {
-        fun fromUseCaseModel(item: ItemUseCaseModel) = MemoShowItemUiState(
+        fun from(item: ItemUseCaseModel) = MemoShowItemUiState(
             id = item.id,
             checked = item.checked,
             content = item.content,

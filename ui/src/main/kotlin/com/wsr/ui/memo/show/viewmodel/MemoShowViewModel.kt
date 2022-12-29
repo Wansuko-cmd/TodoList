@@ -30,7 +30,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlin.system.measureNanoTime
 import kotlinx.coroutines.runBlocking
 
 class MemoShowViewModel @AssistedInject constructor(
@@ -62,21 +61,9 @@ class MemoShowViewModel @AssistedInject constructor(
     fun getMemoAndUpdateUiState() {
         viewModelScope.launch {
             getMemoByIdUseCase(MemoId(memoId)).consume(
-                success = { onSuccessGetting(it) },
-                failure = { onFailureGetting() },
+                success = { _uiState.emit(MemoShowUiState.from(it)) },
+                failure = { _toastEffect.emit(ToastEffect(R.string.system_error_message)) },
             )
-        }
-    }
-
-    private fun onSuccessGetting(data: MemoUseCaseModel) {
-        viewModelScope.launch {
-            _uiState.emit(MemoShowUiState.fromUseCaseModel(data))
-        }
-    }
-
-    private fun onFailureGetting() {
-        viewModelScope.launch {
-            _toastEffect.emit(ToastEffect(R.string.system_error_message))
         }
     }
 
@@ -149,7 +136,7 @@ class MemoShowViewModel @AssistedInject constructor(
         viewModelScope.launch {
             _uiState.update { uiState ->
                 block(uiState.toUseCaseModel(MemoId(memoId)))
-                    .let { MemoShowUiState.fromUseCaseModel(it) }
+                    .let { MemoShowUiState.from(it) }
             }
         }
     }
@@ -164,7 +151,7 @@ class MemoShowViewModel @AssistedInject constructor(
         runBlocking {
             _uiState.update { uiState ->
                 block(uiState.toUseCaseModel(MemoId(memoId)))
-                    .let { MemoShowUiState.fromUseCaseModel(it) }
+                    .let { MemoShowUiState.from(it) }
             }
         }
     }
