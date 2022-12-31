@@ -10,12 +10,12 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.wsr.common.composable.LoadingScreen
+import com.wsr.common.composable.dialog.SettingsMemoTitleDialog
 import com.wsr.common.effect.ObserveNavigateEffect
 import com.wsr.common.effect.ObserveToastEffect
 import com.wsr.memo.MemoId
 import com.wsr.ui.memo.index.MemoIndexUiState
 import com.wsr.ui.memo.index.MemoIndexViewModel
-import com.wsr.ui.memo.index.component.MemoIndexCreateMemoDialog
 import com.wsr.ui.memo.index.section.MemoIndexMemoSection
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
@@ -41,7 +41,7 @@ fun MemoIndexScreen(
     )
 
     if (uiState.isShowingCreateMemoDialog) {
-        MemoIndexCreateMemoDialog(
+        SettingsMemoTitleDialog(
             onDismiss = viewModel::dismissDialog,
             onConfirm = viewModel::createMemo,
         )

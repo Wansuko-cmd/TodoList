@@ -1,4 +1,4 @@
-package com.wsr.ui.memo.index.component
+package com.wsr.common.composable.dialog
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,12 +30,13 @@ import com.wsr.theme.TodoListTheme
 import com.wsr.ui.R
 
 @Composable
-fun MemoIndexCreateMemoDialog(
+fun SettingsMemoTitleDialog(
     modifier: Modifier = Modifier,
+    initialValue: String = "",
     onDismiss: () -> Unit,
     onConfirm: (title: String) -> Unit,
 ) {
-    val (text, setText) = remember { mutableStateOf("") }
+    val (text, setText) = remember { mutableStateOf(initialValue) }
     Dialog(onDismissRequest = onDismiss) {
         Surface {
             Column(
@@ -101,7 +102,7 @@ fun MemoIndexCreateMemoDialog(
 @Composable
 fun MemoIndexCreateMemoDialogPreview() {
     TodoListTheme {
-        MemoIndexCreateMemoDialog(
+        SettingsMemoTitleDialog(
             onDismiss = {},
             onConfirm = {},
         )

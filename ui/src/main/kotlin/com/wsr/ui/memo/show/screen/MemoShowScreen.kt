@@ -10,12 +10,12 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.wsr.common.composable.LoadingScreen
+import com.wsr.common.composable.dialog.SettingsMemoTitleDialog
 import com.wsr.common.effect.ObserveNavigateEffect
 import com.wsr.common.effect.ObserveToastEffect
 import com.wsr.memo.ItemContent
 import com.wsr.memo.ItemId
 import com.wsr.ui.memo.show.MemoShowUiState
-import com.wsr.ui.memo.show.component.MemoShowEditMemoTitleDialog
 import com.wsr.ui.memo.show.effect.ObserveShareItemsEffect
 import com.wsr.ui.memo.show.section.MemoShowItemSection
 import com.wsr.ui.memo.show.viewmodel.MemoShowViewModel
@@ -48,7 +48,7 @@ fun MemoShowScreen(
     )
 
     if (uiState.isShowingEditMemoTitleDialog) {
-        MemoShowEditMemoTitleDialog(
+        SettingsMemoTitleDialog(
             initialValue = uiState.title.value,
             onDismiss = viewModel::dismissDialog,
             onConfirm = viewModel::updateMemoTitle,
