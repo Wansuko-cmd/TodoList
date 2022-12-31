@@ -138,20 +138,20 @@ class MemoShowViewModel @AssistedInject constructor(
         }
     }
 
-    fun showDialog() {
+    fun showUpdateMemoTitleDialog() {
         viewModelScope.launch {
-            _uiState.update { it.copy(isShowingEditMemoTitleDialog = true) }
+            _uiState.update { it.copy(isShowingUpdateMemoTitleDialog = true) }
         }
     }
 
-    fun dismissDialog() {
+    fun dismissUpdateMemoTitleDialog() {
         viewModelScope.launch {
-            _uiState.update { it.copy(isShowingEditMemoTitleDialog = false) }
+            _uiState.update { it.copy(isShowingUpdateMemoTitleDialog = false) }
         }
     }
 
     fun updateMemoTitle(title: String) {
-        dismissDialog()
+        dismissUpdateMemoTitleDialog()
         updateMemo { updateMemoTitleUseCase(it, MemoTitle(title)) }
     }
 

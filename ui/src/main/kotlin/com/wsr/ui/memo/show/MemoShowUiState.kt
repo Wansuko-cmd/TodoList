@@ -12,7 +12,7 @@ data class MemoShowUiState(
     val items: List<MemoShowItemUiState> = listOf(),
     val shouldFocusItemId: ItemId? = null,
     val isLoading: Boolean = false,
-    val isShowingEditMemoTitleDialog: Boolean = false,
+    val isShowingUpdateMemoTitleDialog: Boolean = false,
 ) {
 
     fun toUseCaseModel(id: MemoId) = MemoUseCaseModel(

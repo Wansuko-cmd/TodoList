@@ -41,16 +41,16 @@ fun MemoShowScreen(
         onChangeContent = viewModel::changeItemContent,
         addItem = viewModel::addItem,
         onClickDivide = viewModel::divideItems,
-        onClickTitle = viewModel::showDialog,
+        onClickTitle = viewModel::showUpdateMemoTitleDialog,
         shareItems = viewModel::shareItems,
         deleteCheckedItems = viewModel::deleteCheckedItems,
         onMoveItem = viewModel::swapItem,
     )
 
-    if (uiState.isShowingEditMemoTitleDialog) {
+    if (uiState.isShowingUpdateMemoTitleDialog) {
         SettingsMemoTitleDialog(
             initialValue = uiState.title.value,
-            onDismiss = viewModel::dismissDialog,
+            onDismiss = viewModel::dismissUpdateMemoTitleDialog,
             onConfirm = viewModel::updateMemoTitle,
         )
     }
