@@ -42,6 +42,9 @@ inline fun <T, E> ApiResult<T, E>.consume(
     }
 }
 
+inline fun <T, E> ApiResult<T, E>.onEach(block: (T) -> Unit) =
+    this.map { block(it); it }
+
 fun <T, E> List<ApiResult<T, E>>.sequence(): ApiResult<List<T>, E> {
     val result = mutableListOf<T>()
     for (element in this) {

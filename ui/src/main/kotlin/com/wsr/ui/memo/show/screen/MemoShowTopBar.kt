@@ -1,5 +1,7 @@
 package com.wsr.ui.memo.show.screen
 
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -9,11 +11,15 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.navigation.NavController
 
 @Composable
 fun MemoShowTopBar(
@@ -21,9 +27,12 @@ fun MemoShowTopBar(
     memoTitle: String,
     onClickArrowBack: () -> Unit,
     onClickTitle: () -> Unit,
+    onClickDivide: () -> Unit,
     shareItems: () -> Unit,
     deleteCheckedItems: () -> Unit,
 ) {
+    var showMenu by remember { mutableStateOf(false) }
+
     TopAppBar(
         modifier = modifier,
         title = {
@@ -55,6 +64,20 @@ fun MemoShowTopBar(
                     imageVector = Icons.Filled.Delete,
                     contentDescription = null,
                 )
+            }
+            IconButton(onClick = { showMenu = true }) {
+                Icon(
+                    imageVector = Icons.Filled.MoreVert,
+                    contentDescription = null,
+                )
+            }
+            DropdownMenu(
+                expanded = showMenu,
+                onDismissRequest = { showMenu = false },
+            ) {
+                DropdownMenuItem(onClick = onClickDivide) {
+                    Text(text = "分割")
+                }
             }
         },
     )

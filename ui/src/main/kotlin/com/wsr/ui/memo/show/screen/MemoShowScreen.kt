@@ -40,6 +40,7 @@ fun MemoShowScreen(
         onChecked = viewModel::changeItemChecked,
         onChangeContent = viewModel::changeItemContent,
         addItem = viewModel::addItem,
+        onClickDivide = viewModel::divideItems,
         onClickTitle = viewModel::showDialog,
         shareItems = viewModel::shareItems,
         deleteCheckedItems = viewModel::deleteCheckedItems,
@@ -68,6 +69,7 @@ fun MemoShowScreen(
     onChangeContent: (itemId: ItemId, content: ItemContent) -> Unit,
     addItem: () -> Unit,
     onClickTitle: () -> Unit,
+    onClickDivide: () -> Unit,
     shareItems: () -> Unit,
     deleteCheckedItems: () -> Unit,
     onMoveItem: (from: ItemId, to: ItemId) -> Unit,
@@ -79,6 +81,7 @@ fun MemoShowScreen(
                 memoTitle = uiState.title.value,
                 onClickArrowBack = onClickArrowBack,
                 onClickTitle = onClickTitle,
+                onClickDivide = onClickDivide,
                 shareItems = shareItems,
                 deleteCheckedItems = deleteCheckedItems,
             )

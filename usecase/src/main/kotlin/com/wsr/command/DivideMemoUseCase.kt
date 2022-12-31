@@ -8,6 +8,7 @@ import com.wsr.memo.MemoTitle
 import com.wsr.result.ApiResult
 import com.wsr.result.flatMap
 import com.wsr.result.map
+import com.wsr.result.onEach
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -23,10 +24,9 @@ class DivideMemoUseCase @Inject constructor(
     ) = withContext(dispatcher) {
         memoRepository.getById(originalMemoId)
             .map { it.divideMemo(newTitle) }
-            .map { (original, new) ->
+            .onEach { (original, new) ->
                 memoRepository.upsert(original)
                 memoRepository.upsert(new)
-                new
             }
     }
 }

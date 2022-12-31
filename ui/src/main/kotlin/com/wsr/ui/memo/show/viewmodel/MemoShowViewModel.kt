@@ -130,9 +130,9 @@ class MemoShowViewModel @AssistedInject constructor(
     fun divideItems() {
         viewModelScope.launch {
             divideMemoUseCase(MemoId(memoId), MemoTitle("Test"))
-                .map {
+                .map { (_, new) ->
                     _navigateEffect.emit(
-                        NavigateEffect.Navigate(Route.Memo.Show.with(it.id.value)),
+                        NavigateEffect.Navigate(Route.Memo.Show.with(new.id.value)),
                     )
                 }
         }
