@@ -17,16 +17,8 @@ interface MemoDao {
     suspend fun getMemos(): List<MemoWithItems>
 
     @Transaction
-    @Query("SELECT * FROM memos")
-    fun getMemosFlow(): Flow<List<MemoWithItems>>
-
-    @Transaction
     @Query("SELECT * FROM memos WHERE id=:id")
     suspend fun getMemoById(id: String): MemoWithItems
-
-    @Transaction
-    @Query("SELECT * FROM memos WHERE id=:id")
-    fun getMemoFlowById(id: String): Flow<MemoWithItems>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertMemo(memoEntity: MemoEntity)
