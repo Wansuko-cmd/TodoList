@@ -97,7 +97,7 @@ class MemoShowViewModel @AssistedInject constructor(
         }
     }
 
-    fun onClickDeleteCheckedItems() {
+    fun deleteCheckedItems() {
         updateMemo { deleteCheckedItemsUseCase(it) }
     }
 
@@ -170,6 +170,18 @@ class MemoShowViewModel @AssistedInject constructor(
     fun dismissEditDivideMemoTitleDialog() {
         viewModelScope.launch {
             _uiState.update { it.copy(isShowingEditDivideMemoTitleDialog = false) }
+        }
+    }
+
+    fun showCheckIfDeleteCheckedItemsDialog() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isShowingCheckIfDeleteCheckedItemsDialog = true) }
+        }
+    }
+
+    fun dismissCheckIfDeleteCheckedItemsDialog() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isShowingCheckIfDeleteCheckedItemsDialog = false) }
         }
     }
 

@@ -14,6 +14,7 @@ data class MemoShowUiState(
     val isLoading: Boolean = false,
     val isShowingUpdateMemoTitleDialog: Boolean = false,
     val isShowingEditDivideMemoTitleDialog: Boolean = false,
+    val isShowingCheckIfDeleteCheckedItemsDialog: Boolean = false,
 ) {
 
     fun toUseCaseModel(id: MemoId) = MemoUseCaseModel(

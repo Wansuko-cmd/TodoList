@@ -6,15 +6,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.wsr.common.composable.LoadingScreen
+import com.wsr.common.composable.dialog.CheckConfirmDialog
 import com.wsr.common.composable.dialog.SettingsMemoTitleDialog
 import com.wsr.common.effect.ObserveNavigateEffect
 import com.wsr.common.effect.ObserveToastEffect
 import com.wsr.memo.ItemContent
 import com.wsr.memo.ItemId
+import com.wsr.ui.R
 import com.wsr.ui.memo.show.MemoShowUiState
 import com.wsr.ui.memo.show.effect.ObserveShareItemsEffect
 import com.wsr.ui.memo.show.section.MemoShowItemSection
@@ -28,6 +31,7 @@ fun MemoShowScreen(
     navController: NavHostController,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
         viewModel.getMemoAndUpdateUiState()
@@ -40,7 +44,7 @@ fun MemoShowScreen(
         onClickTitle = viewModel::showUpdateMemoTitleDialog,
         onClickShareItems = viewModel::onClickShareItems,
         onClickDivide = viewModel::showEditDivideMemoTitleDialog,
-        onClickDeleteCheckedItems = viewModel::onClickDeleteCheckedItems,
+        onClickDeleteCheckedItems = viewModel::showCheckIfDeleteCheckedItemsDialog,
         onClickAddItem = viewModel::onClickAddItem,
         onChangeChecked = viewModel::onChangeChecked,
         onChangeContent = viewModel::onChangeContent,
@@ -59,6 +63,14 @@ fun MemoShowScreen(
         SettingsMemoTitleDialog(
             onDismiss = viewModel::dismissEditDivideMemoTitleDialog,
             onConfirm = viewModel::divideItems,
+        )
+    }
+
+    if (uiState.isShowingCheckIfDeleteCheckedItemsDialog) {
+        CheckConfirmDialog(
+            message = context.getString(R.string.memo_show_check_if_delete_checked_items_dialog_message),
+            onDismiss = viewModel::dismissCheckIfDeleteCheckedItemsDialog,
+            onConfirm = viewModel::deleteCheckedItems,
         )
     }
 

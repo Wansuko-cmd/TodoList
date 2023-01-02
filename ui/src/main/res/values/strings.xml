@@ -1,20 +1,26 @@
 <resources>
     <string name="app_name">TodoList</string>
 
-    <string name="memo_index_create_memo_title">タイトル</string>
-    <string name="memo_index_create_memo_dismiss_button">キャンセル</string>
-    <string name="memo_index_create_memo_confirm_button">完了</string>
     <string name="memo_index_delete_memo">削除</string>
 
-    <string name="memo_show_edit_title_memo_title_title">タイトル</string>
-    <string name="memo_show_edit_title_dismiss_button">キャンセル</string>
-    <string name="memo_show_edit_title_confirm_button">完了</string>
+    <string name="memo_show_top_bar_dropdown_menu_divide">チェック要素の移動</string>
+    <string name="memo_show_top_bar_dropdown_menu_delete">チェック要素の削除</string>
+    <string name="memo_show_check_if_delete_checked_items_dialog_message">チェックしている要素を削除してもよろしいですか？</string>
     <string name="memo_show_share_items_on_loading_error_message">ローディング中・・・</string>
     <string name="memo_show_share_items_no_items_error_message">共有するアイテムがありません</string>
     <string name="memo_show_share_items_prefix">・ </string>
 
     <string name="setting_index_top_bar">設定</string>
     <string name="setting_index_text_size">文字の大きさ</string>
+
+    <string name="dialog_settings_memo_title_title">タイトル編集</string>
+    <string name="dialog_settings_memo_title_placeholder">タイトル</string>
+    <string name="dialog_settings_memo_title_confirm_button">完了</string>
+    <string name="dialog_settings_memo_title_dismiss_button">キャンセル</string>
+
+    <string name="dialog_check_confirm_title">警告</string>
+    <string name="dialog_check_confirm_confirm_button">確認</string>
+    <string name="dialog_check_confirm_dismiss_button">キャンセル</string>
 
     <string name="system_error_message">エラーが発生しました</string>
 </resources>

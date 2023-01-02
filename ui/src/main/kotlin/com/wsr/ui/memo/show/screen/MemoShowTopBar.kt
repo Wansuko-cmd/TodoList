@@ -10,7 +10,6 @@ import androidx.compose.material.TextButton
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.runtime.Composable
@@ -20,6 +19,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import com.wsr.ui.R
 
 @Composable
 fun MemoShowTopBar(
@@ -32,6 +33,7 @@ fun MemoShowTopBar(
     onClickDeleteCheckedItems: () -> Unit,
 ) {
     var showMenu by remember { mutableStateOf(false) }
+    val context = LocalContext.current
 
     TopAppBar(
         modifier = modifier,
@@ -59,12 +61,6 @@ fun MemoShowTopBar(
                     contentDescription = null,
                 )
             }
-            IconButton(onClick = onClickDeleteCheckedItems) {
-                Icon(
-                    imageVector = Icons.Filled.Delete,
-                    contentDescription = null,
-                )
-            }
             IconButton(onClick = { showMenu = true }) {
                 Icon(
                     imageVector = Icons.Filled.MoreVert,
@@ -76,7 +72,10 @@ fun MemoShowTopBar(
                 onDismissRequest = { showMenu = false },
             ) {
                 DropdownMenuItem(onClick = onClickDivide) {
-                    Text(text = "分割")
+                    Text(text = context.getString(R.string.memo_show_top_bar_dropdown_menu_divide))
+                }
+                DropdownMenuItem(onClick = onClickDeleteCheckedItems) {
+                    Text(text = context.getString(R.string.memo_show_top_bar_dropdown_menu_delete))
                 }
             }
         },
