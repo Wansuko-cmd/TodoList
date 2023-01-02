@@ -20,12 +20,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.wsr.theme.HoloBlueDark
+import com.wsr.theme.HoloRedDark
 import com.wsr.theme.MossGreen
 import com.wsr.ui.R
 
 @Composable
-fun CheckConfirmDialog(
+fun CheckConfirmDangerDialog(
     modifier: Modifier = Modifier,
     message: String = "",
     onDismiss: () -> Unit,
@@ -69,7 +69,7 @@ fun CheckConfirmDialog(
                     Spacer(modifier = Modifier.width(16.dp))
                     Button(
                         colors = ButtonDefaults.textButtonColors(
-                            backgroundColor = HoloBlueDark,
+                            backgroundColor = HoloRedDark,
                         ),
                         shape = RoundedCornerShape(5.dp),
                         onClick = { onConfirm() },

@@ -11,7 +11,7 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.wsr.common.composable.LoadingScreen
-import com.wsr.common.composable.dialog.CheckConfirmDialog
+import com.wsr.common.composable.dialog.CheckConfirmDangerDialog
 import com.wsr.common.composable.dialog.SettingsMemoTitleDialog
 import com.wsr.common.effect.ObserveNavigateEffect
 import com.wsr.common.effect.ObserveToastEffect
@@ -67,7 +67,7 @@ fun MemoShowScreen(
     }
 
     if (uiState.isShowingCheckIfDeleteCheckedItemsDialog) {
-        CheckConfirmDialog(
+        CheckConfirmDangerDialog(
             message = context.getString(R.string.memo_show_check_if_delete_checked_items_dialog_message),
             onDismiss = viewModel::dismissCheckIfDeleteCheckedItemsDialog,
             onConfirm = viewModel::deleteCheckedItems,
