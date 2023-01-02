@@ -101,9 +101,9 @@ class MemoShowViewModel @AssistedInject constructor(
         updateMemo { deleteCheckedItemsUseCase(it) }
     }
 
-    fun onClickDivide() {
+    fun divideItems(newTitle: String) {
         viewModelScope.launch {
-            divideMemoUseCase(MemoId(memoId), MemoTitle("Test"))
+            divideMemoUseCase(MemoId(memoId), MemoTitle(newTitle))
                 .map { (_, new) ->
                     _navigateEffect.emit(
                         NavigateEffect.Navigate(Route.Memo.Show.with(new.id.value)),
@@ -158,6 +158,18 @@ class MemoShowViewModel @AssistedInject constructor(
     fun dismissUpdateMemoTitleDialog() {
         viewModelScope.launch {
             _uiState.update { it.copy(isShowingUpdateMemoTitleDialog = false) }
+        }
+    }
+
+    fun showEditDivideMemoTitleDialog() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isShowingEditDivideMemoTitleDialog = true) }
+        }
+    }
+
+    fun dismissEditDivideMemoTitleDialog() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isShowingEditDivideMemoTitleDialog = false) }
         }
     }
 

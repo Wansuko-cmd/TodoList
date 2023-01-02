@@ -39,7 +39,7 @@ fun MemoShowScreen(
         onClickArrowBack = viewModel::onClickArrowBack,
         onClickTitle = viewModel::showUpdateMemoTitleDialog,
         onClickShareItems = viewModel::onClickShareItems,
-        onClickDivide = viewModel::onClickDivide,
+        onClickDivide = viewModel::showEditDivideMemoTitleDialog,
         onClickDeleteCheckedItems = viewModel::onClickDeleteCheckedItems,
         onClickAddItem = viewModel::onClickAddItem,
         onChangeChecked = viewModel::onChangeChecked,
@@ -52,6 +52,13 @@ fun MemoShowScreen(
             initialValue = uiState.title.value,
             onDismiss = viewModel::dismissUpdateMemoTitleDialog,
             onConfirm = viewModel::updateMemoTitle,
+        )
+    }
+
+    if (uiState.isShowingEditDivideMemoTitleDialog) {
+        SettingsMemoTitleDialog(
+            onDismiss = viewModel::dismissEditDivideMemoTitleDialog,
+            onConfirm = viewModel::divideItems,
         )
     }
 
