@@ -1,12 +1,9 @@
 package com.wsr.command
 
 import com.wsr.di.DefaultDispatcher
-import com.wsr.exception.DomainException
 import com.wsr.memo.MemoId
 import com.wsr.memo.MemoRepository
 import com.wsr.memo.MemoTitle
-import com.wsr.result.ApiResult
-import com.wsr.result.flatMap
 import com.wsr.result.map
 import com.wsr.result.onEach
 import kotlinx.coroutines.CoroutineDispatcher

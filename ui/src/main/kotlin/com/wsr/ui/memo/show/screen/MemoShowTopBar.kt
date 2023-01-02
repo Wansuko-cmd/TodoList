@@ -28,8 +28,8 @@ fun MemoShowTopBar(
     onClickArrowBack: () -> Unit,
     onClickTitle: () -> Unit,
     onClickDivide: () -> Unit,
-    shareItems: () -> Unit,
-    deleteCheckedItems: () -> Unit,
+    onClickShareItems: () -> Unit,
+    onClickDeleteCheckedItems: () -> Unit,
 ) {
     var showMenu by remember { mutableStateOf(false) }
 
@@ -53,13 +53,13 @@ fun MemoShowTopBar(
             }
         },
         actions = {
-            IconButton(onClick = shareItems) {
+            IconButton(onClick = onClickShareItems) {
                 Icon(
                     imageVector = Icons.Filled.Share,
                     contentDescription = null,
                 )
             }
-            IconButton(onClick = deleteCheckedItems) {
+            IconButton(onClick = onClickDeleteCheckedItems) {
                 Icon(
                     imageVector = Icons.Filled.Delete,
                     contentDescription = null,

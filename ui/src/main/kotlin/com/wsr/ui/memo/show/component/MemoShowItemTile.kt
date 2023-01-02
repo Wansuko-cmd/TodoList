@@ -28,7 +28,7 @@ fun MemoShowItemTile(
     itemUiState: MemoShowItemUiState,
     isDragging: Boolean,
     shouldFocus: Boolean,
-    onChecked: (itemId: ItemId) -> Unit,
+    onChangeChecked: (itemId: ItemId) -> Unit,
     onChangeContent: (itemId: ItemId, content: ItemContent) -> Unit,
 ) {
     val backgroundColor = when {
@@ -52,7 +52,7 @@ fun MemoShowItemTile(
         Row(
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Checkbox(checked = itemUiState.checked, onCheckedChange = { onChecked(itemUiState.id) })
+            Checkbox(checked = itemUiState.checked, onCheckedChange = { onChangeChecked(itemUiState.id) })
             WithoutPaddingTextField(
                 modifier = Modifier.focusRequester(focusRequester),
                 value = itemUiState.content.value,
@@ -63,7 +63,7 @@ fun MemoShowItemTile(
                     backgroundColor = backgroundColor,
                     unfocusedIndicatorColor = backgroundColor,
                     focusedIndicatorColor = backgroundColor,
-                )
+                ),
             )
         }
     }

@@ -24,11 +24,10 @@ import org.burnoutcrew.reorderable.reorderable
 fun MemoShowItemSection(
     modifier: Modifier = Modifier,
     uiState: MemoShowUiState,
-    onChecked: (itemId: ItemId) -> Unit,
+    onChangeChecked: (itemId: ItemId) -> Unit,
     onChangeContent: (itemId: ItemId, content: ItemContent) -> Unit,
     onMoveItem: (from: ItemId, to: ItemId) -> Unit,
 ) {
-
     val reorderItemState = rememberReorderableLazyListState(
         onMove = { from, to ->
             onMoveItem(ItemId(from.key.toString()), ItemId(to.key.toString()))
@@ -58,7 +57,7 @@ fun MemoShowItemSection(
                     itemUiState = item,
                     isDragging = isDragging,
                     shouldFocus = item.id == uiState.shouldFocusItemId,
-                    onChecked = onChecked,
+                    onChangeChecked = onChangeChecked,
                     onChangeContent = onChangeContent,
                 )
             }

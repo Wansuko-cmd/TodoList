@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 
 sealed class NavigateEffect {
-    data class Navigate(val route: String): NavigateEffect()
-    object PopBackStack: NavigateEffect()
+    data class Navigate(val route: String) : NavigateEffect()
+    object PopBackStack : NavigateEffect()
 }
 
 @Composable

@@ -19,7 +19,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TodoListTheme {
-
                 val systemUiController = rememberSystemUiController()
                 val statusBarColor = MaterialTheme.colors.primaryVariant
                 SideEffect {

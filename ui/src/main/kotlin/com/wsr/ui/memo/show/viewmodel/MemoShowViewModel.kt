@@ -37,13 +37,13 @@ import kotlinx.coroutines.runBlocking
 
 class MemoShowViewModel @AssistedInject constructor(
     private val getMemoByIdUseCase: GetMemoByIdUseCase,
+    private val updateMemoTitleUseCase: UpdateMemoTitleUseCase,
+    private val deleteCheckedItemsUseCase: DeleteCheckedItemsUseCase,
+    private val divideMemoUseCase: DivideMemoUseCase,
+    private val addItemUseCase: AddItemUseCase,
     private val updateItemCheckedUseCase: UpdateItemCheckedUseCase,
     private val updateItemContentUseCase: UpdateItemContentUseCase,
-    private val updateMemoTitleUseCase: UpdateMemoTitleUseCase,
-    private val addItemUseCase: AddItemUseCase,
-    private val deleteCheckedItemsUseCase: DeleteCheckedItemsUseCase,
     private val swapItemUseCase: SwapItemUseCase,
-    private val divideMemoUseCase: DivideMemoUseCase,
     @Assisted("memoId") private val memoId: String,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(MemoShowUiState(isLoading = true))
@@ -73,21 +73,46 @@ class MemoShowViewModel @AssistedInject constructor(
         }
     }
 
-    fun changeItemChecked(itemId: ItemId) {
-        updateMemo { updateItemCheckedUseCase(it, itemId) }
+    fun onClickArrowBack() {
+        viewModelScope.launch {
+            _navigateEffect.emit(NavigateEffect.PopBackStack)
+        }
     }
 
-    fun changeItemContent(itemId: ItemId, content: ItemContent) {
-        updateMemoWithRunBlocking { updateItemContentUseCase(it, itemId, content) }
-
-        // 最後のItemでEnterが押された場合、新しいItemを追加する
-        if (
-            content.value.endsWith("\n") &&
-            uiState.value.items.lastOrNull { !it.checked }?.id == itemId
-        ) addItem()
+    fun updateMemoTitle(title: String) {
+        dismissUpdateMemoTitleDialog()
+        updateMemo { updateMemoTitleUseCase(it, MemoTitle(title)) }
     }
 
-    fun addItem() {
+    fun onClickShareItems() {
+        viewModelScope.launch {
+            when {
+                uiState.value.isLoading ->
+                    _toastEffect.emit(ToastEffect(R.string.memo_show_share_items_on_loading_error_message))
+                uiState.value.items.isEmpty() ->
+                    _toastEffect.emit(ToastEffect(R.string.memo_show_share_items_no_items_error_message))
+                else ->
+                    _sharedTextEffect.emit(ShareItemsEffect(uiState.value.items))
+            }
+        }
+    }
+
+    fun onClickDeleteCheckedItems() {
+        updateMemo { deleteCheckedItemsUseCase(it) }
+    }
+
+    fun onClickDivide() {
+        viewModelScope.launch {
+            divideMemoUseCase(MemoId(memoId), MemoTitle("Test"))
+                .map { (_, new) ->
+                    _navigateEffect.emit(
+                        NavigateEffect.Navigate(Route.Memo.Show.with(new.id.value)),
+                    )
+                }
+        }
+    }
+
+    fun onClickAddItem() {
         // Focusを与える処理が必要なためupdateMemo関数を使わない
         viewModelScope.launch {
             _uiState.update { uiState ->
@@ -106,36 +131,22 @@ class MemoShowViewModel @AssistedInject constructor(
         }
     }
 
-    fun deleteCheckedItems() {
-        updateMemo { deleteCheckedItemsUseCase(it) }
+    fun onChangeChecked(itemId: ItemId) {
+        updateMemo { updateItemCheckedUseCase(it, itemId) }
     }
 
-    fun swapItem(from: ItemId, to: ItemId) {
+    fun onChangeContent(itemId: ItemId, content: ItemContent) {
+        updateMemoWithRunBlocking { updateItemContentUseCase(it, itemId, content) }
+
+        // 最後のItemでEnterが押された場合、新しいItemを追加する
+        if (
+            content.value.endsWith("\n") &&
+            uiState.value.items.lastOrNull { !it.checked }?.id == itemId
+        ) onClickAddItem()
+    }
+
+    fun onMoveItem(from: ItemId, to: ItemId) {
         updateMemo { swapItemUseCase(it, from, to) }
-    }
-
-    fun shareItems() {
-        viewModelScope.launch {
-            when {
-                uiState.value.isLoading ->
-                    _toastEffect.emit(ToastEffect(R.string.memo_show_share_items_on_loading_error_message))
-                uiState.value.items.isEmpty() ->
-                    _toastEffect.emit(ToastEffect(R.string.memo_show_share_items_no_items_error_message))
-                else ->
-                    _sharedTextEffect.emit(ShareItemsEffect(uiState.value.items))
-            }
-        }
-    }
-
-    fun divideItems() {
-        viewModelScope.launch {
-            divideMemoUseCase(MemoId(memoId), MemoTitle("Test"))
-                .map { (_, new) ->
-                    _navigateEffect.emit(
-                        NavigateEffect.Navigate(Route.Memo.Show.with(new.id.value)),
-                    )
-                }
-        }
     }
 
     fun showUpdateMemoTitleDialog() {
@@ -150,11 +161,9 @@ class MemoShowViewModel @AssistedInject constructor(
         }
     }
 
-    fun updateMemoTitle(title: String) {
-        dismissUpdateMemoTitleDialog()
-        updateMemo { updateMemoTitleUseCase(it, MemoTitle(title)) }
-    }
-
+    /**
+     * 補助関数群
+     */
     private inline fun updateMemo(
         crossinline block: suspend (MemoUseCaseModel) -> MemoUseCaseModel,
     ) {
@@ -178,12 +187,6 @@ class MemoShowViewModel @AssistedInject constructor(
                 block(uiState.toUseCaseModel(MemoId(memoId)))
                     .let { MemoShowUiState.from(it) }
             }
-        }
-    }
-
-    fun onClickArrowBack() {
-        viewModelScope.launch {
-            _navigateEffect.emit(NavigateEffect.PopBackStack)
         }
     }
 }

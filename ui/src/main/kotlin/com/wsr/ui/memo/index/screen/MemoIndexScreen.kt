@@ -34,15 +34,15 @@ fun MemoIndexScreen(
     MemoIndexScreen(
         modifier = modifier,
         uiState = uiState,
-        onClickTile = viewModel::onClickTile,
         onClickSetting = viewModel::onClickSetting,
-        onClickFab = viewModel::showDialog,
-        onClickDeleteButton = viewModel::deleteMemo,
+        onClickCreateMemo = viewModel::showCreateMemoDialog,
+        onClickMemo = viewModel::onClickMemo,
+        onClickDeleteMemo = viewModel::onClickDeleteMemo,
     )
 
     if (uiState.isShowingCreateMemoDialog) {
         SettingsMemoTitleDialog(
-            onDismiss = viewModel::dismissDialog,
+            onDismiss = viewModel::dismissCreateMemoDialog,
             onConfirm = viewModel::createMemo,
         )
     }
@@ -55,25 +55,25 @@ fun MemoIndexScreen(
 fun MemoIndexScreen(
     modifier: Modifier = Modifier,
     uiState: MemoIndexUiState,
-    onClickTile: (MemoId) -> Unit,
     onClickSetting: () -> Unit,
-    onClickFab: () -> Unit,
-    onClickDeleteButton: (memoId: String) -> Unit,
+    onClickCreateMemo: () -> Unit,
+    onClickMemo: (MemoId) -> Unit,
+    onClickDeleteMemo: (memoId: String) -> Unit,
 ) {
     Scaffold(
         modifier = modifier,
-        topBar = { MemoIndexTopBar(onClickSetting = onClickSetting) },
+        topBar = { MemoIndexTopBar(onClickSettings = onClickSetting) },
         floatingActionButton = {
             MemoIndexFloatActionButton(
-                onClick = onClickFab,
+                onClick = onClickCreateMemo,
             )
         },
     ) { innerPadding ->
         MemoIndexMemoSection(
             modifier = Modifier.padding(innerPadding),
             uiState = uiState,
-            onClickTile = onClickTile,
-            onClickDeleteButton = onClickDeleteButton,
+            onClickTile = onClickMemo,
+            onClickDeleteButton = onClickDeleteMemo,
         )
         if (uiState.isLoading) LoadingScreen()
     }

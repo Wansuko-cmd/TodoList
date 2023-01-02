@@ -15,7 +15,7 @@ import com.wsr.ui.R
 @Composable
 fun MemoIndexTopBar(
     modifier: Modifier = Modifier,
-    onClickSetting: () -> Unit,
+    onClickSettings: () -> Unit,
 ) {
     TopAppBar(
         modifier = modifier,
@@ -27,7 +27,7 @@ fun MemoIndexTopBar(
         },
         actions = {
             IconButton(
-                onClick = onClickSetting,
+                onClick = onClickSettings,
             ) {
                 Icon(
                     imageVector = Icons.Filled.Settings,

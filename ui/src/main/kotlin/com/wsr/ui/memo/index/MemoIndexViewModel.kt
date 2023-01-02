@@ -2,7 +2,6 @@ package com.wsr.ui.memo.index
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.wsr.MemoUseCaseModel
 import com.wsr.Route
 import com.wsr.command.CreateMemoUseCase
 import com.wsr.command.DeleteMemoUseCase
@@ -40,25 +39,9 @@ class MemoIndexViewModel @Inject constructor(
     fun getMemosAndUpdateUiState() {
         viewModelScope.launch {
             getAllMemoFlowUseCase().consume(
-                success = ::onSuccessGetting,
-                failure = { onFailureGetting() },
+                success = { data -> _uiState.update { MemoIndexUiState.from(data) } },
+                failure = { _toastEffect.emit(ToastEffect(R.string.system_error_message)) },
             )
-        }
-    }
-
-    private fun onSuccessGetting(memos: List<MemoUseCaseModel>) {
-        _uiState.update { MemoIndexUiState.from(memos) }
-    }
-
-    private fun onFailureGetting() {
-        viewModelScope.launch {
-            _toastEffect.emit(ToastEffect(R.string.system_error_message))
-        }
-    }
-
-    fun onClickTile(memoId: MemoId) {
-        viewModelScope.launch {
-            _navigateEffect.emit(NavigateEffect.Navigate(Route.Memo.Show.with(memoId.value)))
         }
     }
 
@@ -70,28 +53,34 @@ class MemoIndexViewModel @Inject constructor(
 
     fun createMemo(title: String) {
         viewModelScope.launch {
-            dismissDialog()
+            dismissCreateMemoDialog()
             createMemoUseCase(MemoTitle(title))
             getMemosAndUpdateUiState()
         }
     }
 
-    fun showDialog() {
+    fun onClickMemo(memoId: MemoId) {
+        viewModelScope.launch {
+            _navigateEffect.emit(NavigateEffect.Navigate(Route.Memo.Show.with(memoId.value)))
+        }
+    }
+
+    fun onClickDeleteMemo(memoId: String) {
+        viewModelScope.launch {
+            deleteMemoUseCase(MemoId(memoId))
+            getMemosAndUpdateUiState()
+        }
+    }
+
+    fun showCreateMemoDialog() {
         viewModelScope.launch {
             _uiState.update { it.copy(isShowingCreateMemoDialog = true) }
         }
     }
 
-    fun dismissDialog() {
+    fun dismissCreateMemoDialog() {
         viewModelScope.launch {
             _uiState.update { it.copy(isShowingCreateMemoDialog = false) }
-        }
-    }
-
-    fun deleteMemo(memoId: String) {
-        viewModelScope.launch {
-            deleteMemoUseCase(MemoId(memoId))
-            getMemosAndUpdateUiState()
         }
     }
 }

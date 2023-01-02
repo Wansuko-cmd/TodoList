@@ -37,14 +37,14 @@ fun MemoShowScreen(
         modifier = modifier,
         uiState = uiState,
         onClickArrowBack = viewModel::onClickArrowBack,
-        onChecked = viewModel::changeItemChecked,
-        onChangeContent = viewModel::changeItemContent,
-        addItem = viewModel::addItem,
-        onClickDivide = viewModel::divideItems,
         onClickTitle = viewModel::showUpdateMemoTitleDialog,
-        shareItems = viewModel::shareItems,
-        deleteCheckedItems = viewModel::deleteCheckedItems,
-        onMoveItem = viewModel::swapItem,
+        onClickShareItems = viewModel::onClickShareItems,
+        onClickDivide = viewModel::onClickDivide,
+        onClickDeleteCheckedItems = viewModel::onClickDeleteCheckedItems,
+        onClickAddItem = viewModel::onClickAddItem,
+        onChangeChecked = viewModel::onChangeChecked,
+        onChangeContent = viewModel::onChangeContent,
+        onMoveItem = viewModel::onMoveItem,
     )
 
     if (uiState.isShowingUpdateMemoTitleDialog) {
@@ -64,14 +64,20 @@ fun MemoShowScreen(
 fun MemoShowScreen(
     modifier: Modifier = Modifier,
     uiState: MemoShowUiState,
+
+    // TopBar
     onClickArrowBack: () -> Unit,
-    onChecked: (itemId: ItemId) -> Unit,
-    onChangeContent: (itemId: ItemId, content: ItemContent) -> Unit,
-    addItem: () -> Unit,
     onClickTitle: () -> Unit,
+    onClickShareItems: () -> Unit,
     onClickDivide: () -> Unit,
-    shareItems: () -> Unit,
-    deleteCheckedItems: () -> Unit,
+    onClickDeleteCheckedItems: () -> Unit,
+
+    // Fab
+    onClickAddItem: () -> Unit,
+
+    // Section
+    onChangeChecked: (itemId: ItemId) -> Unit,
+    onChangeContent: (itemId: ItemId, content: ItemContent) -> Unit,
     onMoveItem: (from: ItemId, to: ItemId) -> Unit,
 ) {
     Scaffold(
@@ -82,18 +88,18 @@ fun MemoShowScreen(
                 onClickArrowBack = onClickArrowBack,
                 onClickTitle = onClickTitle,
                 onClickDivide = onClickDivide,
-                shareItems = shareItems,
-                deleteCheckedItems = deleteCheckedItems,
+                onClickShareItems = onClickShareItems,
+                onClickDeleteCheckedItems = onClickDeleteCheckedItems,
             )
         },
         floatingActionButton = {
-            MemoShowFloatActionButton(onClick = addItem)
+            MemoShowFloatActionButton(onClick = onClickAddItem)
         },
     ) { innerPadding ->
         MemoShowItemSection(
             modifier = Modifier.padding(innerPadding),
             uiState = uiState,
-            onChecked = onChecked,
+            onChangeChecked = onChangeChecked,
             onChangeContent = onChangeContent,
             onMoveItem = onMoveItem,
         )
