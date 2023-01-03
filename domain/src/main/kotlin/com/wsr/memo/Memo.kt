@@ -10,19 +10,19 @@ class Memo private constructor(
     val items: List<Item>,
     val accessedAt: Instant,
 ) {
-    fun updateTitle(title: MemoTitle) = update(
+    fun updateTitle(title: MemoTitle): Memo = update(
         title = title,
         items = items,
     )
 
-    fun updateItemContent(itemId: ItemId, content: ItemContent) =
+    fun updateItemContent(itemId: ItemId, content: ItemContent): Memo =
         mapSpecifyItem(itemId) { it.updateContent(content) }
 
-    fun updateItemChecked(itemId: ItemId) = mapSpecifyItem(itemId) { it.switchChecked() }
+    fun updateItemChecked(itemId: ItemId): Memo = mapSpecifyItem(itemId) { it.switchChecked() }
 
-    fun addItem() = mapItems { it + Item.create() }
+    fun addItem(): Memo = mapItems { it + Item.create() }
 
-    fun deleteCheckedItems() = mapItems { items -> items.filterNot { it.checked } }
+    fun deleteCheckedItems(): Memo = mapItems { items -> items.filterNot { it.checked } }
 
     fun swapItem(from: ItemId, to: ItemId): Memo = mapItems {
         val fromIndex = items.indexOfFirst { it.id == from }
@@ -32,24 +32,24 @@ class Memo private constructor(
         } else items
     }
 
-    fun divideMemo(newTitle: MemoTitle) =
+    fun divideMemo(newTitle: MemoTitle): Pair<Memo, Memo> =
         items
             .partition { !it.checked }
             .let { (original, new) ->
                 mapItems { original } to create(newTitle, new.map { it.switchChecked() })
             }
 
-    private fun update(title: MemoTitle, items: List<Item>) = reconstruct(
+    private fun update(title: MemoTitle, items: List<Item>): Memo = reconstruct(
         id = id,
         title = title,
         items = items,
         accessedAt = Clock.System.now(),
     )
 
-    private fun mapItems(block: (List<Item>) -> List<Item>) =
+    private fun mapItems(block: (List<Item>) -> List<Item>): Memo =
         update(title, block(items))
 
-    private fun mapSpecifyItem(itemId: ItemId, block: (Item) -> Item) =
+    private fun mapSpecifyItem(itemId: ItemId, block: (Item) -> Item): Memo =
         mapItems { items ->
             items.map { item ->
                 if (item.id == itemId) block(item) else item
@@ -60,7 +60,7 @@ class Memo private constructor(
         fun create(
             title: MemoTitle,
             items: List<Item> = listOf(Item.create()),
-        ) = Memo(
+        ): Memo = Memo(
             id = MemoId(UUID.randomUUID().toString()),
             title = title,
             items = items,
@@ -72,7 +72,7 @@ class Memo private constructor(
             title: MemoTitle,
             items: List<Item>,
             accessedAt: Instant,
-        ) = Memo(
+        ): Memo = Memo(
             id = id,
             title = title,
             items = items,

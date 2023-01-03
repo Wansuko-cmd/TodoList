@@ -7,20 +7,20 @@ class Item private constructor(
     val checked: Boolean,
     val content: ItemContent,
 ) {
-    fun updateContent(content: ItemContent) = reconstruct(
+    fun updateContent(content: ItemContent): Item = reconstruct(
         id = id,
         checked = checked,
         content = content,
     )
 
-    fun switchChecked() = reconstruct(
+    fun switchChecked(): Item = reconstruct(
         id = id,
         checked = !checked,
         content = content,
     )
 
     companion object {
-        fun create() = Item(
+        fun create(): Item = Item(
             id = ItemId(UUID.randomUUID().toString()),
             checked = false,
             content = ItemContent(""),
@@ -30,7 +30,7 @@ class Item private constructor(
             id: ItemId,
             checked: Boolean,
             content: ItemContent,
-        ) = Item(
+        ): Item = Item(
             id = id,
             checked = checked,
             content = ItemContent(content.value.replace("\n", "")),
