@@ -14,7 +14,6 @@ class AndroidLibraryPlugin : Plugin<Project> {
             }
 
             extensions.configure<LibraryExtension> {
-
                 configureCommonAndroidSetting()
 
                 buildTypes {

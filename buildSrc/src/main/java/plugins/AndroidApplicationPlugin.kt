@@ -14,7 +14,6 @@ class AndroidApplicationPlugin : Plugin<Project> {
             }
 
             extensions.configure<ApplicationExtension> {
-
                 configureCommonAndroidSetting()
 
                 buildTypes {

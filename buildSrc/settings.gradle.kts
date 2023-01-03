@@ -16,12 +16,11 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
     }
+    versionCatalogs {
+        create("libs") {
+            from(files("../gradle/libs.versions.toml"))
+        }
+    }
 }
 
-rootProject.name = "TodoList"
-include("app")
-include("ui")
-include("domain")
-include("usecase")
-include("utils")
-include("data")
+rootProject.name = "buildSrc"

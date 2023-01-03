@@ -34,6 +34,9 @@ test-junit4 = "4.13.2"
 test-turbine = "0.9.0"
 test-mockk = "1.12.5"
 
+# Gradle
+gradle-android = "7.3.1"
+
 [libraries]
 # Kotlin
 kotlin-coroutine = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutine" }
@@ -82,6 +85,11 @@ test-junit4 = { group = "junit", name = "junit", version.ref = "test-junit4" }
 test-turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "test-turbine" }
 test-mockk = { group = "io.mockk", name = "mockk", version.ref = "test-mockk" }
 test-kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }
+
+# Gradle
+gradle-kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+gradle-android = { group = "com.android.tools.build", name = "gradle", version.ref = "gradle-android" }
+gradle-hilt = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "hilt" }
 
 [bundles]
 androidx = ["androidx-core", "androidx-lifecycle-runtime"]
