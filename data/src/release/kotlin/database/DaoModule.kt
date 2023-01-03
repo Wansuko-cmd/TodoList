@@ -15,7 +15,7 @@ object DaoModule {
     @Singleton
     @Provides
     fun provideDatabase(
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
     ) = Room
         .databaseBuilder(context, AppDatabase::class.java, "app_db")
         .build()

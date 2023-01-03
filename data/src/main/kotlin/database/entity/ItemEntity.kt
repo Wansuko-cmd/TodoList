@@ -17,7 +17,7 @@ import com.wsr.memo.MemoId
             parentColumns = ["id"],
             childColumns = ["memoId"],
             onDelete = ForeignKey.CASCADE,
-        )
+        ),
     ],
     indices = [Index("memoId")],
 )

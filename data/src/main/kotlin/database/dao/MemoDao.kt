@@ -7,7 +7,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import database.entity.ItemEntity
 import database.entity.MemoEntity
-import repository.room.entity.MemoWithItems
+import database.entity.MemoWithItems
 
 @Dao
 interface MemoDao {

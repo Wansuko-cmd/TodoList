@@ -3,9 +3,9 @@ package database
 import database.dao.MemoDao
 import database.entity.ItemEntity
 import database.entity.MemoEntity
+import database.entity.MemoWithItems
 import kotlinx.coroutines.delay
 import kotlinx.datetime.Clock
-import repository.room.entity.MemoWithItems
 import javax.inject.Inject
 
 class MockMemoDao @Inject constructor() : MemoDao {
@@ -26,7 +26,7 @@ val memos = List(10) { memoIndex ->
         memo = MemoEntity(
             id = "memoId$memoIndex",
             title = "title$memoIndex",
-            accessedAt = Clock.System.now()
+            accessedAt = Clock.System.now(),
         ),
         items = List(10) { itemIndex ->
             ItemEntity(
@@ -36,6 +36,6 @@ val memos = List(10) { memoIndex ->
                 content = "content$itemIndex",
                 index = itemIndex,
             )
-        }
+        },
     )
 }
