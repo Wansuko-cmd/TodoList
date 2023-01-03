@@ -1,13 +1,13 @@
 package com.wsr.ui.memo.index
 
 import com.wsr.MemoUseCaseModel
-import com.wsr.memo.MemoId
 
 data class MemoIndexUiState(
     val memos: List<MemoIndexMemoUiState> = listOf(),
     val isLoading: Boolean = false,
     val isShowingCreateMemoDialog: Boolean = false,
     val isShowingCheckIfDeleteMemoDialog: IsShowingCheckIfDeleteMemoDialog = IsShowingCheckIfDeleteMemoDialog.False,
+    val isShowingEditMemoTitleDialog: IsShowingEditMemoTitleDialog = IsShowingEditMemoTitleDialog.False,
 ) {
     companion object {
         fun from(memos: List<MemoUseCaseModel>) =
@@ -31,4 +31,9 @@ data class MemoIndexMemoUiState(
 sealed interface IsShowingCheckIfDeleteMemoDialog {
     data class True(val memoId: String) : IsShowingCheckIfDeleteMemoDialog
     object False : IsShowingCheckIfDeleteMemoDialog
+}
+
+sealed interface IsShowingEditMemoTitleDialog {
+    data class True(val memoId: String, val title: String) : IsShowingEditMemoTitleDialog
+    object False : IsShowingEditMemoTitleDialog
 }

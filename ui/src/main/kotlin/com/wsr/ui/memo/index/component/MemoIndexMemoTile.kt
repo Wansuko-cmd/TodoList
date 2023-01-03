@@ -28,16 +28,17 @@ fun MemoIndexMemoTile(
     modifier: Modifier = Modifier,
     memoUiState: MemoIndexMemoUiState,
     onClickTile: (memoId: MemoId) -> Unit,
+    onClickUpdateMemoTitleButton: (memoId: String) -> Unit,
     onClickDeleteButton: (memoId: String) -> Unit,
 ) {
-    var expandedDropdownMenu by remember { mutableStateOf(false) }
+    var showMenu by remember { mutableStateOf(false) }
 
     Card(
         modifier = modifier
             .fillMaxWidth()
             .combinedClickable(
                 onClick = { onClickTile(MemoId(memoUiState.id)) },
-                onLongClick = { expandedDropdownMenu = true },
+                onLongClick = { showMenu = true },
             ),
         elevation = 4.dp,
     ) {
@@ -50,12 +51,20 @@ fun MemoIndexMemoTile(
             )
 
             DropdownMenu(
-                expanded = expandedDropdownMenu,
-                onDismissRequest = { expandedDropdownMenu = false },
+                expanded = showMenu,
+                onDismissRequest = { showMenu = false },
             ) {
                 DropdownMenuItem(
                     onClick = {
-                        expandedDropdownMenu = false
+                        showMenu = false
+                        onClickUpdateMemoTitleButton(memoUiState.id)
+                    },
+                ) {
+                    Text(text = stringResource(id = R.string.memo_index_update_memo_title))
+                }
+                DropdownMenuItem(
+                    onClick = {
+                        showMenu = false
                         onClickDeleteButton(memoUiState.id)
                     },
                 ) {

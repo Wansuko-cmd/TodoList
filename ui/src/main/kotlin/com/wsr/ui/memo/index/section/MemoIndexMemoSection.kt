@@ -20,6 +20,7 @@ fun MemoIndexMemoSection(
     modifier: Modifier = Modifier,
     uiState: MemoIndexUiState,
     onClickTile: (memoId: MemoId) -> Unit,
+    onClickUpdateMemoTitleButton: (memoId: String) -> Unit,
     onClickDeleteButton: (memoId: String) -> Unit,
 ) {
     LazyColumn(
@@ -37,6 +38,7 @@ fun MemoIndexMemoSection(
                     .padding(vertical = 8.dp, horizontal = 16.dp),
                 memoUiState = it,
                 onClickTile = onClickTile,
+                onClickUpdateMemoTitleButton = onClickUpdateMemoTitleButton,
                 onClickDeleteButton = onClickDeleteButton,
             )
         }

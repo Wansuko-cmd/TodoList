@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">TodoList</string>
 
+    <string name="memo_index_update_memo_title">タイトル更新</string>
     <string name="memo_index_delete_memo">削除</string>
     <string name="memo_index_dialog_check_if_delete_memo_message">このメモを削除してもよろしいですか？</string>
 

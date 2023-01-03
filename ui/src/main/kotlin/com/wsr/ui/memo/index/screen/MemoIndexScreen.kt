@@ -18,6 +18,7 @@ import com.wsr.common.effect.ObserveToastEffect
 import com.wsr.memo.MemoId
 import com.wsr.ui.R
 import com.wsr.ui.memo.index.IsShowingCheckIfDeleteMemoDialog
+import com.wsr.ui.memo.index.IsShowingEditMemoTitleDialog
 import com.wsr.ui.memo.index.MemoIndexUiState
 import com.wsr.ui.memo.index.MemoIndexViewModel
 import com.wsr.ui.memo.index.section.MemoIndexMemoSection
@@ -42,6 +43,7 @@ fun MemoIndexScreen(
         onClickSetting = viewModel::onClickSetting,
         onClickCreateMemo = viewModel::showCreateMemoDialog,
         onClickMemo = viewModel::onClickMemo,
+        onClickUpdateMemoTitle = viewModel::showEditMemoTitleDialog,
         onClickDeleteMemo = viewModel::showCheckIfDeleteMemoDialog,
     )
 
@@ -52,6 +54,15 @@ fun MemoIndexScreen(
         )
     }
 
+    if (uiState.isShowingEditMemoTitleDialog is IsShowingEditMemoTitleDialog.True) {
+        val (memoId, title) =
+            (uiState.isShowingEditMemoTitleDialog as IsShowingEditMemoTitleDialog.True)
+        SettingsMemoTitleDialog(
+            initialValue = title,
+            onDismiss = viewModel::dismissEditMemoTitleDialog,
+            onConfirm = { viewModel.updateMemoTitle(memoId, it) },
+        )
+    }
     if (uiState.isShowingCheckIfDeleteMemoDialog is IsShowingCheckIfDeleteMemoDialog.True) {
         val memoId =
             (uiState.isShowingCheckIfDeleteMemoDialog as IsShowingCheckIfDeleteMemoDialog.True).memoId
@@ -73,6 +84,7 @@ fun MemoIndexScreen(
     onClickSetting: () -> Unit,
     onClickCreateMemo: () -> Unit,
     onClickMemo: (MemoId) -> Unit,
+    onClickUpdateMemoTitle: (memoId: String) -> Unit,
     onClickDeleteMemo: (memoId: String) -> Unit,
 ) {
     Scaffold(
@@ -88,6 +100,7 @@ fun MemoIndexScreen(
             modifier = Modifier.padding(innerPadding),
             uiState = uiState,
             onClickTile = onClickMemo,
+            onClickUpdateMemoTitleButton = onClickUpdateMemoTitle,
             onClickDeleteButton = onClickDeleteMemo,
         )
         if (uiState.isLoading) LoadingScreen()

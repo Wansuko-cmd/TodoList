@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.wsr.Route
 import com.wsr.command.CreateMemoUseCase
 import com.wsr.command.DeleteMemoUseCase
+import com.wsr.command.element.UpdateMemoTitleUseCase
 import com.wsr.common.effect.NavigateEffect
 import com.wsr.common.effect.ToastEffect
 import com.wsr.get.GetAllMemoUseCase
@@ -25,6 +26,7 @@ import javax.inject.Inject
 class MemoIndexViewModel @Inject constructor(
     private val getAllMemoFlowUseCase: GetAllMemoUseCase,
     private val createMemoUseCase: CreateMemoUseCase,
+    private val updateMemoTitleUseCase: UpdateMemoTitleUseCase,
     private val deleteMemoUseCase: DeleteMemoUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(MemoIndexUiState(isLoading = true))
@@ -65,6 +67,14 @@ class MemoIndexViewModel @Inject constructor(
         }
     }
 
+    fun updateMemoTitle(memoId: String, title: String) {
+        viewModelScope.launch {
+            dismissEditMemoTitleDialog()
+            updateMemoTitleUseCase(MemoId(memoId), MemoTitle(title))
+            getMemosAndUpdateUiState()
+        }
+    }
+
     fun deleteMemo(memoId: String) {
         viewModelScope.launch {
             deleteMemoUseCase(MemoId(memoId))
@@ -98,6 +108,29 @@ class MemoIndexViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update {
                 it.copy(isShowingCheckIfDeleteMemoDialog = IsShowingCheckIfDeleteMemoDialog.False)
+            }
+        }
+    }
+
+    fun showEditMemoTitleDialog(memoId: String) {
+        viewModelScope.launch {
+            _uiState.update {
+                it.copy(
+                    isShowingEditMemoTitleDialog = IsShowingEditMemoTitleDialog.True(
+                        memoId = memoId,
+                        title = it.memos
+                            .first { memo -> memo.id == memoId }
+                            .title,
+                    ),
+                )
+            }
+        }
+    }
+
+    fun dismissEditMemoTitleDialog() {
+        viewModelScope.launch {
+            _uiState.update {
+                it.copy(isShowingEditMemoTitleDialog = IsShowingEditMemoTitleDialog.False)
             }
         }
     }
