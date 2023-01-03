@@ -3,9 +3,9 @@ plugins {
 }
 
 dependencies {
-    implementation("com.android.tools.build:gradle:7.3.1")
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.10")
-    implementation("com.google.dagger:hilt-android-gradle-plugin:2.44.2")
+    implementation(libs.gradle.kotlin)
+    implementation(libs.gradle.android)
+    implementation(libs.gradle.hilt)
 }
 
 gradlePlugin {
