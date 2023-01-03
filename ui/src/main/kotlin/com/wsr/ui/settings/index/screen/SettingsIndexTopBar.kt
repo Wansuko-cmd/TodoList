@@ -29,14 +29,16 @@ fun SettingsIndexTopBar(
             )
         },
         navigationIcon = {
-            IconButton(onClick = {
-                MainActivity.restartActivity(context)
-            }) {
+            IconButton(
+                onClick = {
+                    MainActivity.restartActivity(context)
+                },
+            ) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBack,
                     contentDescription = null,
                 )
             }
-        }
+        },
     )
 }
