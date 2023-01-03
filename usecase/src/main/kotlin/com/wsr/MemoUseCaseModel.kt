@@ -13,7 +13,7 @@ data class MemoUseCaseModel(
     val title: MemoTitle,
     val items: List<ItemUseCaseModel>,
 ) {
-    fun toMemo() = Memo.reconstruct(
+    fun toMemo(): Memo = Memo.reconstruct(
         id = id,
         title = title,
         items = items.map { it.toItem() },
@@ -21,7 +21,7 @@ data class MemoUseCaseModel(
     )
 
     companion object {
-        fun from(memo: Memo) = MemoUseCaseModel(
+        fun from(memo: Memo): MemoUseCaseModel = MemoUseCaseModel(
             id = memo.id,
             title = memo.title,
             items = memo.items.map(ItemUseCaseModel::from),
@@ -34,14 +34,14 @@ data class ItemUseCaseModel(
     val checked: Boolean,
     val content: ItemContent,
 ) {
-    fun toItem() = Item.reconstruct(
+    fun toItem(): Item = Item.reconstruct(
         id = id,
         checked = checked,
         content = content,
     )
 
     companion object {
-        fun from(item: Item) = ItemUseCaseModel(
+        fun from(item: Item): ItemUseCaseModel = ItemUseCaseModel(
             id = item.id,
             checked = item.checked,
             content = item.content,

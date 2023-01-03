@@ -12,6 +12,9 @@ class UpdateItemCheckedUseCase @Inject constructor(
     private val memoRepository: MemoRepository,
     @DefaultDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) {
-    suspend operator fun invoke(memo: MemoUseCaseModel, itemId: ItemId) =
+    suspend operator fun invoke(
+        memo: MemoUseCaseModel,
+        itemId: ItemId,
+    ): MemoUseCaseModel =
         updateMemoAndReturn(memo, memoRepository, dispatcher) { it.updateItemChecked(itemId) }
 }

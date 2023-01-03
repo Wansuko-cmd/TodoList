@@ -2,9 +2,11 @@ package com.wsr.command.element
 
 import com.wsr.MemoUseCaseModel
 import com.wsr.di.DefaultDispatcher
+import com.wsr.exception.DomainException
 import com.wsr.memo.MemoId
 import com.wsr.memo.MemoRepository
 import com.wsr.memo.MemoTitle
+import com.wsr.result.ApiResult
 import com.wsr.result.flatMap
 import com.wsr.result.map
 import kotlinx.coroutines.CoroutineDispatcher
@@ -16,10 +18,16 @@ class UpdateMemoTitleUseCase @Inject constructor(
     private val memoRepository: MemoRepository,
     @DefaultDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) {
-    suspend operator fun invoke(memo: MemoUseCaseModel, title: MemoTitle) =
+    suspend operator fun invoke(
+        memo: MemoUseCaseModel,
+        title: MemoTitle,
+    ): MemoUseCaseModel =
         updateMemoAndReturn(memo, memoRepository, dispatcher) { it.updateTitle(title) }
 
-    suspend operator fun invoke(memoId: MemoId, title: MemoTitle) =
+    suspend operator fun invoke(
+        memoId: MemoId,
+        title: MemoTitle,
+    ): ApiResult<Unit, DomainException> =
         withContext(dispatcher) {
             memoRepository.getById(memoId)
                 .map { it.updateTitle(title) }

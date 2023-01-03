@@ -2,8 +2,10 @@ package com.wsr.get
 
 import com.wsr.MemoUseCaseModel
 import com.wsr.di.DefaultDispatcher
+import com.wsr.exception.DomainException
 import com.wsr.memo.MemoId
 import com.wsr.memo.MemoRepository
+import com.wsr.result.ApiResult
 import com.wsr.result.map
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -15,7 +17,7 @@ class GetMemoByIdUseCase @Inject constructor(
     @DefaultDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) {
 
-    suspend operator fun invoke(memoId: MemoId) =
+    suspend operator fun invoke(memoId: MemoId): ApiResult<MemoUseCaseModel, DomainException> =
         withContext(dispatcher) {
             memoRepository
                 .getById(memoId)

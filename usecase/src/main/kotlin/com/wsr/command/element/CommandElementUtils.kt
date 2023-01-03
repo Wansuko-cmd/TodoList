@@ -12,7 +12,7 @@ suspend inline fun updateMemoAndReturn(
     memoRepository: MemoRepository,
     dispatcher: CoroutineDispatcher,
     crossinline block: (Memo) -> Memo,
-) =
+): MemoUseCaseModel =
     withContext(dispatcher) {
         val newMemo = memo.toMemo().let(block)
         launch { memoRepository.upsert(newMemo) }

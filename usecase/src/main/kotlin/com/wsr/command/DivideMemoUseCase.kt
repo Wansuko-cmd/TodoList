@@ -2,9 +2,11 @@ package com.wsr.command
 
 import com.wsr.MemoUseCaseModel
 import com.wsr.di.DefaultDispatcher
+import com.wsr.exception.DomainException
 import com.wsr.memo.MemoId
 import com.wsr.memo.MemoRepository
 import com.wsr.memo.MemoTitle
+import com.wsr.result.ApiResult
 import com.wsr.result.map
 import com.wsr.result.onEach
 import kotlinx.coroutines.CoroutineDispatcher
@@ -19,15 +21,16 @@ class DivideMemoUseCase @Inject constructor(
     suspend operator fun invoke(
         originalMemoId: MemoId,
         newTitle: MemoTitle,
-    ) = withContext(dispatcher) {
-        memoRepository.getById(originalMemoId)
-            .map { it.divideMemo(newTitle) }
-            .onEach { (original, new) ->
-                memoRepository.upsert(original)
-                memoRepository.upsert(new)
-            }
-            .map { (original, new) ->
-                MemoUseCaseModel.from(original) to MemoUseCaseModel.from(new)
-            }
-    }
+    ): ApiResult<Pair<MemoUseCaseModel, MemoUseCaseModel>, DomainException> =
+        withContext(dispatcher) {
+            memoRepository.getById(originalMemoId)
+                .map { it.divideMemo(newTitle) }
+                .onEach { (original, new) ->
+                    memoRepository.upsert(original)
+                    memoRepository.upsert(new)
+                }
+                .map { (original, new) ->
+                    MemoUseCaseModel.from(original) to MemoUseCaseModel.from(new)
+                }
+        }
 }

@@ -12,6 +12,10 @@ class SwapItemUseCase @Inject constructor(
     private val memoRepository: MemoRepository,
     @DefaultDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) {
-    suspend operator fun invoke(memo: MemoUseCaseModel, from: ItemId, to: ItemId) =
+    suspend operator fun invoke(
+        memo: MemoUseCaseModel,
+        from: ItemId,
+        to: ItemId,
+    ): MemoUseCaseModel =
         updateMemoAndReturn(memo, memoRepository, dispatcher) { it.swapItem(from, to) }
 }

@@ -17,7 +17,7 @@ class UpdateItemContentUseCase @Inject constructor(
         memo: MemoUseCaseModel,
         itemId: ItemId,
         content: ItemContent,
-    ) = updateMemoAndReturn(memo, memoRepository, dispatcher) {
+    ): MemoUseCaseModel = updateMemoAndReturn(memo, memoRepository, dispatcher) {
         it.updateItemContent(itemId, content)
     }
 }

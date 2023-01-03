@@ -11,6 +11,6 @@ class DeleteCheckedItemsUseCase @Inject constructor(
     private val memoRepository: MemoRepository,
     @DefaultDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) {
-    suspend operator fun invoke(memo: MemoUseCaseModel) =
+    suspend operator fun invoke(memo: MemoUseCaseModel): MemoUseCaseModel =
         updateMemoAndReturn(memo, memoRepository, dispatcher) { it.deleteCheckedItems() }
 }
