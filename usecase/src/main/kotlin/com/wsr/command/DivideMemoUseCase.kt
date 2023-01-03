@@ -1,5 +1,6 @@
 package com.wsr.command
 
+import com.wsr.MemoUseCaseModel
 import com.wsr.di.DefaultDispatcher
 import com.wsr.memo.MemoId
 import com.wsr.memo.MemoRepository
@@ -24,6 +25,9 @@ class DivideMemoUseCase @Inject constructor(
             .onEach { (original, new) ->
                 memoRepository.upsert(original)
                 memoRepository.upsert(new)
+            }
+            .map { (original, new) ->
+                MemoUseCaseModel.from(original) to MemoUseCaseModel.from(new)
             }
     }
 }
