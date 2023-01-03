@@ -9,7 +9,6 @@ import com.wsr.result.ApiResult
 import database.dao.MemoDao
 import database.entity.ItemEntity
 import database.entity.MemoEntity
-import database.entity.MemoWithItems.Companion.toMemo
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

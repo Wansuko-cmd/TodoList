@@ -12,7 +12,7 @@ data class MemoEntity(
     val accessedAt: Instant,
 ) {
     companion object {
-        fun from(memo: Memo) = MemoEntity(
+        fun from(memo: Memo): MemoEntity = MemoEntity(
             id = memo.id.value,
             title = memo.title.value,
             accessedAt = memo.accessedAt,

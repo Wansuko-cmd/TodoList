@@ -7,20 +7,21 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import database.dao.MemoDao
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DaoModule {
+object AppDatabaseModule {
     @Singleton
     @Provides
     fun provideDatabase(
         @ApplicationContext context: Context,
-    ) = Room
+    ): AppDatabase = Room
         .databaseBuilder(context, AppDatabase::class.java, "app_db")
         .build()
 
     @Singleton
     @Provides
-    fun provideMemoDao(db: AppDatabase) = db.memoDao()
+    fun provideMemoDao(db: AppDatabase): MemoDao = db.memoDao()
 }

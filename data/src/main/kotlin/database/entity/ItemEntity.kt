@@ -28,22 +28,22 @@ data class ItemEntity(
     val content: String,
     val index: Int,
 ) {
+    fun toItem(): Item = Item.reconstruct(
+        id = ItemId(id),
+        checked = checked,
+        content = ItemContent(content),
+    )
+
     companion object {
-
-        fun ItemEntity.toItem() = Item.reconstruct(
-            id = ItemId(id),
-            checked = checked,
-            content = ItemContent(content),
-        )
-
-        fun from(items: List<Item>, memoId: MemoId) = items.mapIndexed { index, item ->
-            ItemEntity(
-                id = item.id.value,
-                memoId = memoId.value,
-                checked = item.checked,
-                content = item.content.value,
-                index = index,
-            )
-        }
+        fun from(items: List<Item>, memoId: MemoId): List<ItemEntity> =
+            items.mapIndexed { index, item ->
+                ItemEntity(
+                    id = item.id.value,
+                    memoId = memoId.value,
+                    checked = item.checked,
+                    content = item.content.value,
+                    index = index,
+                )
+            }
     }
 }

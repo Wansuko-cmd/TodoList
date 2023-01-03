@@ -7,6 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import database.dao.MemoDao
 import database.entity.ItemEntity
 import database.entity.MemoEntity
 import kotlinx.coroutines.runBlocking
@@ -15,12 +16,12 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DatabaseModule {
+object DevDatabaseModule {
     @Singleton
     @Provides
     fun provideDatabase(
         @ApplicationContext context: Context,
-    ) = Room
+    ): DevDatabase = Room
         .databaseBuilder(context, DevDatabase::class.java, "dev_db")
         .build()
         .also { db ->
@@ -33,14 +34,14 @@ object DatabaseModule {
 
     @Singleton
     @Provides
-    fun provideMemoDao(db: DevDatabase) = db.memoDao()
+    fun provideMemoDao(db: DevDatabase): MemoDao = db.memoDao()
 }
 
-val memos = List(10) { index ->
+private val memos = List(10) { index ->
     MemoEntity(id = "memoId$index", title = "title$index", accessedAt = Clock.System.now())
 }
 
-val items = List(10) { memoIndex ->
+private val items = List(10) { memoIndex ->
     List(10) { itemIndex ->
         ItemEntity(
             id = "itemId$memoIndex$itemIndex",

@@ -21,7 +21,7 @@ class MockMemoDao @Inject constructor() : MemoDao {
     override suspend fun deleteMemo(id: String) = Unit.also { delay(1000L) }
 }
 
-val memos = List(10) { memoIndex ->
+private val memos = List(10) { memoIndex ->
     MemoWithItems(
         memo = MemoEntity(
             id = "memoId$memoIndex",
