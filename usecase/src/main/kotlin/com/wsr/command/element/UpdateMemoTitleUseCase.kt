@@ -5,13 +5,12 @@ import com.wsr.di.DefaultDispatcher
 import com.wsr.memo.MemoId
 import com.wsr.memo.MemoRepository
 import com.wsr.memo.MemoTitle
-import com.wsr.result.consume
 import com.wsr.result.flatMap
 import com.wsr.result.map
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import javax.inject.Inject
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 class UpdateMemoTitleUseCase @Inject constructor(
     private val memoRepository: MemoRepository,

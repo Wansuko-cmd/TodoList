@@ -7,7 +7,6 @@ import androidx.room.Query
 import androidx.room.Transaction
 import database.entity.ItemEntity
 import database.entity.MemoEntity
-import kotlinx.coroutines.flow.Flow
 import repository.room.entity.MemoWithItems
 
 @Dao
