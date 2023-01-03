@@ -6,14 +6,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.wsr.common.composable.LoadingScreen
+import com.wsr.common.composable.dialog.CheckConfirmDangerDialog
 import com.wsr.common.composable.dialog.SettingsMemoTitleDialog
 import com.wsr.common.effect.ObserveNavigateEffect
 import com.wsr.common.effect.ObserveToastEffect
 import com.wsr.memo.MemoId
+import com.wsr.ui.R
+import com.wsr.ui.memo.index.IsShowingCheckIfDeleteMemoDialog
 import com.wsr.ui.memo.index.MemoIndexUiState
 import com.wsr.ui.memo.index.MemoIndexViewModel
 import com.wsr.ui.memo.index.section.MemoIndexMemoSection
@@ -26,6 +30,7 @@ fun MemoIndexScreen(
     navController: NavHostController,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
         viewModel.getMemosAndUpdateUiState()
@@ -37,13 +42,23 @@ fun MemoIndexScreen(
         onClickSetting = viewModel::onClickSetting,
         onClickCreateMemo = viewModel::showCreateMemoDialog,
         onClickMemo = viewModel::onClickMemo,
-        onClickDeleteMemo = viewModel::onClickDeleteMemo,
+        onClickDeleteMemo = viewModel::showCheckIfDeleteMemoDialog,
     )
 
     if (uiState.isShowingCreateMemoDialog) {
         SettingsMemoTitleDialog(
             onDismiss = viewModel::dismissCreateMemoDialog,
             onConfirm = viewModel::createMemo,
+        )
+    }
+
+    if (uiState.isShowingCheckIfDeleteMemoDialog is IsShowingCheckIfDeleteMemoDialog.True) {
+        val memoId =
+            (uiState.isShowingCheckIfDeleteMemoDialog as IsShowingCheckIfDeleteMemoDialog.True).memoId
+        CheckConfirmDangerDialog(
+            message = context.getString(R.string.memo_index_dialog_check_if_delete_memo_message),
+            onDismiss = viewModel::dismissCheckIfDeleteMemoDialog,
+            onConfirm = { viewModel.deleteMemo(memoId) },
         )
     }
 

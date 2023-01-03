@@ -65,7 +65,7 @@ class MemoIndexViewModel @Inject constructor(
         }
     }
 
-    fun onClickDeleteMemo(memoId: String) {
+    fun deleteMemo(memoId: String) {
         viewModelScope.launch {
             deleteMemoUseCase(MemoId(memoId))
             getMemosAndUpdateUiState()
@@ -81,6 +81,24 @@ class MemoIndexViewModel @Inject constructor(
     fun dismissCreateMemoDialog() {
         viewModelScope.launch {
             _uiState.update { it.copy(isShowingCreateMemoDialog = false) }
+        }
+    }
+
+    fun showCheckIfDeleteMemoDialog(memoId: String) {
+        viewModelScope.launch {
+            _uiState.update {
+                it.copy(
+                    isShowingCheckIfDeleteMemoDialog = IsShowingCheckIfDeleteMemoDialog.True(memoId),
+                )
+            }
+        }
+    }
+
+    fun dismissCheckIfDeleteMemoDialog() {
+        viewModelScope.launch {
+            _uiState.update {
+                it.copy(isShowingCheckIfDeleteMemoDialog = IsShowingCheckIfDeleteMemoDialog.False)
+            }
         }
     }
 }

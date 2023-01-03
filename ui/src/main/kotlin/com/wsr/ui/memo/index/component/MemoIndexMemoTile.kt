@@ -53,7 +53,12 @@ fun MemoIndexMemoTile(
                 expanded = expandedDropdownMenu,
                 onDismissRequest = { expandedDropdownMenu = false },
             ) {
-                DropdownMenuItem(onClick = { onClickDeleteButton(memoUiState.id) }) {
+                DropdownMenuItem(
+                    onClick = {
+                        expandedDropdownMenu = false
+                        onClickDeleteButton(memoUiState.id)
+                    },
+                ) {
                     Text(text = stringResource(id = R.string.memo_index_delete_memo))
                 }
             }

@@ -2,11 +2,12 @@
     <string name="app_name">TodoList</string>
 
     <string name="memo_index_delete_memo">削除</string>
+    <string name="memo_index_dialog_check_if_delete_memo_message">このメモを削除してもよろしいですか？</string>
 
     <string name="memo_show_top_bar_dropdown_menu_share">共有</string>
     <string name="memo_show_top_bar_dropdown_menu_divide">チェック項目の括り出し</string>
     <string name="memo_show_top_bar_dropdown_menu_delete">削除</string>
-    <string name="memo_show_check_if_delete_checked_items_dialog_message">チェックしている要素を削除してもよろしいですか？</string>
+    <string name="memo_show_check_if_delete_checked_items_dialog_message">チェックしている項目を削除してもよろしいですか？</string>
     <string name="memo_show_share_items_on_loading_error_message">ローディング中・・・</string>
     <string name="memo_show_share_items_no_items_error_message">共有するアイテムがありません</string>
     <string name="memo_show_share_items_prefix">・ </string>
