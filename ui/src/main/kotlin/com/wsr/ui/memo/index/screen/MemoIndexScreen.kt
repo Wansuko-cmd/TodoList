@@ -7,7 +7,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.wsr.common.composable.LoadingScreen
@@ -23,7 +22,6 @@ import com.wsr.ui.memo.index.MemoIndexUiState
 import com.wsr.ui.memo.index.MemoIndexViewModel
 import com.wsr.ui.memo.index.section.MemoIndexMemoSection
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun MemoIndexScreen(
     modifier: Modifier = Modifier,
