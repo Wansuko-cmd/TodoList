@@ -21,7 +21,7 @@ androidx-compose-compiler = "1.5.11-dev-k1.9.23-96ef9dc6af1"
 androidx-compose-lifecycle = "2.7.0"
 androidx-compose-navigation = "2.7.7"
 androidx-compose-hilt-navigation = "1.2.0"
-androidx-compose-systemuicontroller = "0.28.0"
+androidx-compose-systemuicontroller = "0.34.0"
 androidx-compose-reorderable = "0.9.6"
 androidx-compose-settings = "0.27.0"
 
