@@ -1,18 +1,18 @@
+@file:Suppress("UnstableApiUsage")
+
 plugins {
     id(Plugins.androidLibrary)
     id(Plugins.daggerHilt)
 }
 
 android {
+    namespace = "com.wsr.ui"
 
     buildFeatures {
         compose = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.0"
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
     }
 }
 

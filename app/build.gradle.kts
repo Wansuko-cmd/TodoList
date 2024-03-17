@@ -4,6 +4,7 @@ plugins {
 }
 
 android {
+    namespace = "com.wsr"
     defaultConfig {
         applicationId = "com.wsr.todolist"
         versionCode = 1

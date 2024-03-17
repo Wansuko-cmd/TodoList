@@ -3,6 +3,10 @@ plugins {
     id(Plugins.daggerHilt)
 }
 
+android {
+    namespace = "com.wsr.data"
+}
+
 dependencies {
     implementation(project(":domain"))
     implementation(project(":usecase"))

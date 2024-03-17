@@ -14,7 +14,7 @@ class AndroidLibraryPlugin : Plugin<Project> {
             }
 
             extensions.configure<LibraryExtension> {
-                configureCommonAndroidSetting()
+                configureCommonAndroidSetting(this)
 
                 buildTypes {
                     create("mock") {
