@@ -24,7 +24,7 @@ androidx-compose-hilt-navigation = "1.0.0"
 androidx-compose-activity = "1.6.1"
 androidx-compose-systemuicontroller = "0.28.0"
 androidx-compose-reorderable = "0.9.6"
-androidx-compose-settings = "0.15.0"
+androidx-compose-settings = "0.27.0"
 
 # Hilt
 hilt = "2.44.2"
