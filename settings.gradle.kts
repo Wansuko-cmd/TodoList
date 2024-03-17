@@ -1,10 +1,14 @@
 @file:Suppress("UnstableApiUsage")
 
+import java.net.URI
+
+
 pluginManagement {
     repositories {
         gradlePluginPortal()
         google()
         mavenCentral()
+        maven(url = "https://androidx.dev/storage/compose-compiler/repository/")
     }
 }
 dependencyResolutionManagement {
@@ -13,6 +17,7 @@ dependencyResolutionManagement {
         gradlePluginPortal()
         google()
         mavenCentral()
+        maven(url = "https://androidx.dev/storage/compose-compiler/repository/")
     }
 }
 
