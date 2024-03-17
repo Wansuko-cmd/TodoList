@@ -10,7 +10,7 @@ internal fun Project.configureCommonAndroidSetting(
     commonExtension: CommonExtension<*, *, *, *, *, *>,
 ) {
     commonExtension.apply {
-        compileSdk = 33
+        compileSdk = 34
 
         defaultConfig {
             minSdk = 26
