@@ -17,7 +17,7 @@ androidx-room = "2.4.3"
 
 # Compose
 androidx-compose = "1.4.0-alpha04"
-androidx-compose-compiler = "1.4.0-alpha02"
+androidx-compose-compiler = "1.5.10"
 androidx-compose-lifecycle = "2.6.0-alpha03"
 androidx-compose-navigation = "2.5.3"
 androidx-compose-hilt-navigation = "1.0.0"
