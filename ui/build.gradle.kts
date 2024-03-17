@@ -22,6 +22,7 @@ dependencies {
     implementation(project(":usecase"))
     implementation(project(":utils"))
 
+    implementation(platform(libs.androidx.compose.bom))
     implementation(libs.bundles.androidx)
 
     implementation(libs.bundles.androidx.compose)
