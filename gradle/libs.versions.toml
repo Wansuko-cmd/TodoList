@@ -27,7 +27,7 @@ androidx-compose-reorderable = "0.9.6"
 androidx-compose-settings = "0.15.0"
 
 # Hilt
-hilt = "2.44.2"
+hilt = "2.51"
 
 # Test
 test-truth = "1.1.3"
