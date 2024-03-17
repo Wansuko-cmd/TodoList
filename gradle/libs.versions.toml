@@ -10,7 +10,7 @@ androidx-lifecycle-runtime = "2.5.1"
 
 # AndroidXTest
 androidx-test-junit = "1.1.5"
-androidx-test-espresso = "3.4.0"
+androidx-test-espresso = "3.5.1"
 
 # Room
 androidx-room = "2.4.3"
