@@ -1,0 +1,20 @@
+name: 'ktlintを実行'
+
+on:
+  push:
+    branches:
+      - '*'
+  workflow_dispatch:
+
+jobs:
+  ktlint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 現ブランチからチェックアウト
+        uses: actions/checkout@v3
+
+      - name: ktlintを実行
+        uses: ScaCap/action-ktlint@master
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-review
