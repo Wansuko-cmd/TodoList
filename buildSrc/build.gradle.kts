@@ -18,6 +18,10 @@ gradlePlugin {
             id = "com.ace.c.android.library"
             implementationClass = "plugins.AndroidLibraryPlugin"
         }
+        register("androidCompose") {
+            id = "com.template.compose"
+            implementationClass = "plugins.AndroidComposePlugin"
+        }
         register("daggerHilt") {
             id = "com.ace.c.android.dagger-hilt"
             implementationClass = "plugins.DaggerHiltPlugin"
