@@ -36,7 +36,7 @@ test-turbine = "1.1.0"
 test-mockk = "1.13.10"
 
 # Gradle
-gradle-android = "7.4.2"
+gradle-android = "8.3.0"
 
 [libraries]
 # Kotlin
