@@ -20,7 +20,7 @@ object AppSettings {
         enum class TextSizeItem {
             Small,
             Normal,
-            Large
+            Large,
         }
     }
 }

@@ -17,7 +17,7 @@ private val LightColorPalette = lightColors(
     onSecondary = Color.Black,
     onBackground = Color.Black,
     onSurface = Color.Black,
-    */
+     */
 )
 
 @Composable
@@ -25,7 +25,6 @@ fun TodoListTheme(
     textSize: AppSettings.TextSize.TextSizeItem = AppSettings.TextSize.getValue(),
     content: @Composable () -> Unit,
 ) {
-
     val typography = when (textSize) {
         AppSettings.TextSize.TextSizeItem.Small -> SmallTypography
         AppSettings.TextSize.TextSizeItem.Normal -> NormalTypography
@@ -36,6 +35,6 @@ fun TodoListTheme(
         colors = LightColorPalette,
         typography = typography,
         shapes = Shapes,
-        content = content
+        content = content,
     )
 }

@@ -42,7 +42,7 @@ fun WithoutPaddingTextField(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     shape: Shape =
         MaterialTheme.shapes.small.copy(bottomEnd = ZeroCornerSize, bottomStart = ZeroCornerSize),
-    colors: TextFieldColors = TextFieldDefaults.textFieldColors()
+    colors: TextFieldColors = TextFieldDefaults.textFieldColors(),
 ) {
     // If color is not provided via the text style, use content color as a default
     val textColor = textStyle.color.takeOrElse {
@@ -82,9 +82,10 @@ fun WithoutPaddingTextField(
                 interactionSource = interactionSource,
                 colors = colors,
                 contentPadding = TextFieldDefaults.textFieldWithLabelPadding(
-                    top = 0.dp, bottom = 0.dp
-                )
+                    top = 0.dp,
+                    bottom = 0.dp,
+                ),
             )
-        }
+        },
     )
 }

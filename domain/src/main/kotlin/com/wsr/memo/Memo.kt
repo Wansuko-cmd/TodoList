@@ -1,6 +1,5 @@
 package com.wsr.memo
 
-import java.util.Collections
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import java.util.UUID
@@ -30,7 +29,9 @@ class Memo private constructor(
         val toIndex = items.indexOfFirst { it.id == to }
         if (fromIndex != -1 && toIndex != -1) {
             items.toMutableList().apply { add(toIndex, removeAt(fromIndex)) }
-        } else items
+        } else {
+            items
+        }
     }
 
     fun divideMemo(newTitle: MemoTitle): Pair<Memo, Memo> =

@@ -22,5 +22,9 @@ gradlePlugin {
             id = "com.ace.c.android.dagger-hilt"
             implementationClass = "plugins.DaggerHiltPlugin"
         }
+        register("ktlint") {
+            id = "com.template.ktlint"
+            implementationClass = "plugins.KtlintPlugin"
+        }
     }
 }

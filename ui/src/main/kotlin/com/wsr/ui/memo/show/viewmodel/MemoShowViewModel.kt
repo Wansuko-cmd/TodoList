@@ -144,7 +144,9 @@ class MemoShowViewModel @AssistedInject constructor(
         if (
             content.value.endsWith("\n") &&
             uiState.value.items.lastOrNull { !it.checked }?.id == itemId
-        ) onClickAddItem()
+        ) {
+            onClickAddItem()
+        }
     }
 
     fun onMoveItem(from: ItemId, to: ItemId) {

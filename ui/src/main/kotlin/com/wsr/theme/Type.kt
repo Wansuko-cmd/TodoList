@@ -11,68 +11,68 @@ val SmallTypography = Typography(
     h1 = TextStyle(
         fontWeight = FontWeight.Light,
         fontSize = 64.sp,
-        letterSpacing = (-1.5).sp
+        letterSpacing = (-1.5).sp,
     ),
     h2 = TextStyle(
         fontWeight = FontWeight.Light,
         fontSize = 40.sp,
-        letterSpacing = (-0.5).sp
+        letterSpacing = (-0.5).sp,
     ),
     h3 = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 32.sp,
-        letterSpacing = 0.sp
+        letterSpacing = 0.sp,
     ),
     h4 = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 22.sp,
-        letterSpacing = 0.25.sp
+        letterSpacing = 0.25.sp,
     ),
     h5 = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
-        letterSpacing = 0.sp
+        letterSpacing = 0.sp,
     ),
     h6 = TextStyle(
         fontWeight = FontWeight.Medium,
         fontSize = 13.sp,
-        letterSpacing = 0.15.sp
+        letterSpacing = 0.15.sp,
     ),
     subtitle1 = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 10.sp,
-        letterSpacing = 0.15.sp
+        letterSpacing = 0.15.sp,
     ),
     subtitle2 = TextStyle(
         fontWeight = FontWeight.Medium,
         fontSize = 9.sp,
-        letterSpacing = 0.1.sp
+        letterSpacing = 0.1.sp,
     ),
     body1 = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 10.sp,
-        letterSpacing = 0.5.sp
+        letterSpacing = 0.5.sp,
     ),
     body2 = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 9.sp,
-        letterSpacing = 0.25.sp
+        letterSpacing = 0.25.sp,
     ),
     button = TextStyle(
         fontWeight = FontWeight.Medium,
         fontSize = 9.sp,
-        letterSpacing = 1.25.sp
+        letterSpacing = 1.25.sp,
     ),
     caption = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 8.sp,
-        letterSpacing = 0.4.sp
+        letterSpacing = 0.4.sp,
     ),
     overline = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 7.sp,
-        letterSpacing = 1.5.sp
-    )
+        letterSpacing = 1.5.sp,
+    ),
 )
 
 val NormalTypography = Typography(
@@ -80,68 +80,68 @@ val NormalTypography = Typography(
     h1 = TextStyle(
         fontWeight = FontWeight.Light,
         fontSize = 96.sp,
-        letterSpacing = (-1.5).sp
+        letterSpacing = (-1.5).sp,
     ),
     h2 = TextStyle(
         fontWeight = FontWeight.Light,
         fontSize = 60.sp,
-        letterSpacing = (-0.5).sp
+        letterSpacing = (-0.5).sp,
     ),
     h3 = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 48.sp,
-        letterSpacing = 0.sp
+        letterSpacing = 0.sp,
     ),
     h4 = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 34.sp,
-        letterSpacing = 0.25.sp
+        letterSpacing = 0.25.sp,
     ),
     h5 = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 24.sp,
-        letterSpacing = 0.sp
+        letterSpacing = 0.sp,
     ),
     h6 = TextStyle(
         fontWeight = FontWeight.Medium,
         fontSize = 20.sp,
-        letterSpacing = 0.15.sp
+        letterSpacing = 0.15.sp,
     ),
     subtitle1 = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
-        letterSpacing = 0.15.sp
+        letterSpacing = 0.15.sp,
     ),
     subtitle2 = TextStyle(
         fontWeight = FontWeight.Medium,
         fontSize = 14.sp,
-        letterSpacing = 0.1.sp
+        letterSpacing = 0.1.sp,
     ),
     body1 = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
-        letterSpacing = 0.5.sp
+        letterSpacing = 0.5.sp,
     ),
     body2 = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
-        letterSpacing = 0.25.sp
+        letterSpacing = 0.25.sp,
     ),
     button = TextStyle(
         fontWeight = FontWeight.Medium,
         fontSize = 14.sp,
-        letterSpacing = 1.25.sp
+        letterSpacing = 1.25.sp,
     ),
     caption = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 12.sp,
-        letterSpacing = 0.4.sp
+        letterSpacing = 0.4.sp,
     ),
     overline = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 10.sp,
-        letterSpacing = 1.5.sp
-    )
+        letterSpacing = 1.5.sp,
+    ),
 )
 
 val LargeTypography = Typography(
@@ -149,66 +149,66 @@ val LargeTypography = Typography(
     h1 = TextStyle(
         fontWeight = FontWeight.Light,
         fontSize = 96.sp,
-        letterSpacing = (-1.5).sp
+        letterSpacing = (-1.5).sp,
     ),
     h2 = TextStyle(
         fontWeight = FontWeight.Light,
         fontSize = 60.sp,
-        letterSpacing = (-0.5).sp
+        letterSpacing = (-0.5).sp,
     ),
     h3 = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 48.sp,
-        letterSpacing = 0.sp
+        letterSpacing = 0.sp,
     ),
     h4 = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 34.sp,
-        letterSpacing = 0.25.sp
+        letterSpacing = 0.25.sp,
     ),
     h5 = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 24.sp,
-        letterSpacing = 0.sp
+        letterSpacing = 0.sp,
     ),
     h6 = TextStyle(
         fontWeight = FontWeight.Medium,
         fontSize = 20.sp,
-        letterSpacing = 0.15.sp
+        letterSpacing = 0.15.sp,
     ),
     subtitle1 = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
-        letterSpacing = 0.15.sp
+        letterSpacing = 0.15.sp,
     ),
     subtitle2 = TextStyle(
         fontWeight = FontWeight.Medium,
         fontSize = 14.sp,
-        letterSpacing = 0.1.sp
+        letterSpacing = 0.1.sp,
     ),
     body1 = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
-        letterSpacing = 0.5.sp
+        letterSpacing = 0.5.sp,
     ),
     body2 = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
-        letterSpacing = 0.25.sp
+        letterSpacing = 0.25.sp,
     ),
     button = TextStyle(
         fontWeight = FontWeight.Medium,
         fontSize = 14.sp,
-        letterSpacing = 1.25.sp
+        letterSpacing = 1.25.sp,
     ),
     caption = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 12.sp,
-        letterSpacing = 0.4.sp
+        letterSpacing = 0.4.sp,
     ),
     overline = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 10.sp,
-        letterSpacing = 1.5.sp
-    )
+        letterSpacing = 1.5.sp,
+    ),
 )
