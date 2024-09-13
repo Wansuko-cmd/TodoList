@@ -1,7 +1,7 @@
 [versions]
 # Kotlin
 kotlin = "1.9.23"
-coroutine = "1.8.0"
+coroutine = "1.9.0"
 datetime = "0.5.0"
 
 # AndroidX
