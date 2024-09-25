@@ -29,7 +29,7 @@ androidx-compose-settings = "0.27.0"
 hilt = "2.51"
 
 # Test
-test-truth = "1.4.2"
+test-truth = "1.4.4"
 test-junit4 = "4.13.2"
 test-turbine = "1.1.0"
 test-mockk = "1.13.10"
