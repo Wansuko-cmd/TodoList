@@ -20,9 +20,6 @@ class AndroidComposePlugin : Plugin<Project> {
                 buildFeatures {
                     compose = true
                 }
-                composeOptions {
-                    kotlinCompilerExtensionVersion = "1.5.11-dev-k1.9.23-96ef9dc6af1"
-                }
             }
 
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")

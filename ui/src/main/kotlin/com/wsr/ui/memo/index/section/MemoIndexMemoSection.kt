@@ -34,7 +34,7 @@ fun MemoIndexMemoSection(
         items(uiState.memos, key = { it.id }) {
             MemoIndexMemoTile(
                 modifier = Modifier
-                    .animateItemPlacement()
+                    .animateItem()
                     .padding(vertical = 8.dp, horizontal = 16.dp),
                 memoUiState = it,
                 onClickTile = onClickTile,

@@ -23,7 +23,7 @@ androidx-compose-navigation = "2.8.9"
 androidx-compose-hilt-navigation = "1.2.0"
 androidx-compose-systemuicontroller = "0.36.0"
 androidx-compose-reorderable = "0.9.6"
-androidx-compose-settings = "2.0.0"
+androidx-compose-settings = "1.0.3"
 
 # Hilt
 hilt = "2.56.2"
@@ -68,7 +68,6 @@ androidx-compose-navigation = { group = "androidx.navigation", name = "navigatio
 androidx-compose-lifecycle = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-compose-lifecycle" }
 androidx-compose-hilt = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidx-compose-hilt-navigation" }
 androidx-compose-systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "androidx-compose-systemuicontroller" }
-androidx-compose-reorderable = { group = "org.burnoutcrew.composereorderable", name = "reorderable", version.ref = "androidx-compose-reorderable"}
 androidx-compose-settings-ui = { group = "com.github.alorma", name = "compose-settings-ui", version.ref = "androidx-compose-settings"}
 androidx-compose-settings-storage = { group = "com.github.alorma", name = "compose-settings-storage-preferences", version.ref = "androidx-compose-settings"}
 
@@ -108,9 +107,11 @@ androidx-compose = [
     "androidx-compose-hilt",
     "androidx-compose-activity",
     "androidx-compose-systemuicontroller",
-    "androidx-compose-reorderable",
     "androidx-compose-settings-ui",
     "androidx-compose-settings-storage",
 ]
 androidx-compose-test = ["androidx-compose-test-junit4", "androidx-compose-test-manifest", "androidx-compose-test-uitooling"]
 test = ["test-truth", "test-junit4", "test-turbine", "test-mockk", "test-kotlin-test"]
+
+[plugins]
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
