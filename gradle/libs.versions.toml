@@ -13,7 +13,7 @@ androidx-test-junit = "1.2.1"
 androidx-test-espresso = "3.6.1"
 
 # Room
-androidx-room = "2.7.1"
+androidx-room = "2.7.2"
 
 # Compose
 androidx-compose-bom = "2025.06.01"
