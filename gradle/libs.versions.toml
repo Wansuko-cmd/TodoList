@@ -5,7 +5,7 @@ coroutine = "1.10.2"
 datetime = "0.7.1-0.6.x-compat"
 
 # AndroidX
-androidx = "1.16.0"
+androidx = "1.17.0"
 androidx-lifecycle-runtime = "2.9.2"
 
 # AndroidXTest
