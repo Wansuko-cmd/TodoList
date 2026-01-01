@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class GetMemoByIdUseCase @Inject constructor(
     private val memoRepository: MemoRepository,
-    @DefaultDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
+    @param:DefaultDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) {
 
     suspend operator fun invoke(memoId: MemoId): ApiResult<MemoUseCaseModel, DomainException> =

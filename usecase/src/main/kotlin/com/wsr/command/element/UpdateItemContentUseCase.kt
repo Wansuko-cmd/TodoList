@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class UpdateItemContentUseCase @Inject constructor(
     private val memoRepository: MemoRepository,
-    @DefaultDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
+    @param:DefaultDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) {
     suspend operator fun invoke(
         memo: MemoUseCaseModel,

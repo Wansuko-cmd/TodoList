@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class DeleteMemoUseCase @Inject constructor(
     private val memoRepository: MemoRepository,
-    @DefaultDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
+    @param:DefaultDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) {
     suspend operator fun invoke(memoId: MemoId): ApiResult<Unit, DomainException> =
         withContext(dispatcher) {

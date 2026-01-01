@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 class DivideMemoUseCase @Inject constructor(
     private val memoRepository: MemoRepository,
-    @DefaultDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
+    @param:DefaultDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) {
     suspend operator fun invoke(
         originalMemoId: MemoId,

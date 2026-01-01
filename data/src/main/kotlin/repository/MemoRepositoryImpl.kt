@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 class MemoRepositoryImpl @Inject constructor(
     private val memoDao: MemoDao,
-    @IODispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
+    @param:IODispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : MemoRepository {
     override suspend fun getAll(): ApiResult<List<Memo>, DomainException> =
         withContext(dispatcher) {
