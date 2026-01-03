@@ -15,6 +15,7 @@ object Route {
         }
     }
 
+    @Deprecated("使っているライブラリが古いので移行中")
     object Settings : Root {
         override val root: String = "settings"
 

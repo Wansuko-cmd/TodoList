@@ -49,7 +49,7 @@ class MemoIndexViewModel @Inject constructor(
 
     fun onClickSetting() {
         viewModelScope.launch {
-            _navigateEffect.emit(NavigateEffect.Navigate(Route.Settings.Index.path))
+//            _navigateEffect.emit(NavigateEffect.Navigate(Route.Settings.Index.path))
         }
     }
 

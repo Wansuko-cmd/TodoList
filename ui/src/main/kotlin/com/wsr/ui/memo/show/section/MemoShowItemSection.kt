@@ -22,7 +22,6 @@ fun MemoShowItemSection(
     onChangeContent: (itemId: ItemId, content: ItemContent) -> Unit,
     onMoveItem: (from: ItemId, to: ItemId) -> Unit,
 ) {
-
     LazyColumn(modifier = modifier.fillMaxSize()) {
         // itemの移動時の挙動を直すために必要
         item {
