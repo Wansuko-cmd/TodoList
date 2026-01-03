@@ -20,6 +20,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import com.wsr.ui.R
 
 @Composable
@@ -77,7 +78,7 @@ fun MemoShowTopBar(
                         onClickDivide()
                     },
                 ) {
-                    Text(text = context.getString(R.string.memo_show_top_bar_dropdown_menu_divide))
+                    Text(text = stringResource(R.string.memo_show_top_bar_dropdown_menu_divide))
                 }
                 DropdownMenuItem(
                     onClick = {
@@ -85,7 +86,7 @@ fun MemoShowTopBar(
                         onClickShareItems()
                     },
                 ) {
-                    Text(text = context.getString(R.string.memo_show_top_bar_dropdown_menu_share))
+                    Text(text = stringResource(R.string.memo_show_top_bar_dropdown_menu_share))
                 }
             }
         },

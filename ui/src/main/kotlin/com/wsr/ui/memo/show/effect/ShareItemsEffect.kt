@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import com.wsr.ui.R
 import com.wsr.ui.memo.show.MemoShowItemUiState
 import kotlinx.coroutines.flow.Flow
@@ -14,7 +15,7 @@ data class ShareItemsEffect(val items: List<MemoShowItemUiState>)
 @Composable
 fun ObserveShareItemsEffect(flow: Flow<ShareItemsEffect>) {
     val context = LocalContext.current
-    val prefix = context.getString(R.string.memo_show_share_items_prefix)
+    val prefix = stringResource(R.string.memo_show_share_items_prefix)
     LaunchedEffect(Unit) {
         flow.collectLatest { effect ->
             val text = effect.items

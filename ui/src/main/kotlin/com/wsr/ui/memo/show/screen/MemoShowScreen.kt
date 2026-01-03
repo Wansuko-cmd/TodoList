@@ -7,6 +7,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.wsr.common.composable.LoadingScreen
@@ -66,7 +67,7 @@ fun MemoShowScreen(
 
     if (uiState.isShowingCheckIfDeleteCheckedItemsDialog) {
         CheckConfirmDangerDialog(
-            message = context.getString(R.string.memo_show_check_if_delete_checked_items_dialog_message),
+            message = stringResource(R.string.memo_show_check_if_delete_checked_items_dialog_message),
             onDismiss = viewModel::dismissCheckIfDeleteCheckedItemsDialog,
             onConfirm = viewModel::deleteCheckedItems,
         )

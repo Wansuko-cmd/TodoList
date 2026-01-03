@@ -6,7 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.wsr.common.composable.LoadingScreen
@@ -25,11 +26,10 @@ import com.wsr.ui.memo.index.section.MemoIndexMemoSection
 @Composable
 fun MemoIndexScreen(
     modifier: Modifier = Modifier,
-    viewModel: MemoIndexViewModel,
+    viewModel: MemoIndexViewModel = hiltViewModel(),
     navController: NavHostController,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
         viewModel.getMemosAndUpdateUiState()
@@ -65,7 +65,7 @@ fun MemoIndexScreen(
         val memoId =
             (uiState.isShowingCheckIfDeleteMemoDialog as IsShowingCheckIfDeleteMemoDialog.True).memoId
         CheckConfirmDangerDialog(
-            message = context.getString(R.string.memo_index_dialog_check_if_delete_memo_message),
+            message = stringResource(R.string.memo_index_dialog_check_if_delete_memo_message),
             onDismiss = viewModel::dismissCheckIfDeleteMemoDialog,
             onConfirm = { viewModel.deleteMemo(memoId) },
         )
