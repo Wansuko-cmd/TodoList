@@ -1,7 +1,7 @@
 object Plugins {
-    const val androidApplication = "com.ace.c.android.application"
-    const val androidLibrary = "com.ace.c.android.library"
-    const val androidCompose = "com.template.compose"
-    const val daggerHilt = "com.ace.c.android.dagger-hilt"
-    const val ktlint = "com.template.ktlint"
+    const val androidApplication = "com.wsr.android.application"
+    const val androidLibrary = "com.wsr.android.library"
+    const val androidCompose = "com.wsr.compose"
+    const val daggerHilt = "com.wsr.android.dagger-hilt"
+    const val ktlint = "com.wsr.ktlint"
 }

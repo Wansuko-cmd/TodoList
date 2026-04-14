@@ -5,29 +5,30 @@ plugins {
 dependencies {
     implementation(libs.gradle.kotlin)
     implementation(libs.gradle.android)
+    implementation(libs.gradle.ksp)
     implementation(libs.gradle.hilt)
 }
 
 gradlePlugin {
     plugins {
         register("androidApplication") {
-            id = "com.ace.c.android.application"
+            id = "com.wsr.android.application"
             implementationClass = "plugins.AndroidApplicationPlugin"
         }
         register("androidLibrary") {
-            id = "com.ace.c.android.library"
+            id = "com.wsr.android.library"
             implementationClass = "plugins.AndroidLibraryPlugin"
         }
         register("androidCompose") {
-            id = "com.template.compose"
+            id = "com.wsr.compose"
             implementationClass = "plugins.AndroidComposePlugin"
         }
         register("daggerHilt") {
-            id = "com.ace.c.android.dagger-hilt"
+            id = "com.wsr.android.dagger-hilt"
             implementationClass = "plugins.DaggerHiltPlugin"
         }
         register("ktlint") {
-            id = "com.template.ktlint"
+            id = "com.wsr.ktlint"
             implementationClass = "plugins.KtlintPlugin"
         }
     }
