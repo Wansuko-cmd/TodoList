@@ -1,6 +1,10 @@
 package com.wsr.ui.memo.index.screen
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -86,8 +90,15 @@ fun MemoIndexScreen(
     onClickDeleteMemo: (memoId: String) -> Unit,
 ) {
     Scaffold(
-        modifier = modifier,
-        topBar = { MemoIndexTopBar(onClickSettings = onClickSetting) },
+        modifier = modifier.imePadding(),
+        topBar = {
+            MemoIndexTopBar(
+                onClickSettings = onClickSetting,
+                modifier = Modifier
+                    .background(color = MaterialTheme.colors.primaryVariant)
+                    .statusBarsPadding(),
+            )
+        },
         floatingActionButton = {
             MemoIndexFloatActionButton(
                 onClick = onClickCreateMemo,
