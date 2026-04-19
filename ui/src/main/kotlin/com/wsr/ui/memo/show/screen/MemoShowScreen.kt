@@ -1,12 +1,15 @@
 package com.wsr.ui.memo.show.screen
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
@@ -30,7 +33,6 @@ fun MemoShowScreen(
     navController: NavHostController,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
         viewModel.getMemoAndUpdateUiState()
@@ -99,7 +101,7 @@ fun MemoShowScreen(
     onMoveItem: (from: ItemId, to: ItemId) -> Unit,
 ) {
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.imePadding(),
         topBar = {
             MemoShowTopBar(
                 memoTitle = uiState.title.value,
@@ -108,6 +110,9 @@ fun MemoShowScreen(
                 onClickDivide = onClickDivide,
                 onClickShareItems = onClickShareItems,
                 onClickDeleteCheckedItems = onClickDeleteCheckedItems,
+                modifier = Modifier
+                    .background(color = MaterialTheme.colors.primaryVariant)
+                    .statusBarsPadding(),
             )
         },
         floatingActionButton = {
