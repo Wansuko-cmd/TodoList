@@ -55,18 +55,17 @@ fun MemoShowItemSection(
                             ?.let { state.layoutInfo.visibleItemsInfo.getOrNull(it) }
                             ?: return@detectDragGesturesAfterLongPress
 
-                        val target = if (dragAmount.y > 0f) {
+                        val target = if (dragAmount.y < 0f) {
                             state.layoutInfo
                                 .visibleItemsInfo
-                                .dropLast(current.index)
+                                .take(current.index)
                                 .find { change.position.y < it.offset + it.size / 2 }
                         } else {
                             state.layoutInfo
                                 .visibleItemsInfo
-                                .drop(current.index)
-                                .find { change.position.y > it.offset - it.size / 2 }
+                                .drop(current.index + 1)
+                                .find { change.position.y > it.offset + it.size / 2 }
                         }
-
                         if (target == null) return@detectDragGesturesAfterLongPress
                         val from = ItemId(current.key.toString())
                         val to = ItemId(target.key.toString())
