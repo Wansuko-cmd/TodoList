@@ -2,6 +2,7 @@ package com.wsr.ui.memo.show.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.MaterialTheme
@@ -101,7 +102,9 @@ fun MemoShowScreen(
     onMoveItem: (from: ItemId, to: ItemId) -> Unit,
 ) {
     Scaffold(
-        modifier = modifier.imePadding(),
+        modifier = modifier
+            .imePadding()
+            .navigationBarsPadding(),
         topBar = {
             MemoShowTopBar(
                 memoTitle = uiState.title.value,
