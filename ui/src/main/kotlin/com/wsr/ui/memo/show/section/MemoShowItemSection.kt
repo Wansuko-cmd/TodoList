@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,6 +33,14 @@ fun MemoShowItemSection(
 ) {
     val state = rememberLazyListState()
     var currentIndex: Int? by remember { mutableStateOf(null) }
+
+    LaunchedEffect(uiState.shouldFocusItemId) {
+        val index = uiState.items
+            .indexOfFirst { it.id == uiState.shouldFocusItemId }
+            .takeIf { it != -1 } ?: return@LaunchedEffect
+        state.scrollToItem(index)
+    }
+
     LazyColumn(
         state = state,
         modifier = modifier
