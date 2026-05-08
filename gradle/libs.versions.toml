@@ -1,7 +1,7 @@
 [versions]
 # Kotlin
 kotlin = "2.3.21"
-coroutine = "1.10.2"
+coroutine = "1.11.0"
 datetime = "0.7.1-0.6.x-compat"
 
 # AndroidX
