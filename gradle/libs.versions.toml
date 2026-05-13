@@ -33,7 +33,7 @@ test-mockk = "1.14.9"
 
 # Gradle
 gradle-android = "9.2.1"
-gradle-ksp = "2.3.7"
+gradle-ksp = "2.3.8"
 
 [libraries]
 # Kotlin
